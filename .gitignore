@@ -12,3 +12,5 @@ celerybeat-schedule.db
 *.pid
 *.log
 *.rdb
+local_settings.py
+local_settings.pyc

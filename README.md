@@ -1,3 +1,3 @@
 # Causas
 
-Web scraper for judicial causes files
+Web scraper for causes files
