@@ -1,0 +1,14 @@
+*.log
+.idea/
+*.pyc
+*.py~
+.coverage
+*.*~
+__pycache__
+*.sqlite3
+celerybeat-schedule.db
+.*~
+.DS_Store
+*.pid
+*.log
+*.rdb
