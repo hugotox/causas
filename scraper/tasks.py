@@ -5,6 +5,7 @@ from django.conf import settings
 from datetime import datetime
 from selenium.webdriver import PhantomJS, Chrome
 
+from main.models import UserProfile
 from scraper.causas_page.page import CausasPage
 from scraper.main_page.page import MainPage
 
@@ -16,27 +17,35 @@ logger = get_task_logger(__name__)
 
 @task(name="run_scraper")
 def run_scraper():
-    n1 = datetime.now()
+    users = UserProfile.objects.filter(user__is_active=True)
 
-    if settings.DRIVER == 'chrome':
-        driver = Chrome(os.path.join(os.getcwd(), 'drivers', settings.PLATFORM, 'chromedriver'))
-    else:
-        # default to phantomjs
-        driver = PhantomJS(os.path.join(os.getcwd(), 'drivers', settings.PLATFORM, 'phantomjs'))
+    for profile in users:
 
-    driver.set_window_size(1200, 775)
+        n1 = datetime.now()
 
-    main_page = MainPage(driver, rut=settings.RUT, clave=settings.CLAVE)
-    main_page.open()
-    main_page.login()
+        if settings.DRIVER == 'chrome':
+            driver = Chrome(os.path.join(os.getcwd(), 'drivers', settings.PLATFORM, 'chromedriver'))
+        else:
+            # default to phantomjs
+            driver = PhantomJS(os.path.join(os.getcwd(), 'drivers', settings.PLATFORM, 'phantomjs'))
 
-    causas = CausasPage(driver)
-    causas.open()
-    causas.init_scraping()  # start the background process
+        driver.set_window_size(1200, 775)
 
-    driver.quit()
+        main_page = MainPage(driver, profile=profile)
+        main_page.open()
+        main_page.login()
 
-    n2 = datetime.now()
-    time = n2 - n1
+        causas = CausasPage(driver, profile=profile)
+        causas.open()
+        causas.init_scraping()  # start the background process
 
-    print('Done in {} minutes.'.format(round(time.seconds / 60, 2)))
+        driver.quit()
+
+        if not profile.initial_migration_done:
+            profile.initial_migration_done = True
+            profile.save()
+
+        n2 = datetime.now()
+        time = n2 - n1
+
+        print('Done in {} minutes.'.format(round(time.seconds / 60, 2)))

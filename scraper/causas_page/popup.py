@@ -11,8 +11,13 @@ class PopupLocators(object):
 
 
 class Popup(BasePage):
-    def __init__(self, driver):
+    def __init__(self, driver, profile):
         super().__init__(driver, '')
+        self.profile = profile
+
+    def save_to_database(self):
+        # TODO: implement this
+        pass
 
     def check_data(self):
         driver = self.driver
@@ -28,10 +33,16 @@ class Popup(BasePage):
         rows = table.find_elements_by_tag_name('tr')
 
         # TODO: save to database
+        # TODO: send notification when new document is found
         for row in rows:
             if not heading:
                 cols = row.find_elements_by_tag_name('td')
                 data = ' - '.join([col.text for col in cols])
+                if not self.profile.initial_migration_done:
+                    self.save_to_database()
+
+                # send notification only after first migration is done
+
                 print(data)
             heading = False
 

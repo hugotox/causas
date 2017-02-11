@@ -133,9 +133,11 @@ CELERY_TIMEZONE = 'America/Santiago'
 # ----------- CUSTOM SETTINGS ---------------
 PLATFORM = 'linux'
 DRIVER = 'phantomjs'
-WEB_DRIVER_WAIT_TIMEOUT = 120  # 2 minutes
-RUT = ''
-CLAVE = ''
+WEB_DRIVER_WAIT_TIMEOUT = 300  # 5 minutes
+
+
+# cryptography
+MASTER_KEY = b''
 
 try:
     from local_settings import *

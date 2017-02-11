@@ -2,16 +2,17 @@ from django.conf import settings
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from utils.crypto import decrypt
 from scraper.core.base_page import BasePage
 from scraper.main_page.locators import MainPageLocators
 
 
 class MainPage(BasePage):
 
-    def __init__(self, driver, rut, clave):
+    def __init__(self, driver, profile):
         super().__init__(driver, 'https://oficinajudicialvirtual.pjud.cl/')
-        self.rut = rut
-        self.clave = clave
+        self.rut = profile.user.username
+        self.clave = decrypt(profile.clave)
 
     def login(self):
         driver = self.driver
