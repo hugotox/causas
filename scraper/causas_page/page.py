@@ -14,40 +14,53 @@ class CausasPage(BasePage):
         self.profile = profile
         self.main_window = None
 
-    def save_form_to_cause(self, form, locator):
+    def get_tipo_causa(self, locator):
         """
         Locator is the `form` object found in locators.FORMS_XPATH
         E.g. (By.XPATH, "//form[@action='./causas/causa_suprema2.php']")
         """
+        if locator[1] == CausasPageLocators.FORM_SUPREMA:
+            type = Causa.TYPE_CHOICES_SUPREMA
+        elif locator[1] == CausasPageLocators.FORM_APELACIONES:
+            type = Causa.TYPE_CHOICES_APELACIONES
+        elif locator[1] == CausasPageLocators.FORM_CIVIL:
+            type = Causa.TYPE_CHOICES_CIVIL
+        elif locator[1] == CausasPageLocators.FORM_LABORAL:
+            type = Causa.TYPE_CHOICES_LABORAL
+        elif locator[1] == CausasPageLocators.FORM_PENAL:
+            type = Causa.TYPE_CHOICES_PENAL
+        elif locator[1] == CausasPageLocators.FORM_COBRANZA:
+            type = Causa.TYPE_CHOICES_COBRANZA
+        elif locator[1] == CausasPageLocators.FORM_FAMILIA:
+            type = Causa.TYPE_CHOICES_FAMILIA
+        else:
+            return None
+        return type
+
+    def get_or_create_form_to_cause(self, form, tipo_causa):
+
         tr = form.find_element_by_xpath('parent::td/parent::tr')
 
         # based on the locator I know which tab I'm working on the locator
-        if locator[1] == CausasPageLocators.FORM_SUPREMA:
-            type = Causa.TYPE_CHOICES_SUPREMA
+        if tipo_causa == Causa.TYPE_CHOICES_SUPREMA:
             idx_cara = 2
             idx_status = 4
-        elif locator[1] == CausasPageLocators.FORM_APELACIONES:
-            type = Causa.TYPE_CHOICES_APELACIONES
+        elif tipo_causa == Causa.TYPE_CHOICES_APELACIONES:
             idx_cara = 3
             idx_status = 5
-        elif locator[1] == CausasPageLocators.FORM_CIVIL:
-            type = Causa.TYPE_CHOICES_CIVIL
+        elif tipo_causa == Causa.TYPE_CHOICES_CIVIL:
             idx_cara = 3
             idx_status = 5
-        elif locator[1] == CausasPageLocators.FORM_LABORAL:
-            type = Causa.TYPE_CHOICES_LABORAL
+        elif tipo_causa == Causa.TYPE_CHOICES_LABORAL:
             idx_cara = 3
             idx_status = 5
-        elif locator[1] == CausasPageLocators.FORM_PENAL:
-            type = Causa.TYPE_CHOICES_PENAL
+        elif tipo_causa == Causa.TYPE_CHOICES_PENAL:
             idx_cara = 4
             idx_status = 6
-        elif locator[1] == CausasPageLocators.FORM_COBRANZA:
-            type = Causa.TYPE_CHOICES_COBRANZA
+        elif tipo_causa == Causa.TYPE_CHOICES_COBRANZA:
             idx_cara = 3
             idx_status = 0  # TODO ???
-        elif locator[1] == CausasPageLocators.FORM_FAMILIA:
-            type = Causa.TYPE_CHOICES_FAMILIA
+        elif tipo_causa == Causa.TYPE_CHOICES_FAMILIA:
             idx_cara = 3
             idx_status = 5
         else:
@@ -63,7 +76,7 @@ class CausasPage(BasePage):
         try:
             causa = Causa.objects.get(id=form_id)
         except:
-            causa = Causa(id=form_id, user=self.profile, type=type, archived=False, caratulado=caratulado)
+            causa = Causa(id=form_id, user=self.profile, type=tipo_causa, archived=False, caratulado=caratulado)
             causa.save()
 
         return causa
@@ -72,11 +85,12 @@ class CausasPage(BasePage):
         driver = self.driver
         for form in forms:
 
-            # saves the form to the database if wasn't saved before
-            causa = save_form_to_cause(form, locator, self.profile)
+            # saves the form to the database if it wasn't saved before
+            tipo_causa = self.get_tipo_causa(locator)
+            causa = self.get_or_create_form_to_cause(form, tipo_causa)
 
             if causa and not causa.archived:
-                print('Submitting form {}...'.format(locator[1]))
+                print('Submitting form {}...'.format(tipo_causa))
 
                 # form submit opens the cause details in a popup window
                 form.submit()
@@ -86,7 +100,7 @@ class CausasPage(BasePage):
                 # switch windows
                 driver.switch_to.window('popup')
 
-                popup = Popup(self.driver, self.profile)
+                popup = Popup(self.driver, self.profile, causa)
                 popup.check_data()
                 driver.switch_to.window(self.main_window)
 
@@ -108,8 +122,8 @@ class CausasPage(BasePage):
                 try:
                     forms = driver.find_elements(*locator['form'])
                     self.loop_forms(forms, locator['form'])
-                except:
-                    pass
+                except Exception as ex:
+                    print(ex)
 
                 try:
                     next_link = driver.find_element(*locator['next_link'])

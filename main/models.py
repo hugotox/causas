@@ -34,74 +34,75 @@ class Causa(models.Model):
     user = models.ForeignKey(UserProfile)
     type = models.IntegerField(choices=TYPE_CHOICES)
     archived = models.BooleanField(default=False)
-    caratulado = models.CharField(max_length=200)
+    caratulado = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return '{} - {} (Archived: {})'.format(self.id, self.caratulado, self.archived)
 
 
-class Document(models.Model):
-    """
-    Suprema
-    - Folio (num)
-    - Doc (icon)
-    - Año Folio (num)
-    - Fecha Resolucion (date)
-    - Tipo Tramite (text)
-    - Nomenclatura (text)
-    - Des. Trámite (text)
-    - Salas (text)
-
-    Apelaciones
-    - Doc. (icon)
-    - Tipo Tramite (text)
-    - Folio (num)
-    - Descripcion (text)
-    - Fecha (date)
-    - Sala (text)
-    - Foja Inicial (num)
-
-    Civil
-    - Folio (num)
-    - Doc (icon)
-    - Anexo (icon)
-    - Etapa (text)
-    - Trámite (text)
-    - Desc. Trámite (text)
-    - Fec. Trámite (date)
-    - Foja (num)
-
-    Laboral
-    - Doc. (icon)
-    - Anexo (icon)
-    - Tipo Tramite (text)
-    - Tramite (text)
-    - Fecha (date)
-
-    Penal
-    - Doc (icon)
-    - Tipo
-    - Observación (text)
-    - Fecha (date)
-    - Estado (text)
-    - Estado Cambio Estado (date)
-
-    Cobranza
-    - Doc. Sel. (icon)
-    - Etapa (text)
-    - Trámite (text)
-    - Desc. Trámite (text)
-    - Fech. Tram. (date)
-
-    Familia
-    - Doc. (icon)
-    - Anexo (icon)
-    - Etapa (text)
-    - Trámite (text)
-    - Desc. Trámite (text)
-    - Referencia (text)
-    - Fecha Tram. (date)
-    """
-
-    # TODO: how to identify a document
+class DocSuprema(models.Model):
+    id = models.CharField(max_length=100, primary_key=True)  # id format is "<causa.id>-<folio>"
     causa = models.ForeignKey(Causa)
+    anio = models.TextField(blank=True, null=True)
+    fecha = models.TextField(blank=True, null=True)
+    tipo = models.TextField(blank=True, null=True)
+    nomenclatura = models.TextField(blank=True, null=True)
+    descripcion = models.TextField(blank=True, null=True)
+    salas = models.TextField(blank=True, null=True)
+
+
+class DocApelaciones(models.Model):
+    id = models.CharField(max_length=100, primary_key=True)  # id format is "<causa.id>-<folio>"
+    causa = models.ForeignKey(Causa)
+    tipo = models.TextField(blank=True, null=True)
+    descripcion = models.TextField(blank=True, null=True)
+    fecha = models.TextField(blank=True, null=True)
+    salas = models.TextField(blank=True, null=True)
+    foja_inicial = models.TextField(blank=True, null=True)
+
+
+class DocCivil(models.Model):
+    id = models.CharField(max_length=100, primary_key=True)  # id format is "<causa.id>-<folio>"
+    causa = models.ForeignKey(Causa)
+    etapa = models.TextField(blank=True, null=True)
+    tramite = models.TextField(blank=True, null=True)
+    descripcion = models.TextField(blank=True, null=True)
+    fecha = models.TextField(blank=True, null=True)
+    foja = models.TextField(blank=True, null=True)
+
+
+class DocLaboral(models.Model):
+    # uses auto generated id
+    causa = models.ForeignKey(Causa)
+    tipo = models.TextField(blank=True, null=True)
+    tramite = models.TextField(blank=True, null=True)
+    fecha = models.TextField(blank=True, null=True)
+
+
+class DocPenal(models.Model):
+    # uses auto generated id
+    causa = models.ForeignKey(Causa)
+    tipo = models.TextField(blank=True, null=True)
+    observacion = models.TextField(blank=True, null=True)
+    fecha = models.TextField(blank=True, null=True)
+    estado = models.TextField(blank=True, null=True)
+    cambio_estado = models.TextField(blank=True, null=True)
+
+
+class DocCobranza(models.Model):
+    # uses auto generated id
+    causa = models.ForeignKey(Causa)
+    etapa = models.TextField(blank=True, null=True)
+    tramite = models.TextField(blank=True, null=True)
+    desc_tramite = models.TextField(blank=True, null=True)
+    fecha = models.TextField(blank=True, null=True)
+
+
+class DocFamilia(models.Model):
+    # uses auto generated id
+    causa = models.ForeignKey(Causa)
+    etapa = models.TextField(blank=True, null=True)
+    tramite = models.TextField(blank=True, null=True)
+    desc_tramite = models.TextField(blank=True, null=True)
+    referencia = models.TextField(blank=True, null=True)
+    fecha = models.TextField(blank=True, null=True)
