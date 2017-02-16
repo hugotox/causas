@@ -50,6 +50,9 @@ class DocSuprema(models.Model):
     descripcion = models.TextField(blank=True, null=True)
     salas = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return '{} - {}'.format(self.causa_id, self.descripcion)
+
 
 class DocApelaciones(models.Model):
     id = models.CharField(max_length=100, primary_key=True)  # id format is "<causa.id>-<folio>"
@@ -59,6 +62,9 @@ class DocApelaciones(models.Model):
     fecha = models.TextField(blank=True, null=True)
     salas = models.TextField(blank=True, null=True)
     foja_inicial = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return '{} - {}'.format(self.causa_id, self.descripcion)
 
 
 class DocCivil(models.Model):
@@ -70,6 +76,9 @@ class DocCivil(models.Model):
     fecha = models.TextField(blank=True, null=True)
     foja = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return '{} - {}'.format(self.causa_id, self.descripcion)
+
 
 class DocLaboral(models.Model):
     # uses auto generated id
@@ -77,6 +86,9 @@ class DocLaboral(models.Model):
     tipo = models.TextField(blank=True, null=True)
     tramite = models.TextField(blank=True, null=True)
     fecha = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return '{} - {}'.format(self.causa_id, self.tramite)
 
 
 class DocPenal(models.Model):
@@ -88,6 +100,9 @@ class DocPenal(models.Model):
     estado = models.TextField(blank=True, null=True)
     cambio_estado = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return '{} - {}'.format(self.causa_id, self.observacion)
+
 
 class DocCobranza(models.Model):
     # uses auto generated id
@@ -96,6 +111,9 @@ class DocCobranza(models.Model):
     tramite = models.TextField(blank=True, null=True)
     desc_tramite = models.TextField(blank=True, null=True)
     fecha = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return '{} - {}: {}'.format(self.causa_id, self.tramite, self.desc_tramite)
 
 
 class DocFamilia(models.Model):
@@ -106,3 +124,6 @@ class DocFamilia(models.Model):
     desc_tramite = models.TextField(blank=True, null=True)
     referencia = models.TextField(blank=True, null=True)
     fecha = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return '{} - {}: {}'.format(self.causa_id, self.tramite, self.desc_tramite)

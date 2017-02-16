@@ -1,6 +1,6 @@
 import os
 
-from celery.task import task
+from celery import shared_task
 from django.conf import settings
 from datetime import datetime
 from selenium.webdriver import PhantomJS, Chrome
@@ -15,7 +15,7 @@ from celery.utils.log import get_task_logger
 logger = get_task_logger(__name__)
 
 
-@task(name="run_scraper")
+@shared_task
 def run_scraper():
     users = UserProfile.objects.filter(user__is_active=True)
 

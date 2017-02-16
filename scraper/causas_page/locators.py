@@ -2,13 +2,13 @@ from selenium.webdriver.common.by import By
 
 
 class CausasPageLocators(object):
-    FORM_SUPREMA = "//form[@action='./causas/causa_suprema2.php']"
+    FORM_SUPREMA     = "//form[@action='./causas/causa_suprema2.php']"
     FORM_APELACIONES = "//form[@action='./causas/causa_corte2.php']"
-    FORM_CIVIL = "//form[@action='./causas/causaCivil2.php']"
-    FORM_LABORAL = "//form[@action='./causas/causa_laboral_reformado2.php']"
-    FORM_PENAL = "//form[@action='./causas/causa_penal2.php']"
-    FORM_COBRANZA = "//form[@action='./causas/causa_cobranza2.php']"
-    FORM_FAMILIA = "//form[@action='./causas/causaFamilia2.php']"
+    FORM_CIVIL       = "//form[@action='./causas/causaCivil2.php']"
+    FORM_LABORAL     = "//form[@action='./causas/causa_laboral_reformado2.php']"
+    FORM_PENAL       = "//form[@action='./causas/causa_penal2.php']"
+    FORM_COBRANZA    = "//form[@action='./causas/causa_cobranza2.php']"
+    FORM_FAMILIA     = "//form[@action='./causas/causaFamilia2.php']"
 
     # every tab has 10 rows of forms, all of them with the same action
     FORMS_XPATHS = [

@@ -69,13 +69,13 @@ class CausasPage(BasePage):
         archived_status_list = ['concluida', 'concluída', 'concluidas', 'concluídas', 'archivada', 'archivadas', 'arc',
                                 'arc.', 'arch', 'arch.']
 
-        form_id = tr.find_elements_by_tag_name('td')[1].text.lower().replace('&nbsp;', '').strip()
+        form_id = '{}_{}'.format(tipo_causa, tr.find_elements_by_tag_name('td')[1].text.lower().replace('&nbsp;', '').strip())
         caratulado = tr.find_elements_by_tag_name('td')[idx_cara].text
         estado = tr.find_elements_by_tag_name('td')[idx_status].text.lower()
 
         try:
             causa = Causa.objects.get(id=form_id)
-        except:
+        except Exception as ex:
             causa = Causa(id=form_id, user=self.profile, type=tipo_causa, archived=False, caratulado=caratulado)
             causa.save()
 
@@ -131,5 +131,5 @@ class CausasPage(BasePage):
                     WebDriverWait(driver, settings.WEB_DRIVER_WAIT_TIMEOUT).until(
                         EC.presence_of_element_located(locator['form'])  # takes a tuple as argument so no need for *
                     )
-                except:
+                except Exception as ex:
                     next_link = None

@@ -78,9 +78,9 @@ class Popup(BasePage):
         elif tipo_causa == Causa.TYPE_CHOICES_LABORAL:
             doc, created = DocLaboral.objects.get_or_create(
                 causa=self.causa,
-                tipo=simplify_string(cols[2].text),
-                tramite=simplify_string(cols[3].text),
-                fecha=simplify_string(cols[4].text),
+                tipo=simplify_string(cols[1].text),
+                tramite=simplify_string(cols[2].text),
+                fecha=simplify_string(cols[3].text),
             )
 
         elif tipo_causa == Causa.TYPE_CHOICES_PENAL:
@@ -134,7 +134,7 @@ class Popup(BasePage):
                 doc, created = self.get_or_create_doc(cols)
                 if created:
                     if not self.profile.initial_migration_done:
-                        send_new_doc_notification()
+                        send_new_doc_notification.delay(doc.id, doc.causa.type)
                 print(data)
             heading = False
 
