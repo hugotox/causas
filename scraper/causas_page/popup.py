@@ -3,8 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 
 from main.models import DocSuprema, Causa, DocApelaciones, DocCivil, DocLaboral, DocPenal, DocCobranza, DocFamilia
-from main.tasks import send_new_doc_notification
-from main.utils import simplify_string
+from main.utils import send_new_doc_notification, simplify_string
 from scraper.core.base_page import BasePage
 
 
@@ -133,8 +132,9 @@ class Popup(BasePage):
                 data = ' - '.join([col.text for col in cols])
                 doc, created = self.get_or_create_doc(cols)
                 if created:
-                    if not self.profile.initial_migration_done:
-                        send_new_doc_notification.delay(doc.id, doc.causa.type)
+                    if self.profile.initial_migration_done:
+                        print('Sending notification: {}'.format(doc))
+                        send_new_doc_notification(doc)
                 print(data)
             heading = False
 
