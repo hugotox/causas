@@ -3,12 +3,10 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from main.utils import external_login
-from scraper.tasks import run_scraper
+from main.utils import external_login, create_user
 
 
 def home(request):
-    # run_scraper.delay()
     return HttpResponse('ok')
 
 
@@ -22,7 +20,8 @@ def login(request):
         # TODO: use requests to validate the clave
 
         if external_login(rut, clave):
-            # create_user(username=rut, password=clave, player_id=player_id)  # saves username, password, clave and player_id
+            user_profile = create_user(username=rut, password=clave,
+                                       player_id=player_id)  # saves username, password, clave and player_id
 
             return JsonResponse({
                 'success': True,

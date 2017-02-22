@@ -1,8 +1,8 @@
 from django.conf import settings
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
-from utils.crypto import decrypt
+from main.crypto import decrypt
 from scraper.core.base_page import BasePage
 from scraper.main_page.locators import MainPageLocators
 

@@ -2,7 +2,9 @@ import os
 from django.conf import settings
 from django.contrib.auth.models import User
 from selenium.webdriver import PhantomJS, Chrome
-from main.models import Causa
+
+from main.crypto import encrypt
+from main.models import Causa, UserProfile
 from onesignalsdk import one_signal_sdk
 from scraper.main_page.page import MainPage
 
@@ -60,7 +62,8 @@ def external_login(rut, clave):
     return page.try_login(rut, clave)
 
 
-def create_user(username, password, player_id):
+def create_user(username, password, player_id, first_name=None, last_name=None):
 
     user = User.objects.create(username=username)
-    # up =
+    up = UserProfile.objects.create(user=user, clave=encrypt(password), player_id=player_id)
+    return up
