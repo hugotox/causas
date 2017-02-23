@@ -95,7 +95,7 @@ class CausasPage(BasePage):
                 # form submit opens the cause details in a popup window
                 form.submit()
                 # wait to make sure there are two windows open
-                WebDriverWait(driver, 10).until(lambda d: len(d.window_handles) == 2)
+                WebDriverWait(driver, settings.WEB_DRIVER_WAIT_TIMEOUT).until(lambda d: len(d.window_handles) == 2)
 
                 # switch windows
                 driver.switch_to.window('popup')
