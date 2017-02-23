@@ -29,8 +29,7 @@ class MainPage(BasePage):
                 EC.presence_of_element_located(MainPageLocators.RUT_INPUT)  # takes a tuple as argument so no need for *
             )
         except Exception as ex:
-            self.open()
-            self.login()
+            return False
 
         driver.find_element(*MainPageLocators.RUT_INPUT).send_keys(rut)
         driver.find_element(*MainPageLocators.CLAVE_INPUT).send_keys(clave)

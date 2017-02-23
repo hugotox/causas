@@ -59,7 +59,7 @@ class CausasPage(BasePage):
             idx_status = 6
         elif tipo_causa == Causa.TYPE_CHOICES_COBRANZA:
             idx_cara = 3
-            idx_status = 0  # TODO ???
+            idx_status = 0  # TODO identify when a cobranza is archived
         elif tipo_causa == Causa.TYPE_CHOICES_FAMILIA:
             idx_cara = 3
             idx_status = 5

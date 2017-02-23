@@ -7,7 +7,7 @@ class UserProfile(models.Model):
     phone = models.CharField(max_length=20, null=True, blank=True)
     initial_migration_done = models.BooleanField(default=False)
     clave = models.TextField()
-    player_id = models.TextField(blank=True, null=True)  # TODO: populate player_id when user installs the app
+    player_id = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return '{} {} ({})'.format(self.user.first_name, self.user.last_name, self.user.username)
