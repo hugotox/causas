@@ -17,34 +17,34 @@ class CausasPageLocators(object):
             'next_link': (By.ID, 'suprema_siguiente'),
             'tab': (By.ID, 'ui-id-1'),
         },
-        # {
-        #     'form': (By.XPATH, FORM_APELACIONES),
-        #     'next_link': (By.ID, 'corte_siguiente'),
-        #     'tab': (By.ID, 'ui-id-2'),
-        # },
-        # {
-        #     'form': (By.XPATH, FORM_CIVIL),
-        #     'next_link': (By.ID, 'civil_siguiente'),
-        #     'tab': (By.ID, 'ui-id-3'),
-        # },
-        # {
-        #     'form': (By.XPATH, FORM_LABORAL),
-        #     'next_link': (By.ID, 'laboral_siguiente'),
-        #     'tab': (By.ID, 'ui-id-4'),
-        # },
-        # {
-        #     'form': (By.XPATH, FORM_PENAL),
-        #     'next_link': (By.ID, 'penal_siguiente'),
-        #     'tab': (By.ID, 'ui-id-5'),
-        # },
-        # {
-        #     'form': (By.XPATH, FORM_COBRANZA),
-        #     'next_link': (By.ID, 'cobranza_siguiente'),
-        #     'tab': (By.ID, 'ui-id-6'),
-        # },
-        # {
-        #     'form': (By.XPATH, FORM_FAMILIA),
-        #     'next_link': (By.ID, 'familia_siguiente'),
-        #     'tab': (By.ID, 'ui-id-7'),
-        # }
+        {
+            'form': (By.XPATH, FORM_APELACIONES),
+            'next_link': (By.ID, 'corte_siguiente'),
+            'tab': (By.ID, 'ui-id-2'),
+        },
+        {
+            'form': (By.XPATH, FORM_CIVIL),
+            'next_link': (By.ID, 'civil_siguiente'),
+            'tab': (By.ID, 'ui-id-3'),
+        },
+        {
+            'form': (By.XPATH, FORM_LABORAL),
+            'next_link': (By.ID, 'laboral_siguiente'),
+            'tab': (By.ID, 'ui-id-4'),
+        },
+        {
+            'form': (By.XPATH, FORM_PENAL),
+            'next_link': (By.ID, 'penal_siguiente'),
+            'tab': (By.ID, 'ui-id-5'),
+        },
+        {
+            'form': (By.XPATH, FORM_COBRANZA),
+            'next_link': (By.ID, 'cobranza_siguiente'),
+            'tab': (By.ID, 'ui-id-6'),
+        },
+        {
+            'form': (By.XPATH, FORM_FAMILIA),
+            'next_link': (By.ID, 'familia_siguiente'),
+            'tab': (By.ID, 'ui-id-7'),
+        }
     ]
