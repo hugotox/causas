@@ -110,6 +110,7 @@ class CausasPage(BasePage):
 
         # tab content is loaded using ajax so we need to wait for it...
         for locator in CausasPageLocators.FORMS_XPATHS:
+            # TODO: server crashed here
             WebDriverWait(driver, settings.WEB_DRIVER_WAIT_TIMEOUT).until(
                 EC.presence_of_element_located(locator['form'])  # takes a tuple as argument so no need for *
             )
