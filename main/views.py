@@ -14,7 +14,7 @@ def home(request):
 @csrf_exempt
 def login(request):
     if request.method == "POST":
-        data = json.loads(request.body)
+        data = json.loads(request.body.decode('utf-8'))
         rut = data['rut']
         clave = data['clave']
         player_id = data['playerId']

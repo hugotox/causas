@@ -25,25 +25,25 @@ def send_new_doc_notification(doc):
     if causa_type == Causa.TYPE_CHOICES_SUPREMA:
         causa_type = 'Corte Suprema'
 
-    if causa_type == Causa.TYPE_CHOICES_FAMILIA:
+    elif causa_type == Causa.TYPE_CHOICES_FAMILIA:
         causa_type = 'Familia'
 
-    if causa_type == Causa.TYPE_CHOICES_COBRANZA:
+    elif causa_type == Causa.TYPE_CHOICES_COBRANZA:
         causa_type = 'Cobranza'
 
-    if causa_type == Causa.TYPE_CHOICES_PENAL:
+    elif causa_type == Causa.TYPE_CHOICES_PENAL:
         causa_type = 'Penal'
 
-    if causa_type == Causa.TYPE_CHOICES_APELACIONES:
+    elif causa_type == Causa.TYPE_CHOICES_APELACIONES:
         causa_type = 'Corte de Apelaciones'
 
-    if causa_type == Causa.TYPE_CHOICES_CIVIL:
+    elif causa_type == Causa.TYPE_CHOICES_CIVIL:
         causa_type = 'Civil'
 
-    if causa_type == Causa.TYPE_CHOICES_LABORAL:
+    elif causa_type == Causa.TYPE_CHOICES_LABORAL:
         causa_type = 'Laboral'
 
-    if doc and causa_type:
+    elif doc and causa_type:
         one_signal = one_signal_sdk.OneSignalSdk(settings.ONE_SIGNAL_REST_TOKEN, settings.ONE_SIGNAL_APP_ID)
         one_signal.create_notification(heading='{}: {}'.format(causa_type, doc.causa),
                                        contents='{}'.format(doc),
