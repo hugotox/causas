@@ -90,7 +90,7 @@ class CausasPage(BasePage):
             causa = self.get_or_create_form_to_cause(form, tipo_causa)
 
             if causa and not causa.archived:
-                print('Submitting form {}...'.format(tipo_causa))
+                print('{} - {}'.format(causa.get_type_display(), causa))
 
                 # form submit opens the cause details in a popup window
                 form.submit()
