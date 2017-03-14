@@ -1,0 +1,180 @@
+<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="../js/jqueryUi/jquery-ui.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="../js/jqueryUi/jquery-ui.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="../js/jqueryUi/jquery-ui.theme.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="../css/popUpCss.css" media="screen"/>
+
+<script>
+  function verDocCorte (crr_doc, cod_corte) {
+    $("#rowdetalle_doccorte").val(crr_doc);
+    $("#cod_corte_doccorte").val(cod_corte);
+    document.getElementById("formDocCorte").submit();
+  }
+
+  $(document).ready(function () {
+
+
+    try {
+      $("#tabPrincipal").tabs();
+    }
+    catch (err) {
+
+    }
+    try {
+      $("#tabs").tabs();
+    }
+    catch (err) {
+
+    }
+
+
+  });
+</script>
+
+<form action='BCA_doc_corte.php' method='POST' target='_blank' id="formDocCorte">
+  <input type='hidden' name='rowdetalle_doccorte' id="rowdetalle_doccorte">
+  <input type='hidden' name='cod_corte_doccorte' id="cod_corte_doccorte">
+</form>
+
+<div id="tabPrincipal">
+  <ul>
+    <li><a href="#tabs-1">Recurso Corte de Apelaciones</a></li>
+  </ul>
+  <div id="tabs-1">
+    <p>
+    <table width='100%'>
+      <div align='center'>
+        <label><strong>C.A. DE TEMUCO </strong></label>
+      </div>
+
+      <tr class="descPopUp" align='center'>
+        <td width='30'><strong>Libro</strong></td>
+        <td width='99'><strong>N° Ingreso</strong></td>
+        <td width='60'><strong>Fecha Ingreso</strong></td>
+        <td width='84'><strong>Tipo Recurso</strong></td>
+        <td><strong>Caratulado</strong></td>
+        <td><strong>Estado Procesal</strong></td>
+        <td><strong>Ubicación</strong></td>
+      </tr>
+      <tr class="descPopUp">
+        <td align='left'>&nbsp;Protección</TD>
+        <td align='left'>&nbsp;968/2017</TD>
+        <td align='left'>&nbsp;09/03/2017</TD>
+        <td align='left'>&nbsp;Protección-Isapre Adecuación</TD>
+        <td align='left'>PIEL MAGNET PATRICIO JAVIER / ISAPRE COLMENA GOLDEN CROSS S.A.</TD>
+        <td align='left'>&nbsp;Dese Cuenta</TD>
+        <td align='left'>&nbsp;Corte apelaciones</TD>
+      </tr>
+
+    </table>
+
+
+    <div id="tabs">
+      <ul>
+        <li><a href="#tabs-1">Movimientos</a></li>
+        <li><a href="#tabs-2">Litigantes</a></li>
+      </ul>
+      <div id="tabs-1">
+        <p>
+
+        <table class='tablaPop' width='100%'>
+
+
+          <tr id='titTablaApeGrid'>
+            <td align='left'><strong>Doc.</strong></td>
+            <td align='left'><strong>Tipo Tramite</strong></td>
+            <td align='left'><strong>Folio</strong></td>
+            <td align='left'><strong>Descripcion</strong></td>
+            <td align='left'><strong>Fecha</strong></td>
+            <td align='left'><strong>Sala</strong></td>
+            <td align='left'><strong>Foja Inicial</strong></td>
+
+          </tr>
+          <tr class='filadostabla' align='left'>
+
+            <td align='left'><a onClick="verDocCorte(15797034,50)"><input type="image" src="../images/word.png"></a>
+            </td>
+            <td align='left'>
+              Resolución
+            </td>
+            <td align='left'>25508</td>
+            <td align='left'>Dese Cuenta</td>
+            <td align='left'>10/03/2017</td>
+            <td align='left'>Presidencia</td>
+            <td align='left'>0</td>
+          </tr>
+          <tr class='filadostabla' align='left'>
+
+            <td align='left'><a onClick="verDocCorte(15794834,50)"><input type="image" src="../images/pdf.png"></a></td>
+            <td align='left'>
+              Actuación
+            </td>
+            <td align='left'>25354</td>
+            <td align='left'>Cert. calidad abogado</td>
+            <td align='left'>09/03/2017</td>
+            <td align='left'>( ' )</td>
+            <td align='left'>0</td>
+          </tr>
+          <tr class='filadostabla' align='left'>
+
+
+            <td align='left'></td>
+            <td align='left'>Escrito</td>
+            <td align='left'>10415</td>
+            <td align='left'>Tramitación - *Ingreso Recurso</td>
+            <td align='left'>09/03/2017</td>
+            <td align='left'></td>
+            <td align='left'>0</td>
+          </tr>
+          <tr class='filadostabla' align='left'>
+
+            <td align='left'><a onClick="verDocCorte(15794833,50)"><input type="image" src="../images/pdf.png"></a></td>
+            <td align='left'>
+              Resolución
+            </td>
+            <td align='left'>25353</td>
+            <td align='left'>Inicio tramitación</td>
+            <td align='left'>09/03/2017</td>
+            <td align='left'>( ' )</td>
+            <td align='left'>0</td>
+          </tr>
+        </table>
+
+        </p>
+      </div>
+
+
+      <div id="tabs-2">
+        <p>
+
+
+        <table class='tablaPop' width='100%'>
+
+
+          <tr id='titTablaApeLit' align='center'>
+            <td width='30' align="left"><strong>Tipo</strong></td>
+            <td width='99' align="left"><strong>Nombre</strong></td>
+          </tr>
+
+          <tr class='filadostabla' align='center'>
+            <td width='5%' align="left">Recurrente</td>
+            <td width='20%' align="left">PATRICIO JAVIER PIEL MAGNET</td>
+          </tr>
+          <tr class='filadostabla' align='center'>
+            <td width='5%' align="left">Abogado Recurrente</td>
+            <td width='20%' align="left">LEONARDO FRANCISCO TAPIA GRANDÓN</td>
+          </tr>
+          <tr class='filadostabla' align='center'>
+            <td width='5%' align="left">Recurrido</td>
+            <td width='20%' align="left">ISAPRE COLMENA GOLDEN CROSS S.A.</td>
+          </tr>
+        </table>
+
+        </p>
+      </div>
+    </div>
+    </p>
+  </div>
+
+</div>

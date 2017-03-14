@@ -1,0 +1,305 @@
+
+
+	<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="../js/jqueryUi/jquery-ui.js"></script>
+<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="../js/jqueryUi/jquery-ui.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="../js/jqueryUi/jquery-ui.theme.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="../css/popUpCss.css?v=1.0.1" media="screen" />
+
+<script>
+function PopWindowAnexo(){
+	var formo = document.getElementById("formPopupFam");
+	win = window.open('../anexos/anexoFamilia.php','formPopupFam','width=500,height=250,menubar=no,scrollbars=yes,toolbar=no,directories=no,resizable=no,left=450, top=300',false);
+	formo.submit();
+	return;
+}
+
+function PopWindowAnexoMov(id){
+	var formoMov = document.getElementById(id);
+	win = window.open('../anexos/anexoFamiliaSolicitud.php',id,'width=500,height=250,menubar=no,scrollbars=yes,toolbar=no,directories=no,resizable=no,left=450, top=300',false);
+	formoMov.submit();
+	return;
+}
+
+function vvbbFF(tipoDD,tipoAA,iiDD,soDD)
+{
+
+	$("#tipoDD").val(tipoDD);
+	$("#tipoAA").val(tipoAA);
+	$("#iiDD").val(iiDD);
+	$("#soDD").val(soDD);
+
+	document.getElementById("formBB_FF").submit();
+}
+
+$( document ).ready(function() {
+
+
+	try {
+		$( "#tabPrincipal" ).tabs();
+	}
+	catch(err) {
+
+	}
+	try {
+		$( "#tabs" ).tabs();
+	}
+	catch(err) {
+
+	}
+
+});
+</script>
+
+
+<form name="formBB_FF" action='bb_ff.php' method='POST' target='_blank' id="formBB_FF">
+	<input type='hidden' name='tipoDD' id="tipoDD">
+	<input type='hidden' name='tipoAA' id="tipoAA">
+	<input type='hidden' name='iiDD' id="iiDD">
+	<input type='hidden' name='soDD' id="soDD">
+	<input type='hidden' name='codTribunalFam' value="11">
+</form>
+
+<div id="tabPrincipal">
+	<ul>
+	<li><a href="#tabs-1">Causa Familia</a></li>
+	</ul>
+
+	<div id="tabs-1">
+		<p>
+		<table class="descPopUp" width="100%">
+
+			<tr align="left">
+				<td><strong>RIT:</strong> E-733-2017</td>
+				<td>CASTILLO / NEUMANN                                                                                  </td>
+				<td><strong>Fec. Ing:</strong>07/03/2017</td>
+			</tr>
+			<tr align="left">
+				<td><strong>RUC:</strong> 14- 2-0301795-3</td>
+				<td><strong>Proc.:</strong> Exhorto</td>
+				<td><strong>Forma Inicio:</strong> Exhorto                       </td>
+			</tr>
+			<tr align="left">
+				<td><strong>Est. Adm.:</strong>  Sin archivar                  </td>
+				<td><strong>Etapa.:</strong>  Exhorto                                 </td>
+				<td><strong>Estado Proc.:</strong> Tramitación                   </td>
+			</tr>
+
+			<tr align="left">
+				<td><strong>Texto Demanda:</strong>
+											<form name="word" action="docuTextDemandaFam.php" method="post" target="6066835">
+							<input type="hidden" name="crrIdDocumento" 	value="6066835">
+							<input type="hidden" name="codTipoArchivo" 	value="3">
+							<input type="hidden" name="cod_tribunal" 	value="11">
+							<input type="image" src="../images/pdf.png" onclick="popup(6066835);" value="">
+						</form>
+
+				</td>
+
+									<td>
+						<b>Anexos de la causa:</b></br>
+						<img src="../images/missing.png" height="24px" width="24px">
+					</td>
+									<td><strong>Tribunal</strong>: 2 Juzgado de Familia Santiago                     </td>
+			</tr>
+		</table>
+
+		<div id="tabs">
+			<ul>
+			<li><a href="#tabs-1">Movimientos</a></li>
+			<li><a href="#tabs-2">Litigantes</a></li>
+			<li><a href="#tabs-3">Materia</a></li>
+			<li><a href="#tabs-4">Plazos</a></li>
+			<li><a href="#tabs-5">Diligencias</a></li>
+			</ul>
+
+			<div id="tabs-1">
+				<p>
+
+				<table class="tablaPop" width="100%">
+					<tr id="titTablaFam">
+						<td align="left">
+							<strong>Folio</strong>
+						</td>
+						<td align="left">
+							<strong>Doc.</strong>
+						</td>
+						<td align="left">
+							<strong>Anexo</strong>
+						</td>
+						<td align="left">
+							<strong>Etapa</strong>
+						</td>
+						<td align="left">
+							<strong>Trámite</strong>
+						</td>
+						<td align="left">
+							<strong>Desc. Trámite</strong>
+						</td>
+						<td align="left">
+							<strong>Referencia</strong>
+						</td>
+						<td align="left">
+							<strong>Fecha Tram.</strong>
+						</td>
+					</tr>
+										<tr class="">
+						<td align="left">
+				2						</td>
+						<td align="left">
+																<a onClick="vvbbFF('Resolución',3,59987979,0);"><img src="../images/pdf.png" border="0" width="24" height="24"/></a>
+
+
+						</td>
+
+				<!-- NUEVO CAMPO -->
+						<td align="left">
+
+						</td>
+				<!-- NUEVO CAMPO -->
+
+						<td align="left">
+					Exhorto                                 						</td>
+						<td align="left">
+					Resolución						</td>
+						<td align="left">
+							Practiquese						</td>
+						<td align="left">
+							notificación personal o Art. 2						</td>
+						<td align="left">
+							07/03/2017						</td>
+					</tr>
+										<tr class="">
+						<td align="left">
+				1						</td>
+						<td align="left">
+																<a onClick="vvbbFF('Escrito',3,22801684,120);"><img src="../images/pdf.png" border="0" width="24" height="24"/></a>
+
+
+						</td>
+
+				<!-- NUEVO CAMPO -->
+						<td align="left">
+
+						</td>
+				<!-- NUEVO CAMPO -->
+
+						<td align="left">
+					Exhorto                                 						</td>
+						<td align="left">
+					Escrito						</td>
+						<td align="left">
+							Ingreso Exhorto						</td>
+						<td align="left">
+							Sin referencia.						</td>
+						<td align="left">
+							07/03/2017						</td>
+					</tr>
+									</table>
+				</p>
+			</div>
+
+			<div id="tabs-2">
+				<p>
+				<table class="tablaPop" width="100%">
+					<tr id="titTablaFamLit">
+						<td align="left" width="25%">
+							<strong>Sujeto</strong>
+						</td>
+						<td align="left" title="Abogado Defensor&iacute;a" width="25%">
+							<strong>Rut</strong>
+						</td>
+						<td align="left" width="25%">
+							<strong>Persona</strong>
+						</td>
+						<td align="left" width="25%">
+							<strong>Nombre o Razón Social</strong>
+						</td>
+					</tr>
+										<tr align="left" >
+						<td align="left">
+							DTE.  						</td>
+						<td align="left">
+							13729848-1						</td>
+						<td align="left">
+							NATURAL                       						</td>
+						<td align="left">
+							CARLOS EDUARDO&nbsp;NEUMANN&nbsp;GARCES						</td>
+					</tr>
+										<tr align="left" >
+						<td align="left">
+							DDO.  						</td>
+						<td align="left">
+							15208349-1						</td>
+						<td align="left">
+							NATURAL                       						</td>
+						<td align="left">
+							MARIA PIA&nbsp;CASTILLO&nbsp;BURGOS						</td>
+					</tr>
+										<tr align="left" >
+						<td align="left">
+							AB.DTE						</td>
+						<td align="left">
+							15580613-3						</td>
+						<td align="left">
+							NATURAL                       						</td>
+						<td align="left">
+							LEONARDO FRANCISCO&nbsp;TAPIA&nbsp;GRANDON						</td>
+					</tr>
+										<tr align="left" >
+						<td align="left">
+							TERC. 						</td>
+						<td align="left">
+							0-0						</td>
+						<td align="left">
+							JURIDICA                      						</td>
+						<td align="left">
+							AFP CUPRUM&nbsp;&nbsp;						</td>
+					</tr>
+									</table>
+				</p>
+			</div>
+
+			<div id="tabs-3">
+
+					<table class="tablaPop" width="100%">
+						<tr id="titTablaFamMat">
+							<td align="left"><strong>C&oacute;digo</strong>
+							<td align="left"><strong>Glosa de Materia</strong>
+						</tr>
+
+									</table>
+			</div>
+
+			<div id="tabs-4">
+
+					<table class="tablaPop" width="100%">
+						<tr id="titTablaFamPla">
+							<td align="left"><strong>Tipo Plazo</strong>
+							<td align="left"><strong>&Aacute;mbito Afectado</strong>
+							<td align="left"><strong>Fecha Inicio</strong>
+							<td align="left"><strong>Fecha T&eacute;rmino</strong>
+						</tr>
+
+									</table>
+			</div>
+
+			<div id="tabs-5">
+
+				<table class="tablaPop" width="100%">
+					<tr id="titTablaFamDil">
+						<td align="left"><strong>Doc. Solicitud</strong>
+						<td align="left"><strong>Doc. Respuesta</strong>
+						<td align="left"><strong>Estado Diligencia</strong>
+						<td align="left"><strong>Tipo Diligencia</strong>
+						<td align="left"><strong>Fecha Tr&aacute;mite</strong>
+					</tr>
+
+									</table>
+			</div>
+
+		</div>
+		</p>
+	</div>
+</div>

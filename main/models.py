@@ -42,7 +42,7 @@ class Causa(models.Model):
 
 
 class DocSuprema(models.Model):
-    id = models.CharField(max_length=100, primary_key=True)  # id format is "<causa.id>-<folio>"
+    id = models.CharField(max_length=100, primary_key=True)  # id format is "<causa.id>__<folio>"
     causa = models.ForeignKey(Causa)
     anio = models.TextField(blank=True, null=True)
     fecha = models.TextField(blank=True, null=True)
@@ -51,12 +51,15 @@ class DocSuprema(models.Model):
     descripcion = models.TextField(blank=True, null=True)
     salas = models.TextField(blank=True, null=True)
 
+    class Meta:
+        verbose_name_plural = 'Docs. Suprema'
+
     def __str__(self):
         return '{} - {}'.format(self.causa_id, self.descripcion)
 
 
 class DocApelaciones(models.Model):
-    id = models.CharField(max_length=100, primary_key=True)  # id format is "<causa.id>-<folio>"
+    id = models.CharField(max_length=100, primary_key=True)  # id format is "<causa.id>__<folio>"
     causa = models.ForeignKey(Causa)
     tipo = models.TextField(blank=True, null=True)
     descripcion = models.TextField(blank=True, null=True)
@@ -64,18 +67,24 @@ class DocApelaciones(models.Model):
     salas = models.TextField(blank=True, null=True)
     foja_inicial = models.TextField(blank=True, null=True)
 
+    class Meta:
+        verbose_name_plural = 'Docs. Apelaciones'
+
     def __str__(self):
         return '{} - {}'.format(self.causa_id, self.descripcion)
 
 
 class DocCivil(models.Model):
-    id = models.CharField(max_length=100, primary_key=True)  # id format is "<causa.id>-<folio>"
+    id = models.CharField(max_length=100, primary_key=True)  # id format is "<causa.id>__<folio>"
     causa = models.ForeignKey(Causa)
     etapa = models.TextField(blank=True, null=True)
     tramite = models.TextField(blank=True, null=True)
     descripcion = models.TextField(blank=True, null=True)
     fecha = models.TextField(blank=True, null=True)
     foja = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'Docs. Civil'
 
     def __str__(self):
         return '{} - {}'.format(self.causa_id, self.descripcion)
@@ -87,6 +96,9 @@ class DocLaboral(models.Model):
     tipo = models.TextField(blank=True, null=True)
     tramite = models.TextField(blank=True, null=True)
     fecha = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'Docs. Laboral'
 
     def __str__(self):
         return '{} - {}'.format(self.causa_id, self.tramite)
@@ -101,6 +113,9 @@ class DocPenal(models.Model):
     estado = models.TextField(blank=True, null=True)
     cambio_estado = models.TextField(blank=True, null=True)
 
+    class Meta:
+        verbose_name_plural = 'Docs. Penal'
+
     def __str__(self):
         return '{} - {}'.format(self.causa_id, self.observacion)
 
@@ -112,6 +127,9 @@ class DocCobranza(models.Model):
     tramite = models.TextField(blank=True, null=True)
     desc_tramite = models.TextField(blank=True, null=True)
     fecha = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'Docs. Cobranza'
 
     def __str__(self):
         return '{} - {}: {}'.format(self.causa_id, self.tramite, self.desc_tramite)
@@ -125,6 +143,9 @@ class DocFamilia(models.Model):
     desc_tramite = models.TextField(blank=True, null=True)
     referencia = models.TextField(blank=True, null=True)
     fecha = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'Docs. Familia'
 
     def __str__(self):
         return '{} - {}: {}'.format(self.causa_id, self.tramite, self.desc_tramite)

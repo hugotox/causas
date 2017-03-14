@@ -6,11 +6,19 @@ from selenium.webdriver import PhantomJS, Chrome
 from main.crypto import encrypt
 from main.models import Causa, UserProfile
 from onesignalsdk import one_signal_sdk
-from scraper.main_page.page import MainPage
+# from scraper.main_page.page import MainPage
 
 
 def simplify_string(string):
     return string.replace('&nbsp;', '').strip()
+
+
+def format_rut(rut):
+    rut = rut.strip().replace('.', '').replace('-', '')
+    rut = rut[::-1]  # reverse string
+    rut = '{}-{}.{}.{}'.format(rut[0], rut[1:4], rut[4:7], rut[7:])
+    rut = rut[::-1]
+    return rut
 
 
 def send_new_doc_notification(doc):
@@ -51,19 +59,19 @@ def send_new_doc_notification(doc):
 
 
 def external_login(rut, clave):
-    if settings.DRIVER == 'chrome':
-        driver = Chrome(os.path.join(os.getcwd(), 'drivers', settings.PLATFORM, 'chromedriver'))
-    else:
-        # default to phantomjs
-        driver = PhantomJS(os.path.join(os.getcwd(), 'drivers', settings.PLATFORM, 'phantomjs'))
-
-    page = MainPage(driver)
-    page.open()
-    return page.try_login(rut, clave)
+    # if settings.DRIVER == 'chrome':
+    #     driver = Chrome(os.path.join(os.getcwd(), 'drivers', settings.PLATFORM, 'chromedriver'))
+    # else:
+    #     # default to phantomjs
+    #     driver = PhantomJS(os.path.join(os.getcwd(), 'drivers', settings.PLATFORM, 'phantomjs'))
+    #
+    # page = MainPage(driver)
+    # page.open()
+    # return page.try_login(rut, clave)
+    pass
 
 
 def create_user(username, password, player_id, first_name=None, last_name=None):
-
     user = User.objects.create(username=username)
     up = UserProfile.objects.create(user=user, clave=encrypt(password), player_id=player_id)
     return up

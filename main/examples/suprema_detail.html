@@ -1,0 +1,524 @@
+<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="../js/jqueryUi/jquery-ui.js"></script>
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="../js/jqueryUi/jquery-ui.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="../js/jqueryUi/jquery-ui.theme.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="../css/popUpCss.css" media="screen"/>
+
+<!-- NUEVO -->
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="../css/bootstrap-dialog.css" media="screen"/>
+<!--<link rel="stylesheet" href="../css/jumbotron-narrow.css">-->
+
+
+<!--<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>-->
+<script type="text/javascript" src="../js/bootstrap.js"></script>
+<script type="text/javascript" src="../js/bootstrap-dialog.js"></script>
+<!--<script type="text/javascript" src="../js/run_prettify.min.js"></script>-->
+<!---------->
+<script>
+  function PopWindowAnexo () {
+    var formo = document.getElementById("formPopupSup");
+    win = window.open('../anexos/anexoSuprema.php', 'formPopupSup', 'width=500,height=250,menubar=no,scrollbars=yes,toolbar=no,directories=no,resizable=no,left=450, top=300', false);
+    formo.submit();
+    return;
+  }
+
+  $(document).ready(function () {
+
+
+    try {
+      $("#tabPrincipal").tabs();
+    }
+    catch (err) {
+
+    }
+    try {
+      $("#tabs").tabs();
+    }
+    catch (err) {
+
+    }
+
+    $("#btn_texto_modal").click(function () {
+      $("#texto_modal").modal('show');
+    });
+
+    $("#btn_tomo_modal").click(function () {
+      $("#tomo_modal").modal('show');
+    });
+
+    $("#btn_docs_modal").click(function () {
+      $("#docs_modal").modal('show');
+    });
+    /*$("#btn_anexo_modal").click(function(){
+     $("#anexo_modal").modal('show');
+     });*/
+
+    $(".btn_agregado_modal").click(function () {
+      var id = $(this).attr('id');
+      $(".modal-agregado").css("display", "none");
+      $("#agregado" + id).css("display", "inline");
+      $("#agregado_modal").modal('show');
+    });
+
+    $(".btn_folio_modal").click(function () {
+      var id = $(this).attr('id');
+      $(".modal-folio").css("display", "none");
+      $("#folio" + id).css("display", "inline");
+      $("#folio_modal").modal('show');
+    });
+
+    $(".btn_acuerdo_modal").click(function () {
+      var id = $(this).attr('id');
+      $(".modal-acuerdo").css("display", "none");
+      $("#acuerdo" + id).css("display", "inline");
+      $("#acuerdo_modal").modal('show');
+    });
+
+    $(".docuSupre").click(function () {
+      var datos = $(this).attr("id");
+      var res = [];
+      res = datos.split('*');
+      $("#iddoc").val(res[ 0 ]);
+      $("#tipodoc").val(res[ 1 ]);
+      //$("#formoSupre").submit();
+      var formo = document.getElementById("formoSupre");
+      win = window.open('doc_suprema2.php', 'formPopupSup', 'width=500,height=250,menubar=no,scrollbars=yes,toolbar=no,directories=no,resizable=no,left=450, top=300', false);
+      formo.submit();
+    });
+
+  });
+</script>
+
+
+<div id="tabPrincipal">
+  <ul>
+    <li><a href="#tabs-1">Recurso Corte Suprema</a></li>
+  </ul>
+  <div id="tabs-1">
+    <p>
+    <table class='descPopUp' width='95%'>
+
+      <div align='center'>
+        <label><strong>Corte Suprema</strong></label>
+      </div>
+      <br>
+      <tr align='left'>
+        <td><strong>Libro</strong></td>
+        <td><strong>Fecha</strong></td>
+        <td><strong>Tipo</strong></td>
+      </tr>
+      <tr align='left'>
+        <td nowrap="nowrap">Civil - 6797 - 2017</td>
+        <td nowrap="nowrap">2017/02/23</td>
+        <td nowrap="nowrap">CV03-(Civil) Apelación Protección</td>
+      </tr>
+      <tr>
+        <td><strong>Estado Procesal</strong></td>
+        <td><strong>Ubicaci&oacute;n</strong></td>
+        <td><strong>Caratulado</strong></td>
+      </tr>
+
+      <tr align='left'>
+        <td nowrap="nowrap">Para dar Cuenta</td>
+        <td nowrap="nowrap">Corte suprema</td>
+        <!--<td nowrap="nowrap">CARVAJAL/ISAPRE CRUZ BLANCA S.A.</td>-->
+        <td nowrap="nowrap">CARVAJAL/ISAPRE CRUZ BLANCA S.A.</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="col-sm-1"><strong>Texto</strong><br><img id="btn_texto_modal" src="../images/folder.png"></div>
+        </td>
+        <td>
+          <div class="col-sm-2"><strong>Tomo</strong><br><img id="btn_tomo_modal" src="../images/folder.png"></div>
+        </td>
+        <td>
+          <div class="col-sm-1"><strong>Docs</strong><br><img id="btn_docs_modal" src="../images/folder.png"></div>
+        </td>
+      </tr>
+    </table>
+
+    <div class="modal fade" id="texto_modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="gridSystemModalLabel">Texto</h4>
+          </div>
+          <div class="modal-body">
+            <form action="doc_suprema2.php" method="post" target="formPopupSup" id="formoSupre">
+              <input type="hidden" name="iddoc" id="iddoc" value="">
+              <input type="hidden" name="tipodoc" id="tipodoc" value="">
+            </form>
+
+            <table class="table table-bordered table-striped">
+              <thead>
+              <tr>
+                <th>Doc.</th>
+                <th>Fecha</th>
+                <th>Referencia</th>
+                <th>Reservado</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td><img src='../images/pdf.png' id='198811*3' class='docuSupre'></td>
+                <td>23-02-2017</td>
+                <td>ESCRITO RECURSO VISTA C.S.</td>
+                <td>No</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-primary btn-sm" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="tomo_modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="gridSystemModalLabel">Tomo</h4>
+          </div>
+          <div class="modal-body">
+            <table class="table table-bordered table-striped">
+              <thead>
+              <tr>
+                <th>Tomo</th>
+                <th>Foja Inicio</th>
+                <th>Foja Fin</th>
+                <th>Ppal.</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>0001</td>
+                <td>0</td>
+                <td>0</td>
+                <td><img src='../images/checked.png'></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-primary btn-sm" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="docs_modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="gridSystemModalLabel">Documentos</h4>
+          </div>
+          <div class="modal-body">
+            <table class="table table-bordered table-striped">
+              <thead>
+              <tr>
+                <th>Tipo Docto.</th>
+                <th>Cantidad</th>
+                <th>Observaci&oacute;n del Docto.</th>
+              </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-primary btn-sm" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tabs">
+      <ul>
+        <li><a href="#tabs-1">Movimientos</a></li>
+        <li><a href="#tabs-2">Litigantes</a></li>
+        <li><a href="#tabs-3">Agregados</a></li>
+        <li><a href="#tabs-4">Observaci&oacute;n</a></li>
+      </ul>
+
+
+      <div id="tabs-1">
+        <p>
+        <table class='tablaPop' width='95%'>
+
+          <tr id='titTablaSup' align='center'>
+            <td><strong>Folio</strong></td>
+            <td><strong>Doc.</strong></td>
+            <!--<td><strong>&nbsp;Anexo</strong></td>-->
+            <td><strong>Año Folio</strong></td>
+            <td><strong>Fecha Resolucion</strong></td>
+            <td><strong>Tipo Tramite</strong></td>
+            <td><strong>Nomenclatura</strong></td>
+            <td><strong>Des.Trámite</strong></td>
+            <td><strong>Salas</strong></td>
+            <!--<td><strong>Foja Inicial</strong></td>
+                      <td><strong>Foja Final</strong></td>-->
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>
+              <form action='doc_suprema.php' method='POST' target='formPopupSup'>
+                <input type='hidden' name='iddoc' value='2278632'>
+                <input type='hidden' name='tipotramite' value='1'>
+                <input type='hidden' name='flagdoc' value='1'>
+                <input type='hidden' name='tipodoc' value='1'>
+                <input type='image' src='../images/pdf.png' onclick='PopWindowAnexo()'>
+              </form>
+            </td>          <!--<td>-->
+            <!--<form method="post" id="formPopupSup" action="../anexos/anexoSuprema.php" target="formPopupSup" >
+                            <input type="hidden" name="rol_causa" value="6797">
+                            <input type="hidden" name="era_causa" value="2017">
+                            <input type="hidden" name="crr_iddocumentocausa" value="2278632">
+                            <input type="hidden" name="titulo" value="Demanda de Escritos">
+                            <a style="cursor:pointer;" onclick='PopWindowAnexo()'>xxxxxx<img src="../images/folder.png" border="0" /></a>
+                        </form>-->
+            <!--<div class="col-sm-2"><img id="btn_anexo_modal" src="../images/folder.png"></div>
+                    </td>-->
+            <td>2017</td>
+            <td>24/02/2017</td>
+            <td>Resolución</td>
+            <td>Nomenclaturas :
+              1.DÉSE CUENTA
+            </td>
+            <td>DESE CUENTA</td>
+            <td>Cuenta (Secretaria)</td>
+            <!--<td >0</td>
+                      <td >0</td> -->
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>
+              <form action='doc_suprema.php' method='POST' target='formPopupSup'>
+                <input type='hidden' name='iddoc' value='2278281'>
+                <input type='hidden' name='tipotramite' value='2'>
+                <input type='hidden' name='flagdoc' value='0'>
+                <input type='hidden' name='tipodoc' value='3'>
+                <input type='image' src='../images/pdf.png' onclick='PopWindowAnexo()'>
+              </form>
+            </td>          <!--<td>-->
+            <!--<form method="post" id="formPopupSup" action="../anexos/anexoSuprema.php" target="formPopupSup" >
+                            <input type="hidden" name="rol_causa" value="6797">
+                            <input type="hidden" name="era_causa" value="2017">
+                            <input type="hidden" name="crr_iddocumentocausa" value="2278281">
+                            <input type="hidden" name="titulo" value="Demanda de Escritos">
+                            <a style="cursor:pointer;" onclick='PopWindowAnexo()'>xxxxxx<img src="../images/folder.png" border="0" /></a>
+                        </form>-->
+            <!--<div class="col-sm-2"><img id="btn_anexo_modal" src="../images/folder.png"></div>
+                    </td>-->
+            <td>2017</td>
+            <td>23/02/2017</td>
+            <td>Otro Tramite</td>
+            <td>Nomenclaturas :
+              1.CERT. INHABILIDAD ART. 195 C.O.T
+            </td>
+            <td>CERT. INHABILIDAD ART. 195 C.O.T</td>
+            <td>Unidad Ingreso</td>
+            <!--<td >0</td>
+                      <td >0</td> -->          </tr>
+          <tr>
+            <td>3</td>
+            <td>
+              <form action='doc_suprema.php' method='POST' target='formPopupSup'>
+                <input type='hidden' name='iddoc' value='2278280'>
+                <input type='hidden' name='tipotramite' value='2'>
+                <input type='hidden' name='flagdoc' value='0'>
+                <input type='hidden' name='tipodoc' value='3'>
+                <input type='image' src='../images/pdf.png' onclick='PopWindowAnexo()'>
+              </form>
+            </td>          <!--<td>-->
+            <!--<form method="post" id="formPopupSup" action="../anexos/anexoSuprema.php" target="formPopupSup" >
+                            <input type="hidden" name="rol_causa" value="6797">
+                            <input type="hidden" name="era_causa" value="2017">
+                            <input type="hidden" name="crr_iddocumentocausa" value="2278280">
+                            <input type="hidden" name="titulo" value="Demanda de Escritos">
+                            <a style="cursor:pointer;" onclick='PopWindowAnexo()'>xxxxxx<img src="../images/folder.png" border="0" /></a>
+                        </form>-->
+            <!--<div class="col-sm-2"><img id="btn_anexo_modal" src="../images/folder.png"></div>
+                    </td>-->
+            <td>2017</td>
+            <td>23/02/2017</td>
+            <td>Otro Tramite</td>
+            <td>Nomenclaturas :
+              1.CERT. INHABILIDAD ART. 196 C.O.T
+            </td>
+            <td>CERT. INHABILIDAD ART. 196 C.O.T</td>
+            <td>Unidad Ingreso</td>
+            <!--<td >0</td>
+                      <td >0</td> -->          </tr>
+          <tr>
+            <td>2</td>
+            <td>
+              <form action='doc_suprema.php' method='POST' target='formPopupSup'>
+                <input type='hidden' name='iddoc' value='2278279'>
+                <input type='hidden' name='tipotramite' value='2'>
+                <input type='hidden' name='flagdoc' value='0'>
+                <input type='hidden' name='tipodoc' value='3'>
+                <input type='image' src='../images/pdf.png' onclick='PopWindowAnexo()'>
+              </form>
+            </td>          <!--<td>-->
+            <!--<form method="post" id="formPopupSup" action="../anexos/anexoSuprema.php" target="formPopupSup" >
+                            <input type="hidden" name="rol_causa" value="6797">
+                            <input type="hidden" name="era_causa" value="2017">
+                            <input type="hidden" name="crr_iddocumentocausa" value="2278279">
+                            <input type="hidden" name="titulo" value="Demanda de Escritos">
+                            <a style="cursor:pointer;" onclick='PopWindowAnexo()'>xxxxxx<img src="../images/folder.png" border="0" /></a>
+                        </form>-->
+            <!--<div class="col-sm-2"><img id="btn_anexo_modal" src="../images/folder.png"></div>
+                    </td>-->
+            <td>2017</td>
+            <td>23/02/2017</td>
+            <td>Otro Tramite</td>
+            <td>Nomenclaturas :
+              1.CERTIFICACIÓN (EN EL MISMO EXPEDIENTE)
+            </td>
+            <td>CERTIFICADO DE INGRESO</td>
+            <td>Unidad Ingreso</td>
+            <!--<td >0</td>
+                      <td >0</td> -->          </tr>
+        </table>
+
+        <!--anexos-->
+        <!--<div class="modal fade" id="anexo_modal" tabindex="-1" role="dialog">
+                  <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="gridSystemModalLabel">Anexos</h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="contenedorTabla" align="center" width="100%">
+
+                            <div class="divTabla" width="80%">
+
+                                <table class="tablaPop" width="95%">
+                                    <tr height="25px" id="titAnexos">
+                                        <th width="8%">Doc.</th>
+                                        <th width="20%">Fecha</th>
+                                        <th width="40%">Referencia</th>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="../images/pdf.png" width="24px" height="24px" /></td>
+                                        <td>21/11/2016</td>
+                                        <td>Documento de la Demanda.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="../images/word.png" width="24px" height="24px" /></td>
+                                        <td>15/10/2016</td>
+                                        <td>C.</td>
+                                    </tr>
+                                </table>
+
+                            </div>
+
+                        </div>
+                    </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn-primary btn-sm" data-dismiss="modal">Cerrar</button>
+                  </div>
+                   </div>
+                  </div>
+                </div>
+                <!---->
+        </p>
+      </div>
+
+
+      <div id="tabs-2">
+        <p>
+
+        <table class='tablaPop' width='95%'>
+
+          <tr id='titTablaSupLit' align='left'>
+            <td align='left'><strong>Tipo</strong></td>
+            <td align='left'><strong>Rut</strong></td>
+            <td align='left'><strong>Persona</strong></td>
+            <td align='left'><strong>Nombre</strong></td>
+          </tr>
+          <tr align='left'>
+            <td>Recurrente</td>
+            <td>96501450-0</td>
+            <td>Jurídica</td>
+            <td>ISAPRE CRUZ BLANCA S.A.</td>
+          </tr>
+          <tr align='left'>
+            <td>Abogado Recurrido</td>
+            <td>15580613-3</td>
+            <td>Natural</td>
+            <td>LEONARDO FRANCISCO TAPIA GRANDÓN</td>
+          </tr>
+          <tr align='left'>
+            <td>Recurrido</td>
+            <td>11906703-0</td>
+            <td>Natural</td>
+            <td>SERGIO ALFREDO CARVAJAL PULGAR</td>
+          </tr>
+        </table>
+
+        </p>
+      </div>
+
+      <div id="tabs-3">
+        <table class="table table-bordered table-striped" style="font-size:12px;">
+          <thead>
+          <tr>
+            <th></th>
+            <th>Folio</th>
+            <th>A&ntilde;o</th>
+            <th>Tribunal</th>
+            <th>Rit Causa</th>
+            <th>Materia</th>
+          </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal fade" id="agregado_modal" tabindex="-1" role="dialog">dadfadadadadasd
+        <div class="modal-dialog modal-md">
+          <div class="modal-content" style="text-align:left;padding:10px;">
+          </div>
+        </div>
+      </div>
+
+      <div id="tabs-4">
+
+        <div class="row">
+          <div class="col-sm-12"><strong>Tomo Principal</strong><br> Nº: 0001 - Foja Inicial : 0 - Foja Final : 0</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12"><strong>Naturaleza del Recurso</strong><br> NATURALEZA: Sin Naturaleza asignada<br>SALA
+            : Tercera, CONSTITUCIONAL<br>MATERIA : Sin Materia Asignada
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6"><strong>Tr&aacute;mites</strong><br>4</div>
+          <div class="col-sm-6"><strong>Escritos</strong><br></div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6"><strong>Tabla</strong><br>--</div>
+          <div class="col-sm-6"><strong>N&uacute;mero de Oficio</strong><br>0-0</div>
+        </div>
+
+      </div>
+
+    </div>
+    </p>
+  </div>
+
+</div>

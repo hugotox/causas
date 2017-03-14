@@ -1,0 +1,449 @@
+
+
+	<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="../js/jqueryUi/jquery-ui.js"></script>
+<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="../js/jqueryUi/jquery-ui.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="../js/jqueryUi/jquery-ui.theme.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="../css/popUpCss.css" media="screen" />
+
+
+
+<script type="text/javascript">
+function PopWindowAnexo(){
+	var formo = document.getElementById("formPopupLab");
+	win = window.open('../anexos/anexoLaboral.php','formPopupLab','width=500,height=250,menubar=no,scrollbars=yes,toolbar=no,directories=no,resizable=no,left=450, top=300',false);
+	formo.submit();
+	return;
+}
+
+function carga_cuaderno(x)
+{
+	var elem = x.split('|');
+	var crr_cuaderno = elem[0];
+	var tip_cuaderno = elem[1];
+
+	location='civil_det.php?cod_tribunal=1349&tip_causa=E&rol_causa=820&era_causa=2017&cod_naturalezaexp=L&cod_tipcuaderno='+tip_cuaderno+'&crr_idcuaderno='+crr_cuaderno+'&cod_usuario=';
+
+}
+
+
+function PopWindow(){
+	var formo = document.getElementById("formPopup");
+	win = window.open('popup.php','formPopup','width=500,height=250,menubar=no,scrollbars=yes,toolbar=no,directories=no,resizable=no,left=450, top=300',false);
+	formo.submit();
+	return;
+}
+
+function PopWindow2(){
+	var formo = document.getElementById("formTramitesPopup");
+	win = window.open('tramitesPopUp','formTramitesPopup','width=500,height=250,menubar=no,scrollbars=yes,toolbar=no,directories=no,resizable=no,left=450, top=300',false);
+	formo.submit();
+	return;
+}
+
+$(document).ready(function(){
+
+	$("#rotator > ul").tabs({fx:{opacity: "toggle"}}).tabs("rotate", 0, true);
+
+	try {
+		$( "#tabPrincipal" ).tabs();
+	}
+	catch(err) {
+
+	}
+	try {
+		$( "#tabs" ).tabs();
+	}
+	catch(err) {
+
+	}
+
+});
+</script>
+
+
+<div id="tabPrincipal">
+
+	<ul>
+		<li><a href="#tabs-1">Causa Laboral</a></li>
+	</ul>
+
+
+	<div id="tabs-1">
+	<p>
+<!-- ------------------- DIV DE ENCABEZADO -------------------------- -->
+	<div class="descPopUp">
+		<table border="0" width="100%" style=" font-family: Arial,Helvetica,sans-serif; font-size: 13px;">
+			<tr>
+				<td><label>RIT: </label></td><td><span>E-820-2017</span>
+				<span>SALDÍAS/MAURICIO ALONSO MA</span></td>
+				<td><label>Fec. Ing: </label></td><td><span>02/03/2017</span></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><label>RUC: </label></td><td><span>17- 4-0000761-6</span></td>
+				<td><label>Proc.: </label></td><td><span>Exhorto</span></td>
+				<td><label>Forma Inicio: </label></td><td><span>Exhorto                       </span></td>
+			</tr>
+			<tr>
+				<td><label>Est. Adm.: </label></td><td><span>Sin archivar                  </span></td>
+				<td><label>Etapa: </label></td><td><span>Exhorto                                 </span></td>
+				<td><label>Estado Proc.: </label></td><td><span>Tramitación                   </span></td>
+			</tr>
+				<td><label>Tribunal: </label></td><td><span>2º Juzgado de Letras del Trabajo de Santiago</span></td>
+				<td><label>Texto Exhorto                        : </label></td>
+				<td>
+										<div>
+						<form method="post" id="formPopup" action="popup.php" target="formPopup" >
+							<input type="hidden" name="cod_tribunal" value="1349">
+							<input type="hidden" name="cod_naturalezaexp" value="L">
+							<input type="hidden" name="crr_idcausa" value="537266">
+							<a style="cursor:pointer;" onclick='PopWindow()'><img src="../images/doc.jpg" border="0" height="14 " width="13"/></a>
+						</form>
+					</div>
+									</td>
+
+				<td id="boton">
+				   <strong>Ebook:</strong>
+
+				    <form name="word" action="newebooklaboral.php" method="post" target="_blank">
+						<input type="hidden" name="crr_causa" value="537266">
+						<input type="hidden" name="cod_tribunal" value="1349">
+						<input type="hidden" name="cod_naturalezaexp" value="L">
+						<input type="hidden" name="tip_causa" value="E">
+						<input type="hidden" name="rol_causa" value="820">
+						<input type="hidden" name="era_causa" value="2017">
+						<input type="hidden" name="cod_tipcuaderno" value="0">
+						<input type="hidden" name="crr_idcuaderno" value="0">
+
+						<input id="btnEbook" type="image" src="../images/pdf.png" onclick="popup(537266);" value="">
+					</form>
+
+				</td>
+
+				<td>
+
+						<label>Tr&aacute;mites :</label>
+				</td>
+				<td>
+
+							<form method="post" id="formTramitesPopup" action="tramitesPopUp.php" target="formTramitesPopup" >
+								<input type="hidden" name="cod_tribunal" value="1349">
+								<input type="hidden" name="crr_idcausa" value="537266">
+								<a style="cursor:pointer;" onclick='PopWindow2()'><img src="../images/doc.jpg" border="0" height="14 " width="13"/></a>
+							</form>
+								</td>
+		</table>
+	</div>
+<!-- ---------------------------------------------------------------- -->
+
+		<div id="tabs">
+		  <ul>
+			<li><a href="#tabs-1">Movimientos</a></li>
+			<li><a href="#tabs-2">Litigantes</a></li>
+			<li><a href="#tabs-3">Notificaciones</a></li>
+			<li><a href="#tabs-4">Diligencias</a></li>
+			<li><a href="#tabs-5">Liquidaci&oacute;n</a></li>
+			<li><a href="#tabs-6">Materias</a></li>
+		  </ul>
+
+
+			<div id="tabs-1">
+
+<!------------------------------------>
+
+
+
+		<table class="tablaPop" width="100%">
+					  <tr id='titTablaLab'>
+						<td width="6%"><strong>Doc.</strong></td>
+						<!--<td width="7%"><strong>&nbsp;Anexo</strong></td>-->
+						<td height='20'><strong>Tipo Tramite</strong></td>
+						<td height='20'><strong>Tramite</strong></td>
+						<td><strong>Fecha</strong></td>
+					  </tr>
+
+					<tr>
+						<td  align='left'>
+							<form action='doc_lab_reformado.php' method='POST' target='_black'>
+								<input type='hidden' name='crr_docfallo' value='5435707'>
+								<input type='hidden' name='cod_tribunal' value='1349'>
+								<input type='hidden' name='tip_doc' value='3'>
+								<input type='hidden' name='est_firma' value='1'>
+								<input type='image' src='../images/pdf.png' onClick(this.submit();)>
+							</form>
+						</td>
+
+						<td>Actuación</td>
+					<td  align='left'>Certif. Notificación Realizada&nbsp;&nbsp;</td>
+
+				<td  align='left'>13/03/2017</td>
+
+			 </tr><tr>
+						<td  align='left'>
+							<form action='doc_lab_reformado.php' method='POST' target='_black'>
+								<input type='hidden' name='crr_docfallo' value='5416301'>
+								<input type='hidden' name='cod_tribunal' value='1349'>
+								<input type='hidden' name='tip_doc' value='3'>
+								<input type='hidden' name='est_firma' value='1'>
+								<input type='image' src='../images/pdf.png' onClick(this.submit();)>
+							</form>
+						</td>
+
+						<td>Resolución</td>
+					<td  align='left'>Practiquese                   &nbsp;&nbsp;</td>
+
+				<td  align='left'>06/03/2017</td>
+
+			 </tr><tr>
+								<td></td>
+
+								<td align='left'>
+									<a>Escrito</a>
+								</td><td  align='left'>Ingreso Causa&nbsp;&nbsp;</td>
+
+				<td  align='left'>02/03/2017</td>
+
+			 </tr>					  <script>
+					    $('#boton').hide();
+					  </script>
+							</table>
+
+<!------------------------------------>
+
+			</div>
+
+			<div id="tabs-2">
+
+				<table class="tablaPop" width="100%">
+					<tr id="titTablaLabLit">
+						<td>Est.</td>
+						<td title="Abogado Defensor&iacute;a">A. D.</td>
+						<td>Sujeto</td>
+						<td>Rut</td>
+						<td>Persona</td>
+						<td>Nombre o Raz&oacute;n Social</td>
+					</tr>
+
+										<tr class="filaunotabla">
+							<td align="center">
+				<img src='../images/vb.png' border='0' height='20px;' width='15px;' >							</td>
+
+							<td>
+				No							</td>
+
+							<td>AB.DDO</td>
+							<td>5275464-K</td>
+							<td>NATURAL                       </td>
+							<td>GUILLERMO HARTMANN GONZALEZ</td>
+						</tr>
+										<tr class="filadostabla">
+							<td align="center">
+				<img src='../images/vb.png' border='0' height='20px;' width='15px;' >							</td>
+
+							<td>
+				No							</td>
+
+							<td>AB.DDO</td>
+							<td>10265816-7</td>
+							<td>NATURAL                       </td>
+							<td>DANIELA HARTMANN CORTINA</td>
+						</tr>
+										<tr class="filaunotabla">
+							<td align="center">
+				<img src='../images/vb.png' border='0' height='20px;' width='15px;' >							</td>
+
+							<td>
+				No							</td>
+
+							<td>AB.DDO</td>
+							<td>13978353-0</td>
+							<td>NATURAL                       </td>
+							<td>MARIA ISABEL GALLEGUILLOS GALLEGUILLOS</td>
+						</tr>
+										<tr class="filadostabla">
+							<td align="center">
+				<img src='../images/vb.png' border='0' height='20px;' width='15px;' >							</td>
+
+							<td>
+				No							</td>
+
+							<td>AB.DDO</td>
+							<td>15374652-4</td>
+							<td>NATURAL                       </td>
+							<td>JUAN GUILLERMO PADILLA HERRERA</td>
+						</tr>
+										<tr class="filaunotabla">
+							<td align="center">
+				<img src='../images/vb.png' border='0' height='20px;' width='15px;' >							</td>
+
+							<td>
+				No							</td>
+
+							<td>AB.DTE</td>
+							<td>15580613-3</td>
+							<td>NATURAL                       </td>
+							<td>LEONARDO FRANCISCO TAPIA GRANDON</td>
+						</tr>
+										<tr class="filadostabla">
+							<td align="center">
+				<img src='../images/vb.png' border='0' height='20px;' width='15px;' >							</td>
+
+							<td>
+				No							</td>
+
+							<td>DDO.  </td>
+							<td>76205021-8</td>
+							<td>JURIDICA                      </td>
+							<td>MAURICIO ALONSO MARTINEZ ORTEGA CONSTRUCTORA MPR EIRL  </td>
+						</tr>
+										<tr class="filaunotabla">
+							<td align="center">
+				<img src='../images/vb.png' border='0' height='20px;' width='15px;' >							</td>
+
+							<td>
+				No							</td>
+
+							<td>AB.DTE</td>
+							<td>15243923-7</td>
+							<td>NATURAL                       </td>
+							<td>JOSE PATRICIO GONZALEZ GARCIA</td>
+						</tr>
+										<tr class="filadostabla">
+							<td align="center">
+				<img src='../images/vb.png' border='0' height='20px;' width='15px;' >							</td>
+
+							<td>
+				No							</td>
+
+							<td>DTE.  </td>
+							<td>13963787-9</td>
+							<td>NATURAL                       </td>
+							<td>ANDRÉS DAMIÁN SALDÍAS PARRA</td>
+						</tr>
+										<tr class="filaunotabla">
+							<td align="center">
+				<img src='../images/vb.png' border='0' height='20px;' width='15px;' >							</td>
+
+							<td>
+				No							</td>
+
+							<td>DDO.SO</td>
+							<td>77261280-K</td>
+							<td>JURIDICA                      </td>
+							<td>FALABELLA RETAIL SA  </td>
+						</tr>
+								</table>
+
+			</div>
+
+			<div id="tabs-3">
+				<table class="tablaPop" width="100%">
+					<tr id="titTablaLabNot">
+						<td>Estado Not.</td>
+						<td>RIT</td>
+						<td>RUC</td>
+						<td>F. Tr&aacute;mite</td>
+						<td>Tipo Part.</td>
+						<td>Nombre</td>
+						<td>Tr&aacute;mite</td>
+						<td>Obs. Fallida</td>
+					</tr>
+
+										<tr class="filaunotabla">
+							<td>Realizada      </td>
+							<td>E-820-2017</td>
+							<td>17- 4- 0000761-6</td>
+							<td>06/03/2017</td>
+							<td>DDO.           </td>
+							<td>MAURICIO ALONSO MARTINEZ ORTEGA CONSTRUCTORA MPR EIRL  </td>
+							<td>resolución                    </td>
+							<td>---</td>
+						</tr>
+										<tr class="filadostabla">
+							<td>Realizada      </td>
+							<td>E-820-2017</td>
+							<td>17- 4- 0000761-6</td>
+							<td>06/03/2017</td>
+							<td>AB.DTE.        </td>
+							<td>LEONARDO FRANCISCO TAPIA GRANDON</td>
+							<td>resolución                    </td>
+							<td></td>
+						</tr>
+								</table>
+			</div>
+
+			<div id="tabs-4">
+				<table class="tablaPop" width="100%">
+					<tr id="titTablaLabDil">
+						<td>Doc. Ida</td>
+						<td>Doc. Vta.</td>
+						<td>Estado Dil.</td>
+						<td>RIT</td>
+						<td>RUC</td>
+						<td>Tipo Diligencia</td>
+						<td>Referencia</td>
+						<td>F. Tr&aacute;mite</td>
+					</tr>
+
+								</table>
+			</div>
+
+			<div id="tabs-5">
+				<table class="tablaPop" width="100%">
+					<tr id="titTablaLabLiq">
+						<td>Liq.</td>
+						<td>RUT</td>
+						<td>Nombre</td>
+						<td>Monto Liq.</td>
+					</tr>
+									<tr>
+						<table class="tablaPop" width="100%" >
+							<tr>
+								<td width="75%">MONTO TOTAL: </td>
+								<td>0</td>
+							</tr>
+						</table>
+					</tr>
+				</table>
+			</div>
+
+			<div id="tabs-6">
+				<table class="tablaPop" width="100%">
+					<tr id="titTablaLabMat">
+						<td>C&oacute;digo</td>
+						<td>Glosa de Materia</td>
+						<td>Estado</td>
+						<td>F. T&eacute;rmino</td>
+					</tr>
+										<tr class="filaunotabla">
+							<td>EX01</td>
+							<td>Exhorto                                                     </td>
+							<td align="center">
+														</td>
+							<td align="center">
+														</td>
+						</tr>
+								</table>
+			</div>
+
+		</div>
+	</p>
+	</div>
+
+	<div id="divAudios">
+		<label>LISTADO DE ARCHIVOS DE AUDIOS DE AUDIENCIA</label>
+
+		<div style="margin: 15px 0 20px 30px;">
+			<img style="margin-right:10px;" src='../images/audio.png'/>&nbsp;<a href='javascript:fabrir(1349, 537266);'>Listado de archivo de audios</a>
+			<script>
+				function fabrir(cod_tribu, crr_causa)
+				{
+				window.open("http://laboral.poderjudicial.cl/SITLAPORWEB/jsp/AtPublico/PopUp/LAB_ATP_PopUpAudioPpal.jsp?COD_Tribunal="+cod_tribu+"&CRR_IdCausa="+crr_causa, '', 'width=700', 'height=250','top=200','left=150');
+				}
+			</script>
+		</div>
+	</div>
+
+</div>
