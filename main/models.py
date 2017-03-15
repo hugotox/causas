@@ -31,7 +31,7 @@ class Causa(models.Model):
         (TYPE_CHOICES_COBRANZA, 'Cobranza'),
         (TYPE_CHOICES_FAMILIA, 'Familia'),
     )
-    id = models.CharField(max_length=50, primary_key=True)  # uses Causa's "ROL" or "RIT" field
+    id = models.CharField(max_length=50, primary_key=True)  # <cod_corte>-<rol>-<era>
     user = models.ForeignKey(UserProfile)
     type = models.IntegerField(choices=TYPE_CHOICES)
     archived = models.BooleanField(default=False)
@@ -42,7 +42,7 @@ class Causa(models.Model):
 
 
 class DocSuprema(models.Model):
-    id = models.CharField(max_length=100, primary_key=True)  # id format is "<causa.id>__<folio>"
+    id = models.CharField(max_length=100, primary_key=True)  # id format is "<causa.id>__<iddoc>"
     causa = models.ForeignKey(Causa)
     anio = models.TextField(blank=True, null=True)
     fecha = models.TextField(blank=True, null=True)
