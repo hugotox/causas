@@ -3,7 +3,7 @@ import re
 from bs4 import BeautifulSoup
 
 from main.crypto import decrypt
-from main.models import Causa, DocSuprema, DocApelaciones
+from main.models import Causa, DocSuprema, DocApelaciones, DocCivil
 from main.utils import format_rut, send_new_doc_notification
 
 
@@ -29,9 +29,14 @@ class Scraper:
             'locator': './causas/causa_corte2.php'
         },
         'civil': {
-            'url': 'https://oficinajudicialvirtual.pjud.cl/consultaxrut/consultaxrut_apelaciones.php',
-            'detail': '',
-            'locator': ''
+            'url': 'https://oficinajudicialvirtual.pjud.cl/consultaxrut/consultaxrut_civil.php',
+            'detail': 'https://oficinajudicialvirtual.pjud.cl/causas/causaCivil2.php',
+            'locator': './causas/causaCivil2.php'
+        },
+        'laboral': {
+            'url': 'https://oficinajudicialvirtual.pjud.cl/consultaxrut/consultaxrut_laboral.php',
+            'detail': 'https://oficinajudicialvirtual.pjud.cl/causas/causa_laboral_reformado2.php',
+            'locator': './causas/causa_laboral_reformado2.php'
         },
     }
 
@@ -282,7 +287,70 @@ class Scraper:
             raise Exception('Unable to find causa documents')
 
     def scrape_civil_document(self, causa):
-        pass
+        """Opens the detail of a causa. `causa` is the soup form element"""
+        session = self.session
+        url = Scraper.CAUSA_TYPES['civil']['detail']
+        data = {}
+        for input_elm in causa.find_all('input'):
+            if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
+                data[input_elm.attrs['name']] = input_elm.attrs['value']
+
+        causa_obj = None
+        causa_id = None
+        if 'rol' in data.keys() and 'ano' in data.keys():
+            causa_id = 'C-{}-{}'.format(data['rol'], data['ano'])  # cod civil = C
+            tr = causa.parent.parent
+            tds = tr.find_all('td')
+            caratulado = tds[3].string
+            try:
+                causa_obj = Causa.objects.get(id=causa_id)
+            except Exception as ex:
+                causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_CIVIL, archived=False,
+                                  caratulado=caratulado)
+                causa_obj.save()
+
+        if causa_obj and causa_id:
+            print(causa_obj)
+            # Open causa details:
+            resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
+            if 'Causa Civil' in resp.text:
+                resp_text = resp.text.replace('\r', ' ').replace('\n', '')
+                html = '<html><body>{}</body></html>'.format(resp_text)
+                soup = BeautifulSoup(html, 'html.parser')
+                rows = soup.find(id='titTablaCiv').parent.parent.find_all('tr')  # double parent becaouse this one has header tr inside <thead>
+                header = True
+                for row in rows:
+                    if not header:  # skip the header row
+                        tds = row.find_all('td')
+                        if tds[0].string and tds[0].string.strip() != '':
+                            doc_id = '{}__{}'.format(causa_id, tds[2].string.strip())  # id = causa_id__folio
+                            created = False
+                            try:
+                                doc_obj = DocCivil.objects.get(id=doc_id)
+                            except:
+                                doc_obj = DocCivil(
+                                    id=doc_id,
+                                    causa=causa_obj,
+                                    etapa=tds[3].string,
+                                    tramite=tds[4].string,
+                                    descripcion=tds[5].string,
+                                    fecha=tds[6].string,
+                                    foja=tds[7].string
+                                )
+                                doc_obj.save()
+                                created = True
+
+                            if created:
+                                if self.profile.initial_migration_done:
+                                    print('Sending notification: {}'.format(doc_obj))
+                                    send_new_doc_notification(doc_obj)
+
+                            print(doc_obj)
+
+                    else:
+                        header = False
+        else:
+            raise Exception('Unable to find causa documents')
 
     def scrape_laboral_document(self, causa):
         pass
@@ -330,8 +398,8 @@ class Scraper:
 
         # self.scrape_causas('suprema', self.scrape_suprema_document)
         # self.scrape_causas('apelaciones', self.scrape_apelaciones_document)
-        self.scrape_causas('civil', self.scrape_civil_document)
-        # self.scrape_causas('laboral', self.scrape_laboral_document)
+        # self.scrape_causas('civil', self.scrape_civil_document)
+        self.scrape_causas('laboral', self.scrape_laboral_document)
         # self.scrape_causas('apelaciones', self.scrape_penal_document)
         # self.scrape_causas('apelaciones', self.scrape_cobranza_document)
         # self.scrape_causas('apelaciones', self.scrape_familia_document)
