@@ -3,7 +3,7 @@ import re
 from bs4 import BeautifulSoup
 
 from main.crypto import decrypt
-from main.models import Causa, DocSuprema, DocApelaciones, DocCivil
+from main.models import Causa, DocSuprema, DocApelaciones, DocCivil, DocLaboral
 from main.utils import format_rut, send_new_doc_notification
 
 
@@ -37,6 +37,21 @@ class Scraper:
             'url': 'https://oficinajudicialvirtual.pjud.cl/consultaxrut/consultaxrut_laboral.php',
             'detail': 'https://oficinajudicialvirtual.pjud.cl/causas/causa_laboral_reformado2.php',
             'locator': './causas/causa_laboral_reformado2.php'
+        },
+        'penal': {
+            'url': 'https://oficinajudicialvirtual.pjud.cl/consultaxrut/consultaxrut_penal.php',
+            'detail': 'https://oficinajudicialvirtual.pjud.cl/causas/causa_penal2.php',
+            'locator': './causas/causa_penal2.php'
+        },
+        'cobranza': {
+            'url': 'https://oficinajudicialvirtual.pjud.cl/consultaxrut/consultaxrut_cobranza.php',
+            'detail': 'https://oficinajudicialvirtual.pjud.cl/causas/causa_cobranza2.php',
+            'locator': './causas/causa_cobranza2.php'
+        },
+        'familia': {
+            'url': 'https://oficinajudicialvirtual.pjud.cl/consultaxrut/consultaxrut_familia.php',
+            'detail': 'https://oficinajudicialvirtual.pjud.cl/causas/causaFamilia2.php',
+            'locator': './causas/causaFamilia2.php'
         },
     }
 
@@ -353,7 +368,77 @@ class Scraper:
             raise Exception('Unable to find causa documents')
 
     def scrape_laboral_document(self, causa):
-        pass
+        """Opens the detail of a causa. `causa` is the soup form element"""
+        session = self.session
+        url = Scraper.CAUSA_TYPES['laboral']['detail']
+        data = {}
+        for input_elm in causa.find_all('input'):
+            if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
+                data[input_elm.attrs['name']] = input_elm.attrs['value']
+
+        causa_obj = None
+        causa_id = None
+        if 'rol_causa' in data.keys() and 'era_causa' in data.keys() and 'cod_tribunal' in data.keys():
+            causa_id = '{}-{}-{}'.format(data['cod_tribunal'], data['rol_causa'], data['era_causa'])
+            tr = causa.parent.parent
+            tds = tr.find_all('td')
+            caratulado = tds[3].string
+            try:
+                causa_obj = Causa.objects.get(id=causa_id)
+            except Exception as ex:
+                causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_LABORAL, archived=False,
+                                  caratulado=caratulado)
+                causa_obj.save()
+
+        if causa_obj and causa_id:
+            print(causa_obj)
+            # Open causa details:
+            resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
+            if 'Causa Laboral' in resp.text:
+                resp_text = resp.text.replace('\r', ' ').replace('\n', '')
+                html = '<html><body>{}</body></html>'.format(resp_text)
+                soup = BeautifulSoup(html, 'html.parser')
+                rows = soup.find(id='titTablaLab').parent.find_all('tr')
+                header = True
+                for row in rows:
+                    if not header:  # skip the header row
+                        doc_data = {}
+                        for doc_input in row.find_all('input'):
+                            try:
+                                doc_data[doc_input.attrs['name']] = doc_input.attrs['value']
+                            except:
+                                pass
+                        doc_keys = doc_data.keys()
+                        doc_id = None
+                        if 'crr_docfallo' in doc_keys and 'cod_tribunal' in doc_keys and 'tip_doc' in doc_keys and 'est_firma' in doc_keys:
+                            doc_id = '{}-{}-{}-{}'.format(doc_data['cod_tribunal'], doc_data['crr_docfallo'], doc_data['tip_doc'], doc_data['est_firma'])
+                        tds = row.find_all('td')
+                        if doc_id:
+                            created = False
+                            try:
+                                doc_obj = DocLaboral.objects.get(id=doc_id)
+                            except:
+                                doc_obj = DocLaboral(
+                                    id=doc_id,
+                                    causa=causa_obj,
+                                    tipo=tds[1].string,
+                                    tramite=tds[2].string,
+                                    fecha=tds[3].string,
+                                )
+                                doc_obj.save()
+                                created = True
+
+                            if created:
+                                if self.profile.initial_migration_done:
+                                    print('Sending notification: {}'.format(doc_obj))
+                                    send_new_doc_notification(doc_obj)
+
+                            print(doc_obj)
+
+                    else:
+                        header = False
+        else:
+            raise Exception('Unable to find causa documents')
 
     def scrape_penal_document(self, causa):
         pass
@@ -399,8 +484,8 @@ class Scraper:
         # self.scrape_causas('suprema', self.scrape_suprema_document)
         # self.scrape_causas('apelaciones', self.scrape_apelaciones_document)
         # self.scrape_causas('civil', self.scrape_civil_document)
-        self.scrape_causas('laboral', self.scrape_laboral_document)
-        # self.scrape_causas('apelaciones', self.scrape_penal_document)
+        # self.scrape_causas('laboral', self.scrape_laboral_document)
+        self.scrape_causas('apelaciones', self.scrape_penal_document)
         # self.scrape_causas('apelaciones', self.scrape_cobranza_document)
         # self.scrape_causas('apelaciones', self.scrape_familia_document)
 
