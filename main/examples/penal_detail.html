@@ -1,949 +1,969 @@
-
-
-	<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
-	<script type="text/javascript" src="../js/jqueryUi/jquery-ui.js"></script>
+<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="../js/jqueryUi/jquery-ui.js"></script>
 <!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="../js/jqueryUi/jquery-ui.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="../js/jqueryUi/jquery-ui.theme.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="../css/popUpCss.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="../js/jqueryUi/jquery-ui.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="../js/jqueryUi/jquery-ui.theme.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="../css/popUpCss.css" media="screen"/>
 
 <script>
-$( document ).ready(function() {
+  $(document).ready(function () {
 
 
-	try {
-		$( "#tabPrincipal" ).tabs();
-	}
-	catch(err) {
+    try {
+      $("#tabPrincipal").tabs();
+    }
+    catch (err) {
 
-	}
-	try {
-		$( "#tabs" ).tabs();
-	}
-	catch(err) {
+    }
+    try {
+      $("#tabs").tabs();
+    }
+    catch (err) {
 
-	}
+    }
 
-});
+  });
 </script>
 
 <div id="tabPrincipal">
-	<ul>
-		<li><a href="#tabs-1">Causa Penal</a></li>
-	</ul>
-	<div id="tabs-1">
+  <ul>
+    <li><a href="#tabs-1">Causa Penal</a></li>
+  </ul>
+  <div id="tabs-1">
 
-		<div class="descPopUp">
-			<table border="0" width="100%" style="font-family: Arial,Helvetica,sans-serif !important; font-size: 13px !important;">
-				<tr>
-					<td><label>Tribunal: </label></td><td>Juzgado de Garantía de Río Negro.</td>
-					<td><label>RIT: </label></td><td>Exhorto.345-2014</td>
-					<td><label>RUC: </label></td><td>1200687711-5</td>
-				</tr>
-				<tr>
-					<td><label>Fecha Ingreso: </label></td><td>05/12/2014</td>
-					<td><label>ETAPA: </label></td><td>Inicio de la acción.</td>
-					<td><label>Estado Actual: </label></td><td>Concluida.</td>
-				</tr>
-				<tr>
-					<td><label>Tribunal Origen: </label></td><td>Juzgado de Garantía de Puerto Varas.</td>
-					<td><label>Forma Inicio: </label></td><td>Exhorto.</td>
-					<td></td><td></td>
-				</tr>
-			</table>
-		</div>
+    <div class="descPopUp">
+      <table border="0" width="100%"
+             style="font-family: Arial,Helvetica,sans-serif !important; font-size: 13px !important;">
+        <tr>
+          <td><label>Tribunal: </label></td>
+          <td>Juzgado de Garantía de Río Negro.</td>
+          <td><label>RIT: </label></td>
+          <td>Exhorto.345-2014</td>
+          <td><label>RUC: </label></td>
+          <td>1200687711-5</td>
+        </tr>
+        <tr>
+          <td><label>Fecha Ingreso: </label></td>
+          <td>05/12/2014</td>
+          <td><label>ETAPA: </label></td>
+          <td>Inicio de la acción.</td>
+          <td><label>Estado Actual: </label></td>
+          <td>Concluida.</td>
+        </tr>
+        <tr>
+          <td><label>Tribunal Origen: </label></td>
+          <td>Juzgado de Garantía de Puerto Varas.</td>
+          <td><label>Forma Inicio: </label></td>
+          <td>Exhorto.</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
 
-		<br>
+    <br>
 
-		<div id="tabs">
-			<ul>
-				<li><a href="#tabs-1">Historia</a></li>
-				<li><a href="#tabs-2">Litigantes</a></li>
-				<li><a href="#tabs-3">Relaciones</a></li>
-				<li><a href="#tabs-4">Notificaciones</a></li>
-			</ul>
-
-
-			<div id="tabs-1">
-				<table align="center" class="tablaPop" width="100%">
-				  <tr id="titTablaPen">
-					<td><strong>Doc.</strong></td>
-					<td><strong>Tipo</strong></td>
-					<td><strong>Observaci&oacute;n</strong></td>
-					<td><strong>Fecha</strong></td>
-					<td><strong>Estado</strong></td>
-					<td><strong>Estado Cambio Estado</strong></td>
-				  </tr>
-										<tr>
-						<td align="center">
-													<div>
-									<form method="post" id="formPopup" action="docPenalPopUp.php" target="_blank" >
-										<input type="hidden" name="valor" value="60005904">
-										<input type="hidden" name="tipDoc" value="1">
-										<a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/word.png" border="0" height="24 " width="24"/></a>
-									</form>
-								</div>
-											</td>
-
-						<td align="left">
-							Actuación						</td>
-
-						<td align="left">
-							Of. 331, Carab. Cascadas, dev. not.&nbsp;
-						</td>
-						<td align="left">
-							29/12/2014&nbsp;
-						</td>
-						<td align="left">
-							Firmada.&nbsp;
-						</td>
-						<td align="center">
-							29/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr>
-						<td align="center">
-													<div>
-									<form method="post" id="formPopup" action="docPenalPopUp.php" target="_blank" >
-										<input type="hidden" name="valor" value="59553315">
-										<input type="hidden" name="tipDoc" value="1">
-										<a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/word.png" border="0" height="24 " width="24"/></a>
-									</form>
-								</div>
-											</td>
-
-						<td align="left">
-							Resolución						</td>
-
-						<td align="left">
-							Cumplase&nbsp;
-						</td>
-						<td align="left">
-							09/12/2014&nbsp;
-						</td>
-						<td align="left">
-							Firmada.&nbsp;
-						</td>
-						<td align="center">
-							09/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr>
-						<td align="center">
-													<div>
-									<form method="post" id="formPopup" action="docPenalPopUp.php" target="_blank" >
-										<input type="hidden" name="valor" value="59473825">
-										<input type="hidden" name="tipDoc" value="1">
-										<a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/word.png" border="0" height="24 " width="24"/></a>
-									</form>
-								</div>
-											</td>
-
-						<td align="left">
-							Solicitud.						</td>
-
-						<td align="left">
-							Audiencia procedimiento simplificado.&nbsp;
-						</td>
-						<td align="left">
-							03/12/2014&nbsp;
-						</td>
-						<td align="left">
-							Resuelta.&nbsp;
-						</td>
-						<td align="center">
-							03/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr>
-						<td align="center">
-													<div>
-									<form method="post" id="formPopup" action="docPenalPopUp.php" target="_blank" >
-										<input type="hidden" name="valor" value="59475553">
-										<input type="hidden" name="tipDoc" value="1">
-										<a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/word.png" border="0" height="24 " width="24"/></a>
-									</form>
-								</div>
-											</td>
-
-						<td align="left">
-							Resolución						</td>
-
-						<td align="left">
-							Fija audiencia simplificado&nbsp;
-						</td>
-						<td align="left">
-							03/12/2014&nbsp;
-						</td>
-						<td align="left">
-							Firmada.&nbsp;
-						</td>
-						<td align="center">
-							03/12/2014&nbsp;
-						</td>
-					</tr>
-
-				</table>
-			</div>
-
-			<div id="tabs-2">
-				<table align="center" class="tablaPop" width="100%">
-				  <tr id="titTablaPenLit">
-					<td>Tipo</td>
-					<td>Nombre</td>
-					<td>RUN</td>
-					<td>Situaci&oacute;n Libertad </td>
-				  </tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Denunciado.&nbsp;
-						</td>
-						<td align="left">
-							HERNÁNDEZ GÁEZ JUAN JOSÉ&nbsp;
-						</td>
-						<td align="left">
-							0011543210-9   &nbsp;
-						</td>
-						<td align="left">
-							Libre.&nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Denunciado.&nbsp;
-						</td>
-						<td align="left">
-							GÁEZ VELÁSQUEZ GILBERTO HORACIO&nbsp;
-						</td>
-						<td align="left">
-							0016844478-8   &nbsp;
-						</td>
-						<td align="left">
-							Libre.&nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Denunciado.&nbsp;
-						</td>
-						<td align="left">
-							MARTÍNEZ GÁEZ FLORINDA AMELIA&nbsp;
-						</td>
-						<td align="left">
-							0012998793-6   &nbsp;
-						</td>
-						<td align="left">
-							Libre.&nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Denunciado.&nbsp;
-						</td>
-						<td align="left">
-							HERNÁNDEZ GÁEZ ROSA DEL CARMEN&nbsp;
-						</td>
-						<td align="left">
-							0013166071-5   &nbsp;
-						</td>
-						<td align="left">
-							Libre.&nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Denunciado.&nbsp;
-						</td>
-						<td align="left">
-							HERNÁNDEZ GÁEZ CARLOS HUMBERTO&nbsp;
-						</td>
-						<td align="left">
-							0012342745-9   &nbsp;
-						</td>
-						<td align="left">
-							Libre.&nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Denunciado.&nbsp;
-						</td>
-						<td align="left">
-							HERNÁNDEZ GÁEZ EUGENIO ALFONSO&nbsp;
-						</td>
-						<td align="left">
-							0012342744-0   &nbsp;
-						</td>
-						<td align="left">
-							Libre.&nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Denunciado.&nbsp;
-						</td>
-						<td align="left">
-							HERNÁNDEZ GÁEZ ANA AMELIA&nbsp;
-						</td>
-						<td align="left">
-							0012756909-6   &nbsp;
-						</td>
-						<td align="left">
-							Libre.&nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Denunciado.&nbsp;
-						</td>
-						<td align="left">
-							HERNÁNDEZ GÁEZ JOSÉ FERNANDO&nbsp;
-						</td>
-						<td align="left">
-							0012756908-8   &nbsp;
-						</td>
-						<td align="left">
-							Libre.&nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Denunciado.&nbsp;
-						</td>
-						<td align="left">
-							QUINTUL MARTÍNEZ JENNIFER ALEJANDRA&nbsp;
-						</td>
-						<td align="left">
-							0018368894-4   &nbsp;
-						</td>
-						<td align="left">
-							Libre.&nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Denunciado.&nbsp;
-						</td>
-						<td align="left">
-							MARTÍNEZ GÁEZ TERESA DEL CARMEN&nbsp;
-						</td>
-						<td align="left">
-							0012021026-2   &nbsp;
-						</td>
-						<td align="left">
-							Libre.&nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Denunciado.&nbsp;
-						</td>
-						<td align="left">
-							GÁEZ VELÁSQUEZ ARIEL HUMBERTO&nbsp;
-						</td>
-						<td align="left">
-							0017604783-6   &nbsp;
-						</td>
-						<td align="left">
-							Libre.&nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Denunciante.&nbsp;
-						</td>
-						<td align="left">
-							SANCHEZ VILLARROEL RENATO IVAN&nbsp;
-						</td>
-						<td align="left">
-							0011428356-8   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Denunciante.&nbsp;
-						</td>
-						<td align="left">
-							SANTA CRUZ HUDSON SAMUEL&nbsp;
-						</td>
-						<td align="left">
-							0007999104-K   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Querellante.&nbsp;
-						</td>
-						<td align="left">
-							SANTA CRUZ HUDSON SAMUEL&nbsp;
-						</td>
-						<td align="left">
-							0007999104-K   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Defensor privado.&nbsp;
-						</td>
-						<td align="left">
-							LLAUCA HUALA ORIETTA ELIANA&nbsp;
-						</td>
-						<td align="left">
-							0014431713-0   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Abogado patrocinante.&nbsp;
-						</td>
-						<td align="left">
-							NAVARRO SILVA PATRICIO&nbsp;
-						</td>
-						<td align="left">
-							0000000000-0   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Abogado patrocinante.&nbsp;
-						</td>
-						<td align="left">
-							MUÑOZ RIVEROS CLAUDIO ANDRÉS&nbsp;
-						</td>
-						<td align="left">
-							0010704304-7   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Abogado patrocinante.&nbsp;
-						</td>
-						<td align="left">
-							TAPIA GRANDÓN LEONARDO FRANCISCO&nbsp;
-						</td>
-						<td align="left">
-							0015580613-3   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Víctima.&nbsp;
-						</td>
-						<td align="left">
-							SOCIEDAD AGRICOLA LACTEOS SA&nbsp;
-						</td>
-						<td align="left">
-							0076000426-K   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Víctima.&nbsp;
-						</td>
-						<td align="left">
-							CAMILO&nbsp;
-						</td>
-						<td align="left">
-							0016967394-2   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Víctima.&nbsp;
-						</td>
-						<td align="left">
-							ÁLVAREZ MORENO GASTÓN ORLANDO&nbsp;
-						</td>
-						<td align="left">
-							0005715421-7   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Testigo.&nbsp;
-						</td>
-						<td align="left">
-							SÁNCHEZ VILLARROEL RENATO IVÁN&nbsp;
-						</td>
-						<td align="left">
-							0011428356-8   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Testigo.&nbsp;
-						</td>
-						<td align="left">
-							ALVAREZ MORENO GASTON ORLANDO&nbsp;
-						</td>
-						<td align="left">
-							0005715421-7   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Testigo.&nbsp;
-						</td>
-						<td align="left">
-							CAULLE GÁEZ FREDY ABELINO&nbsp;
-						</td>
-						<td align="left">
-							0011116278-6   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Testigo.&nbsp;
-						</td>
-						<td align="left">
-							HINOSTROZA GAEZ BARBARA DEL CARMEN&nbsp;
-						</td>
-						<td align="left">
-							0008423457-5   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Testigo.&nbsp;
-						</td>
-						<td align="left">
-							OBANDO OYARZO CAMILO MAURICIO&nbsp;
-						</td>
-						<td align="left">
-							0016967394-2   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Testigo.&nbsp;
-						</td>
-						<td align="left">
-							SANCHEZ PONCE MARCOS GASTON&nbsp;
-						</td>
-						<td align="left">
-							0008770011-9   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Testigo.&nbsp;
-						</td>
-						<td align="left">
-							SANTA CRUZ HUDSON SAMUEL&nbsp;
-						</td>
-						<td align="left">
-							0007999104-K   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Testigo.&nbsp;
-						</td>
-						<td align="left">
-							MARTÍNEZ GÁEZ FLORINDA AMELIA&nbsp;
-						</td>
-						<td align="left">
-							0012998793-6   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Colaborador.&nbsp;
-						</td>
-						<td align="left">
-							DEFENSORIA REGIONAL&nbsp;
-						</td>
-						<td align="left">
-							0000000000-0   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Policía.&nbsp;
-						</td>
-						<td align="left">
-							LLANQUIHUE  CARABINEROS&nbsp;
-						</td>
-						<td align="left">
-							0000000000-0   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Policía.&nbsp;
-						</td>
-						<td align="left">
-							CARABINEROS PTO. OCTAY&nbsp;
-						</td>
-						<td align="left">
-							0000000000-0   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Policía.&nbsp;
-						</td>
-						<td align="left">
-							CARABINEROS RETEN TEGUALDA&nbsp;
-						</td>
-						<td align="left">
-							0000000000-0   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							Policía.&nbsp;
-						</td>
-						<td align="left">
-							CARABINEROS CASMA&nbsp;
-						</td>
-						<td align="left">
-							0000000000-0   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Policía.&nbsp;
-						</td>
-						<td align="left">
-							PREFECTURA CARABINEROS&nbsp;
-						</td>
-						<td align="left">
-							0000000000-0   &nbsp;
-						</td>
-						<td align="left">
-							 &nbsp;
-						</td>
-					</tr>
-
-				</table>
-			</div>
-
-			<div id="tabs-3">
-				<table align="center" class="tablaPop" width="100%">
-				  <tr id="titTablaPenRel">
-					<td>Nombre</td>
-					<td>Delito</td>
-					<td>Estado Relaci&oacute;n </td>
-					<td>Fecha Cambio Estado </td>
-				  </tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							HERNÁNDEZ GÁEZ ANA AMELIA&nbsp;
-						</td>
-						<td align="left">
-							USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
-						</td>
-						<td align="left">
-							Concluida.&nbsp;
-						</td>
-						<td align="left">
-							29/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							HERNÁNDEZ GÁEZ ROSA DEL CARMEN&nbsp;
-						</td>
-						<td align="left">
-							USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
-						</td>
-						<td align="left">
-							Concluida.&nbsp;
-						</td>
-						<td align="left">
-							29/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							HERNÁNDEZ GÁEZ CARLOS HUMBERTO&nbsp;
-						</td>
-						<td align="left">
-							USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
-						</td>
-						<td align="left">
-							Concluida.&nbsp;
-						</td>
-						<td align="left">
-							29/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							HERNÁNDEZ GÁEZ EUGENIO ALFONSO&nbsp;
-						</td>
-						<td align="left">
-							USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
-						</td>
-						<td align="left">
-							Concluida.&nbsp;
-						</td>
-						<td align="left">
-							29/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							HERNÁNDEZ GÁEZ JUAN JOSÉ&nbsp;
-						</td>
-						<td align="left">
-							USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
-						</td>
-						<td align="left">
-							Concluida.&nbsp;
-						</td>
-						<td align="left">
-							29/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							HERNÁNDEZ GÁEZ JOSÉ FERNANDO&nbsp;
-						</td>
-						<td align="left">
-							USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
-						</td>
-						<td align="left">
-							Concluida.&nbsp;
-						</td>
-						<td align="left">
-							29/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							MARTÍNEZ GÁEZ FLORINDA AMELIA&nbsp;
-						</td>
-						<td align="left">
-							USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
-						</td>
-						<td align="left">
-							Concluida.&nbsp;
-						</td>
-						<td align="left">
-							29/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							GÁEZ VELÁSQUEZ ARIEL HUMBERTO&nbsp;
-						</td>
-						<td align="left">
-							USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
-						</td>
-						<td align="left">
-							Concluida.&nbsp;
-						</td>
-						<td align="left">
-							29/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							GÁEZ VELÁSQUEZ GILBERTO HORACIO&nbsp;
-						</td>
-						<td align="left">
-							USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
-						</td>
-						<td align="left">
-							Concluida.&nbsp;
-						</td>
-						<td align="left">
-							29/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							MARTÍNEZ GÁEZ TERESA DEL CARMEN&nbsp;
-						</td>
-						<td align="left">
-							USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
-						</td>
-						<td align="left">
-							Concluida.&nbsp;
-						</td>
-						<td align="left">
-							29/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							QUINTUL MARTÍNEZ JENNIFER ALEJANDRA&nbsp;
-						</td>
-						<td align="left">
-							USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
-						</td>
-						<td align="left">
-							Concluida.&nbsp;
-						</td>
-						<td align="left">
-							29/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							GÁEZ VELÁSQUEZ ARIEL HUMBERTO&nbsp;
-						</td>
-						<td align="left">
-							Daños simples.&nbsp;
-						</td>
-						<td align="left">
-							Concluida.&nbsp;
-						</td>
-						<td align="left">
-							29/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							GÁEZ VELÁSQUEZ GILBERTO HORACIO&nbsp;
-						</td>
-						<td align="left">
-							Daños simples.&nbsp;
-						</td>
-						<td align="left">
-							Concluida.&nbsp;
-						</td>
-						<td align="left">
-							29/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr class="filadostabla">
-						<td align="left">
-							GÁEZ VELÁSQUEZ ARIEL HUMBERTO&nbsp;
-						</td>
-						<td align="left">
-							AMENAZAS SIMPLES CONTRA PERSONAS Y PROPIEDADES ART. 296 Nº3.&nbsp;
-						</td>
-						<td align="left">
-							Concluida.&nbsp;
-						</td>
-						<td align="left">
-							29/12/2014&nbsp;
-						</td>
-					</tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							GÁEZ VELÁSQUEZ GILBERTO HORACIO&nbsp;
-						</td>
-						<td align="left">
-							AMENAZAS SIMPLES CONTRA PERSONAS Y PROPIEDADES ART. 296 Nº3.&nbsp;
-						</td>
-						<td align="left">
-							Concluida.&nbsp;
-						</td>
-						<td align="left">
-							29/12/2014&nbsp;
-						</td>
-					</tr>
-
-				</table>
-			</div>
-
-			<div id="tabs-4">
-				<table align="center" class="tablaPop" width="100%">
-				  <tr id="titTablaPenNot">
-					<td>Tipo</td>
-					<td>Estado</td>
-					<td>Fecha Realizac&oacute;n </td>
-					<td>Fecha Audiencia  </td>
-					<td>Nombre</td>
-				  </tr>
-										<tr class="filaunotabla">
-						<td align="left">
-							Mail.&nbsp;
-						</td>
-						<td align="left">
-							Realizada&nbsp;
-						</td>
-						<td align="left">
-							09/12/2014&nbsp;
-						</td>
-						<td align="left">
-							          &nbsp;
-						</td>
-						<td align="left">
-							CARABINEROS PTO. OCTAY&nbsp;
-						</td>
-					</tr>
-
-				</table>
-			</div>
-		</div>
+    <div id="tabs">
+      <ul>
+        <li><a href="#tabs-1">Historia</a></li>
+        <li><a href="#tabs-2">Litigantes</a></li>
+        <li><a href="#tabs-3">Relaciones</a></li>
+        <li><a href="#tabs-4">Notificaciones</a></li>
+      </ul>
 
 
-<!-- aqui-->
-		</p>
-	</div>
+      <div id="tabs-1">
+        <table align="center" class="tablaPop" width="100%">
+          <tr id="titTablaPen">
+            <td><strong>Doc.</strong></td>
+            <td><strong>Tipo</strong></td>
+            <td><strong>Observaci&oacute;n</strong></td>
+            <td><strong>Fecha</strong></td>
+            <td><strong>Estado</strong></td>
+            <td><strong>Estado Cambio Estado</strong></td>
+          </tr>
+          <tr>
+            <td align="center">
+              <div>
+                <form method="post" id="formPopup" action="docPenalPopUp.php" target="_blank">
+                  <input type="hidden" name="valor" value="60005904">
+                  <input type="hidden" name="tipDoc" value="1">
+                  <a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/word.png"
+                                                                                              border="0" height="24 "
+                                                                                              width="24"/></a>
+                </form>
+              </div>
+            </td>
+
+            <td align="left">
+              Actuación
+            </td>
+
+            <td align="left">
+              Of. 331, Carab. Cascadas, dev. not.&nbsp;
+            </td>
+            <td align="left">
+              29/12/2014&nbsp;
+            </td>
+            <td align="left">
+              Firmada.&nbsp;
+            </td>
+            <td align="center">
+              29/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <div>
+                <form method="post" id="formPopup" action="docPenalPopUp.php" target="_blank">
+                  <input type="hidden" name="valor" value="59553315">
+                  <input type="hidden" name="tipDoc" value="1">
+                  <a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/word.png"
+                                                                                              border="0" height="24 "
+                                                                                              width="24"/></a>
+                </form>
+              </div>
+            </td>
+
+            <td align="left">
+              Resolución
+            </td>
+
+            <td align="left">
+              Cumplase&nbsp;
+            </td>
+            <td align="left">
+              09/12/2014&nbsp;
+            </td>
+            <td align="left">
+              Firmada.&nbsp;
+            </td>
+            <td align="center">
+              09/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <div>
+                <form method="post" id="formPopup" action="docPenalPopUp.php" target="_blank">
+                  <input type="hidden" name="valor" value="59473825">
+                  <input type="hidden" name="tipDoc" value="1">
+                  <a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/word.png"
+                                                                                              border="0" height="24 "
+                                                                                              width="24"/></a>
+                </form>
+              </div>
+            </td>
+
+            <td align="left">
+              Solicitud.
+            </td>
+
+            <td align="left">
+              Audiencia procedimiento simplificado.&nbsp;
+            </td>
+            <td align="left">
+              03/12/2014&nbsp;
+            </td>
+            <td align="left">
+              Resuelta.&nbsp;
+            </td>
+            <td align="center">
+              03/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <div>
+                <form method="post" id="formPopup" action="docPenalPopUp.php" target="_blank">
+                  <input type="hidden" name="valor" value="59475553">
+                  <input type="hidden" name="tipDoc" value="1">
+                  <a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/word.png"
+                                                                                              border="0" height="24 "
+                                                                                              width="24"/></a>
+                </form>
+              </div>
+            </td>
+
+            <td align="left">
+              Resolución
+            </td>
+
+            <td align="left">
+              Fija audiencia simplificado&nbsp;
+            </td>
+            <td align="left">
+              03/12/2014&nbsp;
+            </td>
+            <td align="left">
+              Firmada.&nbsp;
+            </td>
+            <td align="center">
+              03/12/2014&nbsp;
+            </td>
+          </tr>
+
+        </table>
+      </div>
+
+      <div id="tabs-2">
+        <table align="center" class="tablaPop" width="100%">
+          <tr id="titTablaPenLit">
+            <td>Tipo</td>
+            <td>Nombre</td>
+            <td>RUN</td>
+            <td>Situaci&oacute;n Libertad</td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Denunciado.&nbsp;
+            </td>
+            <td align="left">
+              HERNÁNDEZ GÁEZ JUAN JOSÉ&nbsp;
+            </td>
+            <td align="left">
+              0011543210-9 &nbsp;
+            </td>
+            <td align="left">
+              Libre.&nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Denunciado.&nbsp;
+            </td>
+            <td align="left">
+              GÁEZ VELÁSQUEZ GILBERTO HORACIO&nbsp;
+            </td>
+            <td align="left">
+              0016844478-8 &nbsp;
+            </td>
+            <td align="left">
+              Libre.&nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Denunciado.&nbsp;
+            </td>
+            <td align="left">
+              MARTÍNEZ GÁEZ FLORINDA AMELIA&nbsp;
+            </td>
+            <td align="left">
+              0012998793-6 &nbsp;
+            </td>
+            <td align="left">
+              Libre.&nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Denunciado.&nbsp;
+            </td>
+            <td align="left">
+              HERNÁNDEZ GÁEZ ROSA DEL CARMEN&nbsp;
+            </td>
+            <td align="left">
+              0013166071-5 &nbsp;
+            </td>
+            <td align="left">
+              Libre.&nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Denunciado.&nbsp;
+            </td>
+            <td align="left">
+              HERNÁNDEZ GÁEZ CARLOS HUMBERTO&nbsp;
+            </td>
+            <td align="left">
+              0012342745-9 &nbsp;
+            </td>
+            <td align="left">
+              Libre.&nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Denunciado.&nbsp;
+            </td>
+            <td align="left">
+              HERNÁNDEZ GÁEZ EUGENIO ALFONSO&nbsp;
+            </td>
+            <td align="left">
+              0012342744-0 &nbsp;
+            </td>
+            <td align="left">
+              Libre.&nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Denunciado.&nbsp;
+            </td>
+            <td align="left">
+              HERNÁNDEZ GÁEZ ANA AMELIA&nbsp;
+            </td>
+            <td align="left">
+              0012756909-6 &nbsp;
+            </td>
+            <td align="left">
+              Libre.&nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Denunciado.&nbsp;
+            </td>
+            <td align="left">
+              HERNÁNDEZ GÁEZ JOSÉ FERNANDO&nbsp;
+            </td>
+            <td align="left">
+              0012756908-8 &nbsp;
+            </td>
+            <td align="left">
+              Libre.&nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Denunciado.&nbsp;
+            </td>
+            <td align="left">
+              QUINTUL MARTÍNEZ JENNIFER ALEJANDRA&nbsp;
+            </td>
+            <td align="left">
+              0018368894-4 &nbsp;
+            </td>
+            <td align="left">
+              Libre.&nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Denunciado.&nbsp;
+            </td>
+            <td align="left">
+              MARTÍNEZ GÁEZ TERESA DEL CARMEN&nbsp;
+            </td>
+            <td align="left">
+              0012021026-2 &nbsp;
+            </td>
+            <td align="left">
+              Libre.&nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Denunciado.&nbsp;
+            </td>
+            <td align="left">
+              GÁEZ VELÁSQUEZ ARIEL HUMBERTO&nbsp;
+            </td>
+            <td align="left">
+              0017604783-6 &nbsp;
+            </td>
+            <td align="left">
+              Libre.&nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Denunciante.&nbsp;
+            </td>
+            <td align="left">
+              SANCHEZ VILLARROEL RENATO IVAN&nbsp;
+            </td>
+            <td align="left">
+              0011428356-8 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Denunciante.&nbsp;
+            </td>
+            <td align="left">
+              SANTA CRUZ HUDSON SAMUEL&nbsp;
+            </td>
+            <td align="left">
+              0007999104-K &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Querellante.&nbsp;
+            </td>
+            <td align="left">
+              SANTA CRUZ HUDSON SAMUEL&nbsp;
+            </td>
+            <td align="left">
+              0007999104-K &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Defensor privado.&nbsp;
+            </td>
+            <td align="left">
+              LLAUCA HUALA ORIETTA ELIANA&nbsp;
+            </td>
+            <td align="left">
+              0014431713-0 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Abogado patrocinante.&nbsp;
+            </td>
+            <td align="left">
+              NAVARRO SILVA PATRICIO&nbsp;
+            </td>
+            <td align="left">
+              0000000000-0 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Abogado patrocinante.&nbsp;
+            </td>
+            <td align="left">
+              MUÑOZ RIVEROS CLAUDIO ANDRÉS&nbsp;
+            </td>
+            <td align="left">
+              0010704304-7 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Abogado patrocinante.&nbsp;
+            </td>
+            <td align="left">
+              TAPIA GRANDÓN LEONARDO FRANCISCO&nbsp;
+            </td>
+            <td align="left">
+              0015580613-3 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Víctima.&nbsp;
+            </td>
+            <td align="left">
+              SOCIEDAD AGRICOLA LACTEOS SA&nbsp;
+            </td>
+            <td align="left">
+              0076000426-K &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Víctima.&nbsp;
+            </td>
+            <td align="left">
+              CAMILO&nbsp;
+            </td>
+            <td align="left">
+              0016967394-2 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Víctima.&nbsp;
+            </td>
+            <td align="left">
+              ÁLVAREZ MORENO GASTÓN ORLANDO&nbsp;
+            </td>
+            <td align="left">
+              0005715421-7 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Testigo.&nbsp;
+            </td>
+            <td align="left">
+              SÁNCHEZ VILLARROEL RENATO IVÁN&nbsp;
+            </td>
+            <td align="left">
+              0011428356-8 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Testigo.&nbsp;
+            </td>
+            <td align="left">
+              ALVAREZ MORENO GASTON ORLANDO&nbsp;
+            </td>
+            <td align="left">
+              0005715421-7 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Testigo.&nbsp;
+            </td>
+            <td align="left">
+              CAULLE GÁEZ FREDY ABELINO&nbsp;
+            </td>
+            <td align="left">
+              0011116278-6 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Testigo.&nbsp;
+            </td>
+            <td align="left">
+              HINOSTROZA GAEZ BARBARA DEL CARMEN&nbsp;
+            </td>
+            <td align="left">
+              0008423457-5 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Testigo.&nbsp;
+            </td>
+            <td align="left">
+              OBANDO OYARZO CAMILO MAURICIO&nbsp;
+            </td>
+            <td align="left">
+              0016967394-2 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Testigo.&nbsp;
+            </td>
+            <td align="left">
+              SANCHEZ PONCE MARCOS GASTON&nbsp;
+            </td>
+            <td align="left">
+              0008770011-9 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Testigo.&nbsp;
+            </td>
+            <td align="left">
+              SANTA CRUZ HUDSON SAMUEL&nbsp;
+            </td>
+            <td align="left">
+              0007999104-K &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Testigo.&nbsp;
+            </td>
+            <td align="left">
+              MARTÍNEZ GÁEZ FLORINDA AMELIA&nbsp;
+            </td>
+            <td align="left">
+              0012998793-6 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Colaborador.&nbsp;
+            </td>
+            <td align="left">
+              DEFENSORIA REGIONAL&nbsp;
+            </td>
+            <td align="left">
+              0000000000-0 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Policía.&nbsp;
+            </td>
+            <td align="left">
+              LLANQUIHUE CARABINEROS&nbsp;
+            </td>
+            <td align="left">
+              0000000000-0 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Policía.&nbsp;
+            </td>
+            <td align="left">
+              CARABINEROS PTO. OCTAY&nbsp;
+            </td>
+            <td align="left">
+              0000000000-0 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Policía.&nbsp;
+            </td>
+            <td align="left">
+              CARABINEROS RETEN TEGUALDA&nbsp;
+            </td>
+            <td align="left">
+              0000000000-0 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              Policía.&nbsp;
+            </td>
+            <td align="left">
+              CARABINEROS CASMA&nbsp;
+            </td>
+            <td align="left">
+              0000000000-0 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Policía.&nbsp;
+            </td>
+            <td align="left">
+              PREFECTURA CARABINEROS&nbsp;
+            </td>
+            <td align="left">
+              0000000000-0 &nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+          </tr>
+
+        </table>
+      </div>
+
+      <div id="tabs-3">
+        <table align="center" class="tablaPop" width="100%">
+          <tr id="titTablaPenRel">
+            <td>Nombre</td>
+            <td>Delito</td>
+            <td>Estado Relaci&oacute;n</td>
+            <td>Fecha Cambio Estado</td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              HERNÁNDEZ GÁEZ ANA AMELIA&nbsp;
+            </td>
+            <td align="left">
+              USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
+            </td>
+            <td align="left">
+              Concluida.&nbsp;
+            </td>
+            <td align="left">
+              29/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              HERNÁNDEZ GÁEZ ROSA DEL CARMEN&nbsp;
+            </td>
+            <td align="left">
+              USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
+            </td>
+            <td align="left">
+              Concluida.&nbsp;
+            </td>
+            <td align="left">
+              29/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              HERNÁNDEZ GÁEZ CARLOS HUMBERTO&nbsp;
+            </td>
+            <td align="left">
+              USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
+            </td>
+            <td align="left">
+              Concluida.&nbsp;
+            </td>
+            <td align="left">
+              29/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              HERNÁNDEZ GÁEZ EUGENIO ALFONSO&nbsp;
+            </td>
+            <td align="left">
+              USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
+            </td>
+            <td align="left">
+              Concluida.&nbsp;
+            </td>
+            <td align="left">
+              29/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              HERNÁNDEZ GÁEZ JUAN JOSÉ&nbsp;
+            </td>
+            <td align="left">
+              USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
+            </td>
+            <td align="left">
+              Concluida.&nbsp;
+            </td>
+            <td align="left">
+              29/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              HERNÁNDEZ GÁEZ JOSÉ FERNANDO&nbsp;
+            </td>
+            <td align="left">
+              USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
+            </td>
+            <td align="left">
+              Concluida.&nbsp;
+            </td>
+            <td align="left">
+              29/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              MARTÍNEZ GÁEZ FLORINDA AMELIA&nbsp;
+            </td>
+            <td align="left">
+              USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
+            </td>
+            <td align="left">
+              Concluida.&nbsp;
+            </td>
+            <td align="left">
+              29/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              GÁEZ VELÁSQUEZ ARIEL HUMBERTO&nbsp;
+            </td>
+            <td align="left">
+              USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
+            </td>
+            <td align="left">
+              Concluida.&nbsp;
+            </td>
+            <td align="left">
+              29/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              GÁEZ VELÁSQUEZ GILBERTO HORACIO&nbsp;
+            </td>
+            <td align="left">
+              USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
+            </td>
+            <td align="left">
+              Concluida.&nbsp;
+            </td>
+            <td align="left">
+              29/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              MARTÍNEZ GÁEZ TERESA DEL CARMEN&nbsp;
+            </td>
+            <td align="left">
+              USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
+            </td>
+            <td align="left">
+              Concluida.&nbsp;
+            </td>
+            <td align="left">
+              29/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              QUINTUL MARTÍNEZ JENNIFER ALEJANDRA&nbsp;
+            </td>
+            <td align="left">
+              USURPACION DE PROPIEDAD,DESCUBRIMIENTO O PRODUCCION.ART.158.&nbsp;
+            </td>
+            <td align="left">
+              Concluida.&nbsp;
+            </td>
+            <td align="left">
+              29/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              GÁEZ VELÁSQUEZ ARIEL HUMBERTO&nbsp;
+            </td>
+            <td align="left">
+              Daños simples.&nbsp;
+            </td>
+            <td align="left">
+              Concluida.&nbsp;
+            </td>
+            <td align="left">
+              29/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              GÁEZ VELÁSQUEZ GILBERTO HORACIO&nbsp;
+            </td>
+            <td align="left">
+              Daños simples.&nbsp;
+            </td>
+            <td align="left">
+              Concluida.&nbsp;
+            </td>
+            <td align="left">
+              29/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr class="filadostabla">
+            <td align="left">
+              GÁEZ VELÁSQUEZ ARIEL HUMBERTO&nbsp;
+            </td>
+            <td align="left">
+              AMENAZAS SIMPLES CONTRA PERSONAS Y PROPIEDADES ART. 296 Nº3.&nbsp;
+            </td>
+            <td align="left">
+              Concluida.&nbsp;
+            </td>
+            <td align="left">
+              29/12/2014&nbsp;
+            </td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              GÁEZ VELÁSQUEZ GILBERTO HORACIO&nbsp;
+            </td>
+            <td align="left">
+              AMENAZAS SIMPLES CONTRA PERSONAS Y PROPIEDADES ART. 296 Nº3.&nbsp;
+            </td>
+            <td align="left">
+              Concluida.&nbsp;
+            </td>
+            <td align="left">
+              29/12/2014&nbsp;
+            </td>
+          </tr>
+
+        </table>
+      </div>
+
+      <div id="tabs-4">
+        <table align="center" class="tablaPop" width="100%">
+          <tr id="titTablaPenNot">
+            <td>Tipo</td>
+            <td>Estado</td>
+            <td>Fecha Realizac&oacute;n</td>
+            <td>Fecha Audiencia</td>
+            <td>Nombre</td>
+          </tr>
+          <tr class="filaunotabla">
+            <td align="left">
+              Mail.&nbsp;
+            </td>
+            <td align="left">
+              Realizada&nbsp;
+            </td>
+            <td align="left">
+              09/12/2014&nbsp;
+            </td>
+            <td align="left">
+              &nbsp;
+            </td>
+            <td align="left">
+              CARABINEROS PTO. OCTAY&nbsp;
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+    <!-- aqui-->
+    </p>
+  </div>
 
 </div>

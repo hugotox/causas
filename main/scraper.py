@@ -3,7 +3,7 @@ import re
 from bs4 import BeautifulSoup
 
 from main.crypto import decrypt
-from main.models import Causa, DocSuprema, DocApelaciones, DocCivil, DocLaboral
+from main.models import Causa, DocSuprema, DocApelaciones, DocCivil, DocLaboral, DocPenal
 from main.utils import format_rut, send_new_doc_notification
 
 
@@ -168,7 +168,7 @@ class Scraper:
                     scrape_documents(causa)
             return resp.text
         else:
-            raise Exception('Unable to find Suprema forms')
+            print('Unable to find {} forms'.format(causa_type))
 
     def scrape_suprema_document(self, causa):
         """Opens the detail of a causa"""
@@ -233,7 +233,7 @@ class Scraper:
                     else:
                         header = False
         else:
-            raise Exception('Unable to find causa documents')
+            raise Exception('Unable to find suprema documents')
 
     def scrape_apelaciones_document(self, causa):
         """Opens the detail of a causa. `causa` is the soup form element"""
@@ -299,7 +299,7 @@ class Scraper:
                     else:
                         header = False
         else:
-            raise Exception('Unable to find causa documents')
+            raise Exception('Unable to find apelaciones documents')
 
     def scrape_civil_document(self, causa):
         """Opens the detail of a causa. `causa` is the soup form element"""
@@ -365,7 +365,7 @@ class Scraper:
                     else:
                         header = False
         else:
-            raise Exception('Unable to find causa documents')
+            raise Exception('Unable to find civil documents')
 
     def scrape_laboral_document(self, causa):
         """Opens the detail of a causa. `causa` is the soup form element"""
@@ -438,10 +438,82 @@ class Scraper:
                     else:
                         header = False
         else:
-            raise Exception('Unable to find causa documents')
+            raise Exception('Unable to find laboral documents')
 
     def scrape_penal_document(self, causa):
-        pass
+        """Opens the detail of a causa. `causa` is the soup form element"""
+        session = self.session
+        url = Scraper.CAUSA_TYPES['penal']['detail']
+        data = {}
+        for input_elm in causa.find_all('input'):
+            if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
+                data[input_elm.attrs['name']] = input_elm.attrs['value']
+
+        causa_obj = None
+        causa_id = None
+        if 'rol_causa' in data.keys() and 'era_causa' in data.keys() and 'cod_tribunal' in data.keys():
+            causa_id = '{}-{}-{}'.format(data['cod_tribunal'], data['rol_causa'], data['era_causa'])
+            tr = causa.parent.parent
+            tds = tr.find_all('td')
+            caratulado = tds[4].string
+            try:
+                causa_obj = Causa.objects.get(id=causa_id)
+            except Exception as ex:
+                causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_PENAL, archived=False,
+                                  caratulado=caratulado)
+                causa_obj.save()
+
+        if causa_obj and causa_id:
+            print(causa_obj)
+            # Open causa details:
+            resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
+            if 'Causa Penal' in resp.text:
+                resp_text = resp.text.replace('\r', ' ').replace('\n', '')
+                html = '<html><body>{}</body></html>'.format(resp_text)
+                soup = BeautifulSoup(html, 'html.parser')
+                rows = soup.find(id='titTablaPen').parent.find_all('tr')
+                header = True
+                for row in rows:
+                    if not header:  # skip the header row
+                        doc_data = {}
+                        for doc_input in row.find_all('input'):
+                            try:
+                                doc_data[doc_input.attrs['name']] = doc_input.attrs['value']
+                            except:
+                                pass
+                        doc_keys = doc_data.keys()
+                        doc_id = None
+                        if 'tipDoc' in doc_keys and 'valor' in doc_keys:
+                            doc_id = 'P-{}-{}'.format(doc_data['tipDoc'], doc_data['valor'])
+                        tds = row.find_all('td')
+                        if doc_id:
+                            created = False
+                            try:
+                                doc_obj = DocPenal.objects.get(id=doc_id)
+                            except:
+                                doc_obj = DocPenal(
+                                    id=doc_id,
+                                    causa=causa_obj,
+                                    tipo=tds[1].string,
+                                    observacion=tds[2].string,
+                                    fecha=tds[3].string,
+                                    estado=tds[4].string,
+                                    cambio_estado=tds[5].string,
+                                )
+                                doc_obj.save()
+                                created = True
+
+                            if created:
+                                if self.profile.initial_migration_done:
+                                    print('Sending notification: {}'.format(doc_obj))
+                                    send_new_doc_notification(doc_obj)
+
+                            print(doc_obj)
+
+                    else:
+                        header = False
+        else:
+            raise Exception('Unable to find penal documents')
 
     def scrape_cobranza_document(self, causa):
         pass
@@ -453,14 +525,15 @@ class Scraper:
         # I need to post page 1 to know the total pages. Then loop starts from page 2
         resp_text = self.post_causa_type(type, 1, doc_scraper)
 
-        # find total record to calculate total pages
-        total_records = self._get_total_records(resp_text)
-        print('Total records: {}'.format(total_records))
-        total_pages = int(total_records / 10 + 1)
-        print('Total pages: {}'.format(total_pages))
-        if total_pages > 1:
-            for page in range(2, total_pages + 1):
-                self.post_causa_type(type, page, doc_scraper)
+        if resp_text:
+            # find total record to calculate total pages
+            total_records = self._get_total_records(resp_text)
+            print('Total records: {}'.format(total_records))
+            total_pages = int(total_records / 10 + 1)
+            print('Total pages: {}'.format(total_pages))
+            if total_pages > 1:
+                for page in range(2, total_pages + 1):
+                    self.post_causa_type(type, page, doc_scraper)
 
     def init_scraping(self):
         session = self.session
@@ -485,8 +558,8 @@ class Scraper:
         # self.scrape_causas('apelaciones', self.scrape_apelaciones_document)
         # self.scrape_causas('civil', self.scrape_civil_document)
         # self.scrape_causas('laboral', self.scrape_laboral_document)
-        self.scrape_causas('apelaciones', self.scrape_penal_document)
-        # self.scrape_causas('apelaciones', self.scrape_cobranza_document)
-        # self.scrape_causas('apelaciones', self.scrape_familia_document)
+        self.scrape_causas('penal', self.scrape_penal_document)
+        # self.scrape_causas('cobranza', self.scrape_cobranza_document)
+        # self.scrape_causas('familia', self.scrape_familia_document)
 
         session.close()

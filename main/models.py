@@ -105,7 +105,7 @@ class DocLaboral(models.Model):
 
 
 class DocPenal(models.Model):
-    # uses auto generated id
+    id = models.CharField(max_length=100, primary_key=True)
     causa = models.ForeignKey(Causa)
     tipo = models.TextField(blank=True, null=True)
     observacion = models.TextField(blank=True, null=True)
