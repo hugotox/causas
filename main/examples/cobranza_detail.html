@@ -1,745 +1,771 @@
-
-
-
-	<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
-	<script type="text/javascript" src="../js/jqueryUi/jquery-ui.js"></script>
+<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="../js/jqueryUi/jquery-ui.js"></script>
 <!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="../js/jqueryUi/jquery-ui.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="../js/jqueryUi/jquery-ui.theme.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="../css/popUpCss.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="../js/jqueryUi/jquery-ui.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="../js/jqueryUi/jquery-ui.theme.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="../css/popUpCss.css" media="screen"/>
 
 
 <script type="text/javascript">
-function PopWindowAnexo(){
-	var formo = document.getElementById("formPopupCob");
-	win = window.open('../anexos/anexoCobranza.php','formPopupCob','width=500,height=250,menubar=no,scrollbars=yes,toolbar=no,directories=no,resizable=no,left=450, top=300',false);
-	formo.submit();
-	return;
-}
+  function PopWindowAnexo () {
+    var formo = document.getElementById("formPopupCob");
+    win = window.open('../anexos/anexoCobranza.php', 'formPopupCob', 'width=500,height=250,menubar=no,scrollbars=yes,toolbar=no,directories=no,resizable=no,left=450, top=300', false);
+    formo.submit();
+    return;
+  }
 
-function carga_cuaderno(x)
-{
-	var elem = x.split('|');
-	var crr_cuaderno = elem[0];
-	var tip_cuaderno = elem[1];
+  function carga_cuaderno (x) {
+    var elem = x.split('|');
+    var crr_cuaderno = elem[ 0 ];
+    var tip_cuaderno = elem[ 1 ];
 
-	location='cobranza_det2.php?codTribunal=211&tipoCausa=C&rolCausa=1&eraCausa=2017&codNaturaleza=B&ctCuaderno='+tip_cuaderno+'&idCuaderno='+crr_cuaderno+' ';
-}
-
-
-function PopWindow(){
-	var formo = document.getElementById("formPopup");
-	win = window.open('doc_func_cob.php','formPopup','width=600,height=250,menubar=no,scrollbars=yes,toolbar=no,directories=no,resizable=no,left=450, top=300',false);
-	formo.submit();
-	return;
-}
-
-function oculta_det_receptor()
-{
-	document.getElementById('det_receptor').style.display='none';
-}
+    location = 'cobranza_det2.php?codTribunal=211&tipoCausa=C&rolCausa=1&eraCausa=2017&codNaturaleza=B&ctCuaderno=' + tip_cuaderno + '&idCuaderno=' + crr_cuaderno + ' ';
+  }
 
 
-function muestra_det_receptor()
-{
-	document.getElementById('det_receptor').style.display='block';
-}
+  function PopWindow () {
+    var formo = document.getElementById("formPopup");
+    win = window.open('doc_func_cob.php', 'formPopup', 'width=600,height=250,menubar=no,scrollbars=yes,toolbar=no,directories=no,resizable=no,left=450, top=300', false);
+    formo.submit();
+    return;
+  }
+
+  function oculta_det_receptor () {
+    document.getElementById('det_receptor').style.display = 'none';
+  }
 
 
-$(document).ready(function(){
+  function muestra_det_receptor () {
+    document.getElementById('det_receptor').style.display = 'block';
+  }
 
-	$("#rotator > ul").tabs({fx:{opacity: "toggle"}}).tabs("rotate", 0, true);
 
-	try {
-		$( "#tabPrincipal" ).tabs();
-	}
-	catch(err) {
+  $(document).ready(function () {
 
-	}
-	try {
-		$( "#tabs" ).tabs();
-	}
-	catch(err) {
+    $("#rotator > ul").tabs({ fx: { opacity: "toggle" } }).tabs("rotate", 0, true);
 
-	}
+    try {
+      $("#tabPrincipal").tabs();
+    }
+    catch (err) {
 
-});
+    }
+    try {
+      $("#tabs").tabs();
+    }
+    catch (err) {
 
-function cambiaCuaderno()
-{
+    }
 
-	var str=$("#selCuaderno").val();
-	var porciones = str.split("|");
-	$("#hiCuaderno").val(porciones[0]);
-	$("#hiTipoCuaderno").val(porciones[1]);
-	$("#frmCuaderno").submit();
+  });
 
-}
+  function cambiaCuaderno () {
+
+    var str = $("#selCuaderno").val();
+    var porciones = str.split("|");
+    $("#hiCuaderno").val(porciones[ 0 ]);
+    $("#hiTipoCuaderno").val(porciones[ 1 ]);
+    $("#frmCuaderno").submit();
+
+  }
 
 </script>
 <form id="frmCuaderno" action="/causas/causa_cobranza2.php" method="post">
-	<input type="hidden" name='cotd' value='211'>
-	<input type="hidden" name='crrCausa' value='2759733'>
-	<input type="hidden" name='tipo_causa' value='C'>
-	<input type="hidden" name='rol_causa' value='1'>
-	<input type="hidden" name='era_causa' value='2017'>
-	<input type="hidden" name='codNaturaleza' value='B'>
-	<input type="hidden" name='ctCuaderno' value='1'>
-	<input type="hidden" name='idCuaderno' value='5202871'>
-	<input type="hidden" name='cod_tribunal' value='211'>
-	<input type="hidden" name='cuaderno' id="hiCuaderno" value="">
-	<input type="hidden" name='tipoCuaderno' id="hiTipoCuaderno" value="">
+  <input type="hidden" name='cotd' value='211'>
+  <input type="hidden" name='crrCausa' value='2759733'>
+  <input type="hidden" name='tipo_causa' value='C'>
+  <input type="hidden" name='rol_causa' value='1'>
+  <input type="hidden" name='era_causa' value='2017'>
+  <input type="hidden" name='codNaturaleza' value='B'>
+  <input type="hidden" name='ctCuaderno' value='1'>
+  <input type="hidden" name='idCuaderno' value='5202871'>
+  <input type="hidden" name='cod_tribunal' value='211'>
+  <input type="hidden" name='cuaderno' id="hiCuaderno" value="">
+  <input type="hidden" name='tipoCuaderno' id="hiTipoCuaderno" value="">
 </form>
 
 <div id="tabPrincipal">
-	<ul>
-		<li><a href="#tabs-1">Causa Cobranza</a></li>
-	</ul>
-
-	<div id="tabs-1">
-		<p>
-<!-- ------------------- DIV DE ENCABEZADO -------------------------- -->
-			<div class="descPopUp">
-				<table border="0" style="font-family: Arial,Helvetica,sans-serif; font-size: 13px;" width="100%">
-					<tr>
-						<td><label>RIT: </label></td>
-						<td><span>C-1-2017</span>
-							<span>COLILLANCA CON SIERRA     </span></td>
-						<td><label>Fec. Ing: </label></td>
-						<td><span>27/01/2017</span></td>
-						<td></td><td></td>
-					</tr>
-					<tr>
-						<td><label>Est. Adm.: </label></td><td><span>Sin archivar                  </span></td>
-						<td><label>Proc.: </label></td><td><span>Cumplimiento Laboral</span></td>
-						<td><label>Forma Inicio: </label></td><td><span>Sitla                         </span></td>
-					</tr>
-					<tr>
-						<td><label>Est. Adm.: </label></td><td><span>Sin archivar                  </span></td>
-						<td><label>Etapa: </label></td><td><span>Excepciones / Objeta Liquidación        </span></td>
-						<td><label>Estado Proc.: </label></td><td><span>Tramitación                   </span></td>
-					</tr>
-					<tr>
-						<td><label>Tribunal: </label></td><td><span>Juzgado de Letras de Pitrufquen                   </span></td>
-						<td><label>Doc. Dda.: </label></td>
-						<td>
-							<!--<form method="post" id="formPopup" action="popup.php" target="formPopup" >
-								<input type="hidden" name="cod_tribunal" value="211">
-								<input type="hidden" name="cod_naturalezaexp" value="B">
-								<input type="hidden" name="crr_idcausa" value="2759733">
-								<a style="cursor:pointer;" onclick='PopWindow()'><img src="../images/doc.jpg" border="0" height="14 " width="13"/></a>
-							</form>-->
-														<form action="doc_func_cob.php" method="post" target="_blank" id="formPopup">
-								<input type="hidden" name="tribunal" value="211">
-								<input type="hidden" name="crr_causa" value="2759733">
-								<input type="hidden" name="id_documento" value="2836629">
-								<input type="hidden" name="tipo" value="1">
-																	<a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/word.png"></a>
-															</form>
-													</td>
-						<td>
-
-									<label>Titulo Ejec.: </label>
-
-						</td>
-					</tr>
-				</table>
-			</div>
-<!-- ---------------------------------------------------------------- -->
-
-			<fieldset>
-				<div class="row descPopUp" style="text-align:left;">
-					<div class="large-2 columns">
-						<strong>Historia Causa Cuaderno</strong>
-					</div>
-					<div class="large-4 columns">
-						<select id="selCuaderno" onChange="cambiaCuaderno();">
-															<option value="5202871|1" selected="selected">Principal</option>
-
-						</select>
-					</div>
-					<div class="large-4 columns">
-						<a href="#" style="width:100%;" id="arecept">
-
-						</a>
-					</div>
-					<br>
-					<div>
-						<label>Inf. Receptor: </label><a href="JavaScript:muestra_det_receptor()"><img src='../images/doc.jpg' border='0' height='15px;' width='15px;'></a>
-					</div>
-				</div>
-			</fieldset>
-
-<!-- ------------ INFORMACION DEL RECEPTOR -------------------- -->
-			<div id="det_receptor" align="center" style="z-index:20;display:none;">
-
-				<table class="tabla" width="90%">
-					<tr>
-						<td colspan="3"><b>Informaci&oacute;n de Receptor</b></td>
-					</tr>
-										<tr>
-							<td class="descPopUp" colspan="3">&nbsp;</td>
-						</tr>
-
-						<tr>
-							<td class="descPopUp" colspan="3">Causa no presenta retiro de Receptor.</td>
-						</tr>
-									<tr class="filadostabla">
-						<td colspan="3">
-							<input type="button" style="margin:15px 0 -25px;" onclick="oculta_det_receptor();" value="Aceptar" name="aceptar" />
-						</td>
-					</tr>
-
-					<tr>
-						<td>&nbsp;</td>
-					</tr>
-
-					<tr>
-						<td>&nbsp;</td>
-					</tr>
-				</table>
-
-			</div>
-<!-- ---------------------------------------------------------- -->
-
-			<div id="tabs">
-				<ul>
-					<li><a href="#tabs-1">Historia</a></li>
-					<li><a href="#tabs-2">Litigantes</a></li>
-					<li><a href="#tabs-3">Notificaciones</a></li>
-					<li><a href="#tabs-4">Diligencias</a></li>
-					<li><a href="#tabs-5">Liquidaci&oacute;n</a></li>
-				</ul>
-
-				<div id="tabs-1">
-					<table class="tablaPop" width="100%">
-						<tr id="titTablaCob">
-							<td>Doc.Sel.</td>
-							<!--<td>&nbsp;Anexo</td>-->
-							<td>Etapa</td>
-							<td>Tr&aacute;mite</td>
-							<td>Desc. Tr&aacute;mite</td>
-							<td>Fech.Tram.</td>
-						</tr>
-
-
-							<tr class="">
-								<td align="center">
-
-									<!-- pdf -->
-																<form method="post" action="blob_cobranza.php" target='_blank'>
-												<input type="hidden" name="tabla" value="4">
-												<input type="hidden" name="field" value="1">
-												<input type="hidden" name="fielddoc" value="1">
-												<input type="hidden" name="where" value="4">
-												<input type="hidden" name="typedoc" value="3">
-												<input type="hidden" name="cod_tribunal" value="211">
-												<input type="hidden" name="crr_iddocumento" value="24048771">
-												<a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png" border='0' height='24px;' width='24px;'></a>
-											</form>
-														<!-- fin pdf -->
-								</td>
-								<!--<td>
-									<form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
-										<input type="hidden" name="rol_causa" value="211">
-										<input type="hidden" name="crr_iddocumentocausa" value="24048771">
-										<a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
-									</form>
-								</td>-->
-								<td>Excepciones / Objeta Liquidación        </td>
-								<td>Actuación                     </td>
-
-								<td>Certifica Envío de E-Mail									<!-- Pdf o word -->
-
-														<!-- Fin pdf o word -->
-								</td>
-
-								<td>20/02/2017</td>
-							</tr>
-
-							<tr class="">
-								<td align="center">
-
-									<!-- pdf -->
-																<form method="post" action="blob_cobranza.php" target='_blank'>
-												<input type="hidden" name="tabla" value="4">
-												<input type="hidden" name="field" value="1">
-												<input type="hidden" name="fielddoc" value="1">
-												<input type="hidden" name="where" value="4">
-												<input type="hidden" name="typedoc" value="3">
-												<input type="hidden" name="cod_tribunal" value="211">
-												<input type="hidden" name="crr_iddocumento" value="24048773">
-												<a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png" border='0' height='24px;' width='24px;'></a>
-											</form>
-														<!-- fin pdf -->
-								</td>
-								<!--<td>
-									<form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
-										<input type="hidden" name="rol_causa" value="211">
-										<input type="hidden" name="crr_iddocumentocausa" value="24048773">
-										<a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
-									</form>
-								</td>-->
-								<td>Excepciones / Objeta Liquidación        </td>
-								<td>Actuación                     </td>
-
-								<td>Certifica Envío de E-Mail									<!-- Pdf o word -->
-
-														<!-- Fin pdf o word -->
-								</td>
-
-								<td>20/02/2017</td>
-							</tr>
-
-							<tr class="">
-								<td align="center">
-
-									<!-- pdf -->
-																<form method="post" action="blob_cobranza.php" target='_blank'>
-												<input type="hidden" name="tabla" value="4">
-												<input type="hidden" name="field" value="1">
-												<input type="hidden" name="fielddoc" value="1">
-												<input type="hidden" name="where" value="4">
-												<input type="hidden" name="typedoc" value="3">
-												<input type="hidden" name="cod_tribunal" value="211">
-												<input type="hidden" name="crr_iddocumento" value="24048772">
-												<a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png" border='0' height='24px;' width='24px;'></a>
-											</form>
-														<!-- fin pdf -->
-								</td>
-								<!--<td>
-									<form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
-										<input type="hidden" name="rol_causa" value="211">
-										<input type="hidden" name="crr_iddocumentocausa" value="24048772">
-										<a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
-									</form>
-								</td>-->
-								<td>Excepciones / Objeta Liquidación        </td>
-								<td>Actuación                     </td>
-
-								<td>Certifica Envío de E-Mail									<!-- Pdf o word -->
-
-														<!-- Fin pdf o word -->
-								</td>
-
-								<td>20/02/2017</td>
-							</tr>
-
-							<tr class="">
-								<td align="center">
-
-									<!-- pdf -->
-																<form method="post" action="blob_cobranza.php" target='_blank'>
-												<input type="hidden" name="tabla" value="4">
-												<input type="hidden" name="field" value="1">
-												<input type="hidden" name="fielddoc" value="1">
-												<input type="hidden" name="where" value="4">
-												<input type="hidden" name="typedoc" value="3">
-												<input type="hidden" name="cod_tribunal" value="211">
-												<input type="hidden" name="crr_iddocumento" value="24038951">
-												<a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png" border='0' height='24px;' width='24px;'></a>
-											</form>
-														<!-- fin pdf -->
-								</td>
-								<!--<td>
-									<form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
-										<input type="hidden" name="rol_causa" value="211">
-										<input type="hidden" name="crr_iddocumentocausa" value="24038951">
-										<a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
-									</form>
-								</td>-->
-								<td>Ingreso                                 </td>
-								<td>Resolución                    </td>
-
-								<td>Requiérase									<!-- Pdf o word -->
-
-														<!-- Fin pdf o word -->
-								</td>
-
-								<td>20/02/2017</td>
-							</tr>
-
-							<tr class="">
-								<td align="center">
-
-									<!-- pdf -->
-																<form method="post" action="blob_cobranza.php" target='_blank'>
-												<input type="hidden" name="tabla" value="4">
-												<input type="hidden" name="field" value="1">
-												<input type="hidden" name="fielddoc" value="1">
-												<input type="hidden" name="where" value="4">
-												<input type="hidden" name="typedoc" value="3">
-												<input type="hidden" name="cod_tribunal" value="211">
-												<input type="hidden" name="crr_iddocumento" value="24008654">
-												<a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png" border='0' height='24px;' width='24px;'></a>
-											</form>
-														<!-- fin pdf -->
-								</td>
-								<!--<td>
-									<form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
-										<input type="hidden" name="rol_causa" value="211">
-										<input type="hidden" name="crr_iddocumentocausa" value="24008654">
-										<a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
-									</form>
-								</td>-->
-								<td>Ingreso                                 </td>
-								<td>Actuación                     </td>
-
-								<td>Liquidación									<!-- Pdf o word -->
-
-														<!-- Fin pdf o word -->
-								</td>
-
-								<td>16/02/2017</td>
-							</tr>
-
-							<tr class="">
-								<td align="center">
-
-									<!-- pdf -->
-																<form method="post" action="blob_cobranza.php" target='_blank'>
-												<input type="hidden" name="tabla" value="4">
-												<input type="hidden" name="field" value="1">
-												<input type="hidden" name="fielddoc" value="1">
-												<input type="hidden" name="where" value="4">
-												<input type="hidden" name="typedoc" value="3">
-												<input type="hidden" name="cod_tribunal" value="211">
-												<input type="hidden" name="crr_iddocumento" value="23829703">
-												<a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png" border='0' height='24px;' width='24px;'></a>
-											</form>
-														<!-- fin pdf -->
-								</td>
-								<!--<td>
-									<form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
-										<input type="hidden" name="rol_causa" value="211">
-										<input type="hidden" name="crr_iddocumentocausa" value="23829703">
-										<a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
-									</form>
-								</td>-->
-								<td>Ingreso                                 </td>
-								<td>Actuación                     </td>
-
-								<td>Certifica Envío de E-Mail									<!-- Pdf o word -->
-
-														<!-- Fin pdf o word -->
-								</td>
-
-								<td>01/02/2017</td>
-							</tr>
-
-							<tr class="">
-								<td align="center">
-
-									<!-- pdf -->
-																<form method="post" action="blob_cobranza.php" target='_blank'>
-												<input type="hidden" name="tabla" value="4">
-												<input type="hidden" name="field" value="1">
-												<input type="hidden" name="fielddoc" value="1">
-												<input type="hidden" name="where" value="4">
-												<input type="hidden" name="typedoc" value="3">
-												<input type="hidden" name="cod_tribunal" value="211">
-												<input type="hidden" name="crr_iddocumento" value="23829704">
-												<a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png" border='0' height='24px;' width='24px;'></a>
-											</form>
-														<!-- fin pdf -->
-								</td>
-								<!--<td>
-									<form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
-										<input type="hidden" name="rol_causa" value="211">
-										<input type="hidden" name="crr_iddocumentocausa" value="23829704">
-										<a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
-									</form>
-								</td>-->
-								<td>Ingreso                                 </td>
-								<td>Actuación                     </td>
-
-								<td>Certifica Envío de E-Mail									<!-- Pdf o word -->
-
-														<!-- Fin pdf o word -->
-								</td>
-
-								<td>01/02/2017</td>
-							</tr>
-
-							<tr class="">
-								<td align="center">
-
-									<!-- pdf -->
-																<form method="post" action="blob_cobranza.php" target='_blank'>
-												<input type="hidden" name="tabla" value="4">
-												<input type="hidden" name="field" value="1">
-												<input type="hidden" name="fielddoc" value="1">
-												<input type="hidden" name="where" value="4">
-												<input type="hidden" name="typedoc" value="3">
-												<input type="hidden" name="cod_tribunal" value="211">
-												<input type="hidden" name="crr_iddocumento" value="23829705">
-												<a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png" border='0' height='24px;' width='24px;'></a>
-											</form>
-														<!-- fin pdf -->
-								</td>
-								<!--<td>
-									<form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
-										<input type="hidden" name="rol_causa" value="211">
-										<input type="hidden" name="crr_iddocumentocausa" value="23829705">
-										<a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
-									</form>
-								</td>-->
-								<td>Ingreso                                 </td>
-								<td>Actuación                     </td>
-
-								<td>Certifica Envío de E-Mail									<!-- Pdf o word -->
-
-														<!-- Fin pdf o word -->
-								</td>
-
-								<td>01/02/2017</td>
-							</tr>
-
-							<tr class="">
-								<td align="center">
-
-									<!-- pdf -->
-																<form method="post" action="blob_cobranza.php" target='_blank'>
-												<input type="hidden" name="tabla" value="4">
-												<input type="hidden" name="field" value="1">
-												<input type="hidden" name="fielddoc" value="1">
-												<input type="hidden" name="where" value="4">
-												<input type="hidden" name="typedoc" value="3">
-												<input type="hidden" name="cod_tribunal" value="211">
-												<input type="hidden" name="crr_iddocumento" value="23821178">
-												<a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png" border='0' height='24px;' width='24px;'></a>
-											</form>
-														<!-- fin pdf -->
-								</td>
-								<!--<td>
-									<form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
-										<input type="hidden" name="rol_causa" value="211">
-										<input type="hidden" name="crr_iddocumentocausa" value="23821178">
-										<a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
-									</form>
-								</td>-->
-								<td>Ingreso                                 </td>
-								<td>Resolución                    </td>
-
-								<td>Liquídese Cumplimiento									<!-- Pdf o word -->
-
-														<!-- Fin pdf o word -->
-								</td>
-
-								<td>01/02/2017</td>
-							</tr>
-
-							<tr class="">
-								<td align="center">
-
-									<!-- pdf -->
-																<form method="post" action="blob_cobranza.php" target='_blank'>
-												<input type="hidden" name="tabla" value="2">
-												<input type="hidden" name="field" value="1">
-												<input type="hidden" name="fielddoc" value="1">
-												<input type="hidden" name="where" value="2">
-												<input type="hidden" name="typedoc" value="1">
-												<input type="hidden" name="cod_tribunal" value="211">
-												<input type="hidden" name="crr_iddocumento" value="9129705">
-												<a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/word.png" border='0' height='24px;' width='24px;'></a>
-											</form>
-														<!-- fin pdf -->
-								</td>
-								<!--<td>
-									<form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
-										<input type="hidden" name="rol_causa" value="211">
-										<input type="hidden" name="crr_iddocumentocausa" value="9129705">
-										<a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
-									</form>
-								</td>-->
-								<td>Ingreso                                 </td>
-								<td>Escrito</td>
-
-								<td>Ingreso demanda									<!-- Pdf o word -->
-
-														<!-- Fin pdf o word -->
-								</td>
-
-								<td>27/01/2017</td>
-							</tr>
-
-					</table>
-				</div>
-
-				<div id="tabs-2">
-					<table class="tablaPop" width="100%">
-						<tr id="titTablaCobLit">
-							<td>Sujeto</td>
-							<td>Rut</td>
-							<td>Persona</td>
-							<td>Nombre o Raz&oacute;n Social</td>
-						</tr>
-
-
-							<tr class="">
-								<td>DDO.  </td>
-								<td>7821483-K</td>
-								<td>NATURAL                       </td>
-								<td>GERARLDO GLOEMIR SIERRA PACHECO </td>
-							</tr>
-
-							<tr class="">
-								<td>AB.DDO</td>
-								<td>13607574-8</td>
-								<td>NATURAL                       </td>
-								<td>PAOLA ANDREA LARA SANHUEZA </td>
-							</tr>
-
-							<tr class="">
-								<td>DTE.  </td>
-								<td>10257696-9</td>
-								<td>NATURAL                       </td>
-								<td>JOSE ORLANDO COLILLANCA CURIN </td>
-							</tr>
-
-							<tr class="">
-								<td>AB.DTE</td>
-								<td>15580613-3</td>
-								<td>NATURAL                       </td>
-								<td>LEONARDO FRANCISCO TAPIA GRANDON </td>
-							</tr>
-
-							<tr class="">
-								<td>AB.DTE</td>
-								<td>17043594-K</td>
-								<td>NATURAL                       </td>
-								<td>FRANCISCO  JAVIER GRANDN ZAMBRANO </td>
-							</tr>
-
-							<tr class="">
-								<td>T.IND.</td>
-								<td>98000400-7</td>
-								<td>JURIDICA                      </td>
-								<td>A.F.P. PROVIDA S.A.   </td>
-							</tr>
-
-					</table>
-				</div>
-
-				<div id="tabs-3">
-					<table class="tablaPop" width="100%">
-						<tr id="titTablaCobNot">
-							<td>Tip.Not.</td>
-							<td>Est.Not.</td>
-							<td>Fec.Not.</td>
-							<td>Fec.Tram.</td>
-							<td>Tramite</td>
-							<td>Tip.Part.</td>
-							<td>Nombre</td>
-							<td>Obs.Fallida</td>
-						</tr>
-												<tr class="">
-								<td>e-mail                        </td>
-								<td>Realizada                                         </td>
-								<td>01/02/2017</td>
-								<td>01/02/2017</td>
-								<td>resolución                    </td>
-								<td>AB.DDO.        </td>
-								<td>PAOLA ANDREA LARA SANHUEZA</td>
-							</tr>
-														<tr class="">
-								<td>e-mail                        </td>
-								<td>Realizada                                         </td>
-								<td>01/02/2017</td>
-								<td>01/02/2017</td>
-								<td>resolución                    </td>
-								<td>AB.DTE.        </td>
-								<td>LEONARDO FRANCISCO TAPIA GRANDON</td>
-							</tr>
-														<tr class="">
-								<td>e-mail                        </td>
-								<td>Realizada                                         </td>
-								<td>01/02/2017</td>
-								<td>01/02/2017</td>
-								<td>resolución                    </td>
-								<td>AB.DTE.        </td>
-								<td>FRANCISCO  JAVIER GRANDN ZAMBRANO</td>
-							</tr>
-														<tr class="">
-								<td>e-mail                        </td>
-								<td>Realizada                                         </td>
-								<td>20/02/2017</td>
-								<td>20/02/2017</td>
-								<td>resolución                    </td>
-								<td>AB.DDO.        </td>
-								<td>PAOLA ANDREA LARA SANHUEZA</td>
-							</tr>
-														<tr class="">
-								<td>e-mail                        </td>
-								<td>Realizada                                         </td>
-								<td>20/02/2017</td>
-								<td>20/02/2017</td>
-								<td>resolución                    </td>
-								<td>AB.DTE.        </td>
-								<td>LEONARDO FRANCISCO TAPIA GRANDON</td>
-							</tr>
-														<tr class="">
-								<td>e-mail                        </td>
-								<td>Realizada                                         </td>
-								<td>20/02/2017</td>
-								<td>20/02/2017</td>
-								<td>resolución                    </td>
-								<td>AB.DTE.        </td>
-								<td>FRANCISCO  JAVIER GRANDN ZAMBRANO</td>
-							</tr>
-
-					</table>
-				</div>
-
-				<div id="tabs-4">
-					<table class="tablaPop" width="100%">
-						<tr id="titTablaCobDil">
-							<td>Esta.Dil.</td>
-							<td>RIT</td>
-							<td>RUC</td>
-							<td>Tip.Dilig.</td>
-							<td>Fec.Tram.</td>
-							<td>Destinatario</td>
-							<td>Responsable</td>
-						</tr>
-
-					</table>
-				</div>
-
-				<div id="tabs-5">
-					<table class="tablaPop" width="100%">
-						<tr id="titTablaCobLiq">
-							<td>Liq.</td>
-							<td>Fecha.Liq.</td>
-							<td>Cuaderno</td>
-							<td>Estado</td>
-							<td>Monto.Liq.</td>
-						</tr>
-												<tr class="">
-								<td align="center">
-									<form method="post" action="blob_cobranza.php" target='_blank'>
-										<input type="hidden" name="tabla" value="5">
-										<input type="hidden" name="field" value="1">
-										<input type="hidden" name="fielddoc" value="1">
-										<input type="hidden" name="where" value="5">
-										<input type="hidden" name="typedoc" value="3">
-										<input type="hidden" name="cod_tribunal" value="211">
-										<input type="hidden" name="crr_iddocumento" value="522651">
-										<a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src='../images/pdf.png' border='0' height='15px;' width='15px;'></a>
-									</form>
-
-								</td>
-								<td>16/02/2017</td>
-								<td>Principal</td>
-								<td>Firmado</td>
-								<td>274.186</td>
-							</tr>
-										</table>
-				</div>
-			</div>
-
-	<!-- aqui-->
-		</p>
-	</div>
+  <ul>
+    <li><a href="#tabs-1">Causa Cobranza</a></li>
+  </ul>
+
+  <div id="tabs-1">
+    <p>
+      <!-- ------------------- DIV DE ENCABEZADO -------------------------- -->
+    <div class="descPopUp">
+      <table border="0" style="font-family: Arial,Helvetica,sans-serif; font-size: 13px;" width="100%">
+        <tr>
+          <td><label>RIT: </label></td>
+          <td><span>C-1-2017</span>
+            <span>COLILLANCA CON SIERRA     </span></td>
+          <td><label>Fec. Ing: </label></td>
+          <td><span>27/01/2017</span></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><label>Est. Adm.: </label></td>
+          <td><span>Sin archivar                  </span></td>
+          <td><label>Proc.: </label></td>
+          <td><span>Cumplimiento Laboral</span></td>
+          <td><label>Forma Inicio: </label></td>
+          <td><span>Sitla                         </span></td>
+        </tr>
+        <tr>
+          <td><label>Est. Adm.: </label></td>
+          <td><span>Sin archivar                  </span></td>
+          <td><label>Etapa: </label></td>
+          <td><span>Excepciones / Objeta Liquidación        </span></td>
+          <td><label>Estado Proc.: </label></td>
+          <td><span>Tramitación                   </span></td>
+        </tr>
+        <tr>
+          <td><label>Tribunal: </label></td>
+          <td><span>Juzgado de Letras de Pitrufquen                   </span></td>
+          <td><label>Doc. Dda.: </label></td>
+          <td>
+            <!--<form method="post" id="formPopup" action="popup.php" target="formPopup" >
+                              <input type="hidden" name="cod_tribunal" value="211">
+                              <input type="hidden" name="cod_naturalezaexp" value="B">
+                              <input type="hidden" name="crr_idcausa" value="2759733">
+                              <a style="cursor:pointer;" onclick='PopWindow()'><img src="../images/doc.jpg" border="0" height="14 " width="13"/></a>
+                          </form>-->
+            <form action="doc_func_cob.php" method="post" target="_blank" id="formPopup">
+              <input type="hidden" name="tribunal" value="211">
+              <input type="hidden" name="crr_causa" value="2759733">
+              <input type="hidden" name="id_documento" value="2836629">
+              <input type="hidden" name="tipo" value="1">
+              <a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/word.png"></a>
+            </form>
+          </td>
+          <td>
+
+            <label>Titulo Ejec.: </label>
+
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!-- ---------------------------------------------------------------- -->
+
+    <fieldset>
+      <div class="row descPopUp" style="text-align:left;">
+        <div class="large-2 columns">
+          <strong>Historia Causa Cuaderno</strong>
+        </div>
+        <div class="large-4 columns">
+          <select id="selCuaderno" onChange="cambiaCuaderno();">
+            <option value="5202871|1" selected="selected">Principal</option>
+
+          </select>
+        </div>
+        <div class="large-4 columns">
+          <a href="#" style="width:100%;" id="arecept">
+
+          </a>
+        </div>
+        <br>
+        <div>
+          <label>Inf. Receptor: </label><a href="JavaScript:muestra_det_receptor()"><img src='../images/doc.jpg'
+                                                                                         border='0' height='15px;'
+                                                                                         width='15px;'></a>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- ------------ INFORMACION DEL RECEPTOR -------------------- -->
+    <div id="det_receptor" align="center" style="z-index:20;display:none;">
+
+      <table class="tabla" width="90%">
+        <tr>
+          <td colspan="3"><b>Informaci&oacute;n de Receptor</b></td>
+        </tr>
+        <tr>
+          <td class="descPopUp" colspan="3">&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td class="descPopUp" colspan="3">Causa no presenta retiro de Receptor.</td>
+        </tr>
+        <tr class="filadostabla">
+          <td colspan="3">
+            <input type="button" style="margin:15px 0 -25px;" onclick="oculta_det_receptor();" value="Aceptar"
+                   name="aceptar"/>
+          </td>
+        </tr>
+
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+
+    </div>
+    <!-- ---------------------------------------------------------- -->
+
+    <div id="tabs">
+      <ul>
+        <li><a href="#tabs-1">Historia</a></li>
+        <li><a href="#tabs-2">Litigantes</a></li>
+        <li><a href="#tabs-3">Notificaciones</a></li>
+        <li><a href="#tabs-4">Diligencias</a></li>
+        <li><a href="#tabs-5">Liquidaci&oacute;n</a></li>
+      </ul>
+
+      <div id="tabs-1">
+        <table class="tablaPop" width="100%">
+          <tr id="titTablaCob">
+            <td>Doc.Sel.</td>
+            <!--<td>&nbsp;Anexo</td>-->
+            <td>Etapa</td>
+            <td>Tr&aacute;mite</td>
+            <td>Desc. Tr&aacute;mite</td>
+            <td>Fech.Tram.</td>
+          </tr>
+
+
+          <tr class="">
+            <td align="center">
+
+              <!-- pdf -->
+              <form method="post" action="blob_cobranza.php" target='_blank'>
+                <input type="hidden" name="tabla" value="4">
+                <input type="hidden" name="field" value="1">
+                <input type="hidden" name="fielddoc" value="1">
+                <input type="hidden" name="where" value="4">
+                <input type="hidden" name="typedoc" value="3">
+                <input type="hidden" name="cod_tribunal" value="211">
+                <input type="hidden" name="crr_iddocumento" value="24048771">
+                <a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png"
+                                                                                            border='0' height='24px;'
+                                                                                            width='24px;'></a>
+              </form>
+              <!-- fin pdf -->
+            </td>
+            <!--<td>
+                                <form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
+                                    <input type="hidden" name="rol_causa" value="211">
+                                    <input type="hidden" name="crr_iddocumentocausa" value="24048771">
+                                    <a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
+                                </form>
+                            </td>-->
+            <td>Excepciones / Objeta Liquidación</td>
+            <td>Actuación</td>
+
+            <td>Certifica Envío de E-Mail                  <!-- Pdf o word -->
+
+              <!-- Fin pdf o word -->
+            </td>
+
+            <td>20/02/2017</td>
+          </tr>
+
+          <tr class="">
+            <td align="center">
+
+              <!-- pdf -->
+              <form method="post" action="blob_cobranza.php" target='_blank'>
+                <input type="hidden" name="tabla" value="4">
+                <input type="hidden" name="field" value="1">
+                <input type="hidden" name="fielddoc" value="1">
+                <input type="hidden" name="where" value="4">
+                <input type="hidden" name="typedoc" value="3">
+                <input type="hidden" name="cod_tribunal" value="211">
+                <input type="hidden" name="crr_iddocumento" value="24048773">
+                <a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png"
+                                                                                            border='0' height='24px;'
+                                                                                            width='24px;'></a>
+              </form>
+              <!-- fin pdf -->
+            </td>
+            <!--<td>
+                                <form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
+                                    <input type="hidden" name="rol_causa" value="211">
+                                    <input type="hidden" name="crr_iddocumentocausa" value="24048773">
+                                    <a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
+                                </form>
+                            </td>-->
+            <td>Excepciones / Objeta Liquidación</td>
+            <td>Actuación</td>
+
+            <td>Certifica Envío de E-Mail                  <!-- Pdf o word -->
+
+              <!-- Fin pdf o word -->
+            </td>
+
+            <td>20/02/2017</td>
+          </tr>
+
+          <tr class="">
+            <td align="center">
+
+              <!-- pdf -->
+              <form method="post" action="blob_cobranza.php" target='_blank'>
+                <input type="hidden" name="tabla" value="4">
+                <input type="hidden" name="field" value="1">
+                <input type="hidden" name="fielddoc" value="1">
+                <input type="hidden" name="where" value="4">
+                <input type="hidden" name="typedoc" value="3">
+                <input type="hidden" name="cod_tribunal" value="211">
+                <input type="hidden" name="crr_iddocumento" value="24048772">
+                <a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png"
+                                                                                            border='0' height='24px;'
+                                                                                            width='24px;'></a>
+              </form>
+              <!-- fin pdf -->
+            </td>
+            <!--<td>
+                                <form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
+                                    <input type="hidden" name="rol_causa" value="211">
+                                    <input type="hidden" name="crr_iddocumentocausa" value="24048772">
+                                    <a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
+                                </form>
+                            </td>-->
+            <td>Excepciones / Objeta Liquidación</td>
+            <td>Actuación</td>
+
+            <td>Certifica Envío de E-Mail                  <!-- Pdf o word -->
+
+              <!-- Fin pdf o word -->
+            </td>
+
+            <td>20/02/2017</td>
+          </tr>
+
+          <tr class="">
+            <td align="center">
+
+              <!-- pdf -->
+              <form method="post" action="blob_cobranza.php" target='_blank'>
+                <input type="hidden" name="tabla" value="4">
+                <input type="hidden" name="field" value="1">
+                <input type="hidden" name="fielddoc" value="1">
+                <input type="hidden" name="where" value="4">
+                <input type="hidden" name="typedoc" value="3">
+                <input type="hidden" name="cod_tribunal" value="211">
+                <input type="hidden" name="crr_iddocumento" value="24038951">
+                <a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png"
+                                                                                            border='0' height='24px;'
+                                                                                            width='24px;'></a>
+              </form>
+              <!-- fin pdf -->
+            </td>
+            <!--<td>
+                                <form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
+                                    <input type="hidden" name="rol_causa" value="211">
+                                    <input type="hidden" name="crr_iddocumentocausa" value="24038951">
+                                    <a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
+                                </form>
+                            </td>-->
+            <td>Ingreso</td>
+            <td>Resolución</td>
+
+            <td>Requiérase                  <!-- Pdf o word -->
+
+              <!-- Fin pdf o word -->
+            </td>
+
+            <td>20/02/2017</td>
+          </tr>
+
+          <tr class="">
+            <td align="center">
+
+              <!-- pdf -->
+              <form method="post" action="blob_cobranza.php" target='_blank'>
+                <input type="hidden" name="tabla" value="4">
+                <input type="hidden" name="field" value="1">
+                <input type="hidden" name="fielddoc" value="1">
+                <input type="hidden" name="where" value="4">
+                <input type="hidden" name="typedoc" value="3">
+                <input type="hidden" name="cod_tribunal" value="211">
+                <input type="hidden" name="crr_iddocumento" value="24008654">
+                <a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png"
+                                                                                            border='0' height='24px;'
+                                                                                            width='24px;'></a>
+              </form>
+              <!-- fin pdf -->
+            </td>
+            <!--<td>
+                                <form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
+                                    <input type="hidden" name="rol_causa" value="211">
+                                    <input type="hidden" name="crr_iddocumentocausa" value="24008654">
+                                    <a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
+                                </form>
+                            </td>-->
+            <td>Ingreso</td>
+            <td>Actuación</td>
+
+            <td>Liquidación                  <!-- Pdf o word -->
+
+              <!-- Fin pdf o word -->
+            </td>
+
+            <td>16/02/2017</td>
+          </tr>
+
+          <tr class="">
+            <td align="center">
+
+              <!-- pdf -->
+              <form method="post" action="blob_cobranza.php" target='_blank'>
+                <input type="hidden" name="tabla" value="4">
+                <input type="hidden" name="field" value="1">
+                <input type="hidden" name="fielddoc" value="1">
+                <input type="hidden" name="where" value="4">
+                <input type="hidden" name="typedoc" value="3">
+                <input type="hidden" name="cod_tribunal" value="211">
+                <input type="hidden" name="crr_iddocumento" value="23829703">
+                <a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png"
+                                                                                            border='0' height='24px;'
+                                                                                            width='24px;'></a>
+              </form>
+              <!-- fin pdf -->
+            </td>
+            <!--<td>
+                                <form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
+                                    <input type="hidden" name="rol_causa" value="211">
+                                    <input type="hidden" name="crr_iddocumentocausa" value="23829703">
+                                    <a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
+                                </form>
+                            </td>-->
+            <td>Ingreso</td>
+            <td>Actuación</td>
+
+            <td>Certifica Envío de E-Mail                  <!-- Pdf o word -->
+
+              <!-- Fin pdf o word -->
+            </td>
+
+            <td>01/02/2017</td>
+          </tr>
+
+          <tr class="">
+            <td align="center">
+
+              <!-- pdf -->
+              <form method="post" action="blob_cobranza.php" target='_blank'>
+                <input type="hidden" name="tabla" value="4">
+                <input type="hidden" name="field" value="1">
+                <input type="hidden" name="fielddoc" value="1">
+                <input type="hidden" name="where" value="4">
+                <input type="hidden" name="typedoc" value="3">
+                <input type="hidden" name="cod_tribunal" value="211">
+                <input type="hidden" name="crr_iddocumento" value="23829704">
+                <a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png"
+                                                                                            border='0' height='24px;'
+                                                                                            width='24px;'></a>
+              </form>
+              <!-- fin pdf -->
+            </td>
+            <!--<td>
+                                <form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
+                                    <input type="hidden" name="rol_causa" value="211">
+                                    <input type="hidden" name="crr_iddocumentocausa" value="23829704">
+                                    <a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
+                                </form>
+                            </td>-->
+            <td>Ingreso</td>
+            <td>Actuación</td>
+
+            <td>Certifica Envío de E-Mail                  <!-- Pdf o word -->
+
+              <!-- Fin pdf o word -->
+            </td>
+
+            <td>01/02/2017</td>
+          </tr>
+
+          <tr class="">
+            <td align="center">
+
+              <!-- pdf -->
+              <form method="post" action="blob_cobranza.php" target='_blank'>
+                <input type="hidden" name="tabla" value="4">
+                <input type="hidden" name="field" value="1">
+                <input type="hidden" name="fielddoc" value="1">
+                <input type="hidden" name="where" value="4">
+                <input type="hidden" name="typedoc" value="3">
+                <input type="hidden" name="cod_tribunal" value="211">
+                <input type="hidden" name="crr_iddocumento" value="23829705">
+                <a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png"
+                                                                                            border='0' height='24px;'
+                                                                                            width='24px;'></a>
+              </form>
+              <!-- fin pdf -->
+            </td>
+            <!--<td>
+                                <form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
+                                    <input type="hidden" name="rol_causa" value="211">
+                                    <input type="hidden" name="crr_iddocumentocausa" value="23829705">
+                                    <a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
+                                </form>
+                            </td>-->
+            <td>Ingreso</td>
+            <td>Actuación</td>
+
+            <td>Certifica Envío de E-Mail                  <!-- Pdf o word -->
+
+              <!-- Fin pdf o word -->
+            </td>
+
+            <td>01/02/2017</td>
+          </tr>
+
+          <tr class="">
+            <td align="center">
+
+              <!-- pdf -->
+              <form method="post" action="blob_cobranza.php" target='_blank'>
+                <input type="hidden" name="tabla" value="4">
+                <input type="hidden" name="field" value="1">
+                <input type="hidden" name="fielddoc" value="1">
+                <input type="hidden" name="where" value="4">
+                <input type="hidden" name="typedoc" value="3">
+                <input type="hidden" name="cod_tribunal" value="211">
+                <input type="hidden" name="crr_iddocumento" value="23821178">
+                <a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/pdf.png"
+                                                                                            border='0' height='24px;'
+                                                                                            width='24px;'></a>
+              </form>
+              <!-- fin pdf -->
+            </td>
+            <!--<td>
+                                <form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
+                                    <input type="hidden" name="rol_causa" value="211">
+                                    <input type="hidden" name="crr_iddocumentocausa" value="23821178">
+                                    <a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
+                                </form>
+                            </td>-->
+            <td>Ingreso</td>
+            <td>Resolución</td>
+
+            <td>Liquídese Cumplimiento                  <!-- Pdf o word -->
+
+              <!-- Fin pdf o word -->
+            </td>
+
+            <td>01/02/2017</td>
+          </tr>
+
+          <tr class="">
+            <td align="center">
+
+              <!-- pdf -->
+              <form method="post" action="blob_cobranza.php" target='_blank'>
+                <input type="hidden" name="tabla" value="2">
+                <input type="hidden" name="field" value="1">
+                <input type="hidden" name="fielddoc" value="1">
+                <input type="hidden" name="where" value="2">
+                <input type="hidden" name="typedoc" value="1">
+                <input type="hidden" name="cod_tribunal" value="211">
+                <input type="hidden" name="crr_iddocumento" value="9129705">
+                <a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src="../images/word.png"
+                                                                                            border='0' height='24px;'
+                                                                                            width='24px;'></a>
+              </form>
+              <!-- fin pdf -->
+            </td>
+            <!--<td>
+                                <form method="post" id="formPopupCob" action="../anexos/anexoCobranza.php" target="formPopupCob" >
+                                    <input type="hidden" name="rol_causa" value="211">
+                                    <input type="hidden" name="crr_iddocumentocausa" value="9129705">
+                                    <a style="cursor:pointer;" onclick='PopWindowAnexo()'><img src="../images/folder.png" border="0" /></a>
+                                </form>
+                            </td>-->
+            <td>Ingreso</td>
+            <td>Escrito</td>
+
+            <td>Ingreso demanda                  <!-- Pdf o word -->
+
+              <!-- Fin pdf o word -->
+            </td>
+
+            <td>27/01/2017</td>
+          </tr>
+
+        </table>
+      </div>
+
+      <div id="tabs-2">
+        <table class="tablaPop" width="100%">
+          <tr id="titTablaCobLit">
+            <td>Sujeto</td>
+            <td>Rut</td>
+            <td>Persona</td>
+            <td>Nombre o Raz&oacute;n Social</td>
+          </tr>
+
+
+          <tr class="">
+            <td>DDO.</td>
+            <td>7821483-K</td>
+            <td>NATURAL</td>
+            <td>GERARLDO GLOEMIR SIERRA PACHECO</td>
+          </tr>
+
+          <tr class="">
+            <td>AB.DDO</td>
+            <td>13607574-8</td>
+            <td>NATURAL</td>
+            <td>PAOLA ANDREA LARA SANHUEZA</td>
+          </tr>
+
+          <tr class="">
+            <td>DTE.</td>
+            <td>10257696-9</td>
+            <td>NATURAL</td>
+            <td>JOSE ORLANDO COLILLANCA CURIN</td>
+          </tr>
+
+          <tr class="">
+            <td>AB.DTE</td>
+            <td>15580613-3</td>
+            <td>NATURAL</td>
+            <td>LEONARDO FRANCISCO TAPIA GRANDON</td>
+          </tr>
+
+          <tr class="">
+            <td>AB.DTE</td>
+            <td>17043594-K</td>
+            <td>NATURAL</td>
+            <td>FRANCISCO JAVIER GRANDN ZAMBRANO</td>
+          </tr>
+
+          <tr class="">
+            <td>T.IND.</td>
+            <td>98000400-7</td>
+            <td>JURIDICA</td>
+            <td>A.F.P. PROVIDA S.A.</td>
+          </tr>
+
+        </table>
+      </div>
+
+      <div id="tabs-3">
+        <table class="tablaPop" width="100%">
+          <tr id="titTablaCobNot">
+            <td>Tip.Not.</td>
+            <td>Est.Not.</td>
+            <td>Fec.Not.</td>
+            <td>Fec.Tram.</td>
+            <td>Tramite</td>
+            <td>Tip.Part.</td>
+            <td>Nombre</td>
+            <td>Obs.Fallida</td>
+          </tr>
+          <tr class="">
+            <td>e-mail</td>
+            <td>Realizada</td>
+            <td>01/02/2017</td>
+            <td>01/02/2017</td>
+            <td>resolución</td>
+            <td>AB.DDO.</td>
+            <td>PAOLA ANDREA LARA SANHUEZA</td>
+          </tr>
+          <tr class="">
+            <td>e-mail</td>
+            <td>Realizada</td>
+            <td>01/02/2017</td>
+            <td>01/02/2017</td>
+            <td>resolución</td>
+            <td>AB.DTE.</td>
+            <td>LEONARDO FRANCISCO TAPIA GRANDON</td>
+          </tr>
+          <tr class="">
+            <td>e-mail</td>
+            <td>Realizada</td>
+            <td>01/02/2017</td>
+            <td>01/02/2017</td>
+            <td>resolución</td>
+            <td>AB.DTE.</td>
+            <td>FRANCISCO JAVIER GRANDN ZAMBRANO</td>
+          </tr>
+          <tr class="">
+            <td>e-mail</td>
+            <td>Realizada</td>
+            <td>20/02/2017</td>
+            <td>20/02/2017</td>
+            <td>resolución</td>
+            <td>AB.DDO.</td>
+            <td>PAOLA ANDREA LARA SANHUEZA</td>
+          </tr>
+          <tr class="">
+            <td>e-mail</td>
+            <td>Realizada</td>
+            <td>20/02/2017</td>
+            <td>20/02/2017</td>
+            <td>resolución</td>
+            <td>AB.DTE.</td>
+            <td>LEONARDO FRANCISCO TAPIA GRANDON</td>
+          </tr>
+          <tr class="">
+            <td>e-mail</td>
+            <td>Realizada</td>
+            <td>20/02/2017</td>
+            <td>20/02/2017</td>
+            <td>resolución</td>
+            <td>AB.DTE.</td>
+            <td>FRANCISCO JAVIER GRANDN ZAMBRANO</td>
+          </tr>
+
+        </table>
+      </div>
+
+      <div id="tabs-4">
+        <table class="tablaPop" width="100%">
+          <tr id="titTablaCobDil">
+            <td>Esta.Dil.</td>
+            <td>RIT</td>
+            <td>RUC</td>
+            <td>Tip.Dilig.</td>
+            <td>Fec.Tram.</td>
+            <td>Destinatario</td>
+            <td>Responsable</td>
+          </tr>
+
+        </table>
+      </div>
+
+      <div id="tabs-5">
+        <table class="tablaPop" width="100%">
+          <tr id="titTablaCobLiq">
+            <td>Liq.</td>
+            <td>Fecha.Liq.</td>
+            <td>Cuaderno</td>
+            <td>Estado</td>
+            <td>Monto.Liq.</td>
+          </tr>
+          <tr class="">
+            <td align="center">
+              <form method="post" action="blob_cobranza.php" target='_blank'>
+                <input type="hidden" name="tabla" value="5">
+                <input type="hidden" name="field" value="1">
+                <input type="hidden" name="fielddoc" value="1">
+                <input type="hidden" name="where" value="5">
+                <input type="hidden" name="typedoc" value="3">
+                <input type="hidden" name="cod_tribunal" value="211">
+                <input type="hidden" name="crr_iddocumento" value="522651">
+                <a style="cursor:pointer;" onclick='$(this).closest("form").submit();'><img src='../images/pdf.png'
+                                                                                            border='0' height='15px;'
+                                                                                            width='15px;'></a>
+              </form>
+
+            </td>
+            <td>16/02/2017</td>
+            <td>Principal</td>
+            <td>Firmado</td>
+            <td>274.186</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- aqui-->
+    </p>
+  </div>
 
 </div>

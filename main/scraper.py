@@ -3,7 +3,7 @@ import re
 from bs4 import BeautifulSoup
 
 from main.crypto import decrypt
-from main.models import Causa, DocSuprema, DocApelaciones, DocCivil, DocLaboral, DocPenal
+from main.models import Causa, DocSuprema, DocApelaciones, DocCivil, DocLaboral, DocPenal, DocCobranza, DocFamilia
 from main.utils import format_rut, send_new_doc_notification
 
 
@@ -133,7 +133,6 @@ class Scraper:
             raise Exception('Unable to load {}'.format(url))
 
     def _get_total_records(self, text):
-        session = self.session
         regex = re.compile('de un total de \d+ registros')
         line = regex.search(text)
         if line:
@@ -516,10 +515,145 @@ class Scraper:
             raise Exception('Unable to find penal documents')
 
     def scrape_cobranza_document(self, causa):
-        pass
+        """Opens the detail of a causa. `causa` is the soup form element"""
+        session = self.session
+        url = Scraper.CAUSA_TYPES['cobranza']['detail']
+        data = {}
+        for input_elm in causa.find_all('input'):
+            if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
+                data[input_elm.attrs['name']] = input_elm.attrs['value']
+        causa_obj = None
+        causa_id = None
+
+        data_keys = data.keys()
+
+        if 'cod_tribunal' in data_keys and 'rol_causa' in data_keys and 'era_causa' in data_keys:
+            causa_id = '{}-{}-{}'.format(data['cod_tribunal'], data['rol_causa'], data['era_causa'])
+            tr = causa.parent.parent
+            tds = tr.find_all('td')
+            caratulado = tds[3].string
+            try:
+                causa_obj = Causa.objects.get(id=causa_id)
+            except Exception as ex:
+                causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_COBRANZA, archived=False,
+                                  caratulado=caratulado)
+                causa_obj.save()
+
+        if causa_obj and causa_id:
+            print(causa_obj)
+            # Open causa details:
+            resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
+            if 'Causa Cobranza' in resp.text:
+                resp_text = resp.text.replace('\r', ' ').replace('\n', '')
+                html = '<html><body>{}</body></html>'.format(resp_text)
+                soup = BeautifulSoup(html, 'html.parser')
+                rows = soup.find(id='titTablaCob').parent.find_all('tr')
+                header = True
+                for row in rows:
+                    if not header:  # skip the header row
+                        doc_data = {}
+                        for doc_input in row.find_all('input'):
+                            try:
+                                doc_data[doc_input.attrs['name']] = doc_input.attrs['value']
+                            except:
+                                pass
+                        doc_keys = doc_data.keys()
+                        doc_id = None
+                        if 'cod_tribunal' in doc_keys and 'crr_iddocumento' in doc_keys:
+                            doc_id = 'COB-{}-{}'.format(doc_data['cod_tribunal'], doc_data['crr_iddocumento'])
+                        tds = row.find_all('td')
+                        if doc_id:
+                            created = False
+                            try:
+                                doc_obj = DocCobranza.objects.get(id=doc_id)
+                            except:
+                                doc_obj = DocCobranza(
+                                    id=doc_id,
+                                    causa=causa_obj,
+                                    etapa=tds[1].string,
+                                    tramite=tds[2].string,
+                                    desc_tramite=tds[3].string,
+                                    fecha=tds[4].string,
+                                )
+                                doc_obj.save()
+                                created = True
+
+                            if created:
+                                if self.profile.initial_migration_done:
+                                    print('Sending notification: {}'.format(doc_obj))
+                                    send_new_doc_notification(doc_obj)
+
+                            print(doc_obj)
+
+                    else:
+                        header = False
+        else:
+            raise Exception('Unable to find cobranza documents')
 
     def scrape_familia_document(self, causa):
-        pass
+        """Opens the detail of a causa. `causa` is the soup form element"""
+        session = self.session
+        url = Scraper.CAUSA_TYPES['familia']['detail']
+        data = {}
+        for input_elm in causa.find_all('input'):
+            if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
+                data[input_elm.attrs['name']] = input_elm.attrs['value']
+        causa_id = '-'.join(data.values())  # TODO: use this kind of id for all causas
+        tr = causa.parent.parent
+        tds = tr.find_all('td')
+        caratulado = tds[3].string
+        try:
+            causa_obj = Causa.objects.get(id=causa_id)
+        except Exception as ex:
+            causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_FAMILIA, archived=False,
+                              caratulado=caratulado)
+            causa_obj.save()
+
+        if causa_obj and causa_id:
+            print(causa_obj)
+            # Open causa details:
+            resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
+            if 'Causa Familia' in resp.text:
+                resp_text = resp.text.replace('\r', ' ').replace('\n', '')
+                html = '<html><body>{}</body></html>'.format(resp_text)
+                soup = BeautifulSoup(html, 'html.parser')
+                rows = soup.find(id='titTablaFam').parent.find_all('tr')
+                header = True
+                for row in rows:
+                    if not header:  # skip the header row
+                        link = row.find('a')
+                        if link and 'onclick' in link.attrs:
+                            onclick = link.attrs['onclick']  # E.g "vvbbFF('Resolución',3,59987979,0);"
+                            doc_id = onclick.replace('vvbbFF(', '').replace(');', '').replace(',', '-').replace("'", '')
+                            tds = row.find_all('td')
+                            if doc_id:
+                                created = False
+                                try:
+                                    doc_obj = DocFamilia.objects.get(id=doc_id)
+                                except:
+                                    doc_obj = DocFamilia(
+                                        id=doc_id,
+                                        causa=causa_obj,
+                                        etapa=tds[2].string,
+                                        tramite=tds[3].string,
+                                        desc_tramite=tds[4].string,
+                                        referencia=tds[5].string,
+                                        fecha=tds[6].string,
+                                    )
+                                    doc_obj.save()
+                                    created = True
+
+                                if created:
+                                    if self.profile.initial_migration_done:
+                                        print('Sending notification: {}'.format(doc_obj))
+                                        send_new_doc_notification(doc_obj)
+
+                                print(doc_obj)
+
+                    else:
+                        header = False
+        else:
+            raise Exception('Unable to find familia documents')
 
     def scrape_causas(self, type, doc_scraper):
         # I need to post page 1 to know the total pages. Then loop starts from page 2
@@ -558,8 +692,8 @@ class Scraper:
         # self.scrape_causas('apelaciones', self.scrape_apelaciones_document)
         # self.scrape_causas('civil', self.scrape_civil_document)
         # self.scrape_causas('laboral', self.scrape_laboral_document)
-        self.scrape_causas('penal', self.scrape_penal_document)
+        # self.scrape_causas('penal', self.scrape_penal_document)
         # self.scrape_causas('cobranza', self.scrape_cobranza_document)
-        # self.scrape_causas('familia', self.scrape_familia_document)
+        self.scrape_causas('familia', self.scrape_familia_document)
 
         session.close()

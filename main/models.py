@@ -121,7 +121,7 @@ class DocPenal(models.Model):
 
 
 class DocCobranza(models.Model):
-    # uses auto generated id
+    id = models.CharField(max_length=100, primary_key=True)
     causa = models.ForeignKey(Causa)
     etapa = models.TextField(blank=True, null=True)
     tramite = models.TextField(blank=True, null=True)
@@ -136,7 +136,7 @@ class DocCobranza(models.Model):
 
 
 class DocFamilia(models.Model):
-    # uses auto generated id
+    id = models.CharField(max_length=100, primary_key=True)
     causa = models.ForeignKey(Causa)
     etapa = models.TextField(blank=True, null=True)
     tramite = models.TextField(blank=True, null=True)
