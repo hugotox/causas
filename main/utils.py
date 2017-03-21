@@ -55,12 +55,7 @@ def send_new_doc_notification(doc):
                                        player_ids=[doc.causa.user.player_id])
 
 
-def external_login(rut, clave):
-    # TODO
-    pass
-
-
-def create_user(username, password, player_id, first_name=None, last_name=None):
+def create_user(username, password, player_id):
     user = User.objects.create(username=username)
     up = UserProfile.objects.create(user=user, clave=encrypt(password), player_id=player_id)
     return up

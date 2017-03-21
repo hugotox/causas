@@ -55,15 +55,19 @@ class Scraper:
         },
     }
 
-    def __init__(self, profile):
-        self.profile = profile
+    def __init__(self, profile=None):
         self.session = requests.Session()
-        self.rut_consulta = self.profile.user.username.strip().replace('.', '').replace('-', '')[0:-1]
-        self.dv_consulta = self.profile.user.username.strip().replace('.', '').replace('-', '')[-1]
-        self.username = format_rut(self.profile.user.username)
-        self.clave = decrypt(self.profile.clave)
+        if profile:
+            self.profile = profile
+            self.rut_consulta = self.profile.user.username.strip().replace('.', '').replace('-', '')[0:-1]
+            self.dv_consulta = self.profile.user.username.strip().replace('.', '').replace('-', '')[-1]
+            self.username = format_rut(self.profile.user.username)
+            self.clave = decrypt(self.profile.clave)
 
     def login(self):
+        self.try_login(self.username, self.clave)
+
+    def try_login(self, rut, clave):
         url = 'https://oficinajudicialvirtual.pjud.cl/'
         headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) '
@@ -111,8 +115,8 @@ class Scraper:
                     'next': soup.find('input', attrs={'name': 'next'}).attrs['value'],
                     'nombre_app': 'PJUD',
                     'retorno': 'https://oficinajudicialvirtual.pjud.cl/claveunica/return.php',
-                    'username': self.username,
-                    'password': self.clave
+                    'username': format_rut(rut),
+                    'password': clave
                 }
 
                 print('Login in... {}'.format(payload))
@@ -124,13 +128,17 @@ class Scraper:
                 })
                 if 'https://oficinajudicialvirtual.pjud.cl/session.php' in resp.text:
                     print('Login in... OK')
+                    return True
                 else:
-                    raise Exception('Unable to log in. {}'.format(resp.text))
+                    # raise Exception('Unable to log in. {}'.format(resp.text))
+                    return False
             else:
-                raise Exception('Unable to find csrfmiddlewaretoken')
+                # raise Exception('Unable to find csrfmiddlewaretoken')
+                return False
 
         else:
-            raise Exception('Unable to load {}'.format(url))
+            # raise Exception('Unable to load {}'.format(url))
+            return False
 
     def _get_total_records(self, text):
         regex = re.compile('de un total de \d+ registros')
@@ -694,6 +702,6 @@ class Scraper:
         # self.scrape_causas('laboral', self.scrape_laboral_document)
         # self.scrape_causas('penal', self.scrape_penal_document)
         # self.scrape_causas('cobranza', self.scrape_cobranza_document)
-        self.scrape_causas('familia', self.scrape_familia_document)
+        # self.scrape_causas('familia', self.scrape_familia_document)
 
         session.close()

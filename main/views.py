@@ -1,14 +1,10 @@
 import json
-from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from main.models import UserProfile
-from main.utils import external_login, create_user
-
-
-def home(request):
-    return HttpResponse('ok')
+from main.scraper import Scraper
+from main.utils import create_user
 
 
 @csrf_exempt
@@ -27,7 +23,8 @@ def login(request):
                 'message': ''
             })
         except Exception as ex:
-            if external_login(rut, clave):
+            scraper = Scraper()
+            if scraper.try_login(rut, clave):
                 # create the user only if the external login was successful
                 user_profile = create_user(
                     username=rut,
