@@ -15,11 +15,11 @@ def run_scraper():
     for profile in users:
         n1 = datetime.now()
         scraper = Scraper(profile)
-        scraper.login()
-        scraper.init_scraping()
-        if not profile.initial_migration_done:
-            profile.initial_migration_done = True
-            profile.save()
+        if scraper.login():
+            scraper.init_scraping()
+            if not profile.initial_migration_done:
+                profile.initial_migration_done = True
+                profile.save()
         n2 = datetime.now()
         time = n2 - n1
         print('Done in {} minutes.'.format(round(time.seconds / 60, 2)))

@@ -65,7 +65,7 @@ class Scraper:
             self.clave = decrypt(self.profile.clave)
 
     def login(self):
-        self.try_login(self.username, self.clave)
+        return self.try_login(self.username, self.clave)
 
     def try_login(self, rut, clave):
         url = 'https://oficinajudicialvirtual.pjud.cl/'
@@ -106,7 +106,7 @@ class Scraper:
 
             print('Loading {} ... OK'.format(auth_url))
 
-            soup = BeautifulSoup(resp.text, 'html.parser')
+            soup = BeautifulSoup(resp.content.decode('ISO-8859-1'), 'html.parser')
             csrf_input = soup.find('input', attrs={'name': 'csrfmiddlewaretoken'})
 
             if csrf_input:
@@ -129,16 +129,8 @@ class Scraper:
                 if 'https://oficinajudicialvirtual.pjud.cl/session.php' in resp.text:
                     print('Login in... OK')
                     return True
-                else:
-                    # raise Exception('Unable to log in. {}'.format(resp.text))
-                    return False
-            else:
-                # raise Exception('Unable to find csrfmiddlewaretoken')
-                return False
 
-        else:
-            # raise Exception('Unable to load {}'.format(url))
-            return False
+        return False
 
     def _get_total_records(self, text):
         regex = re.compile('de un total de \d+ registros')
@@ -148,10 +140,7 @@ class Scraper:
             if total_records:
                 total_records = int(total_records[0])
                 return total_records
-            else:
-                raise Exception('Unable to find total records')
-        else:
-            raise Exception('Unable to find total records regex')
+        return 0
 
     def post_causa_type(self, causa_type, page, scrape_documents):
         """Opens the causas list based on causa type and the pagination number. Then loops through all causas
@@ -168,11 +157,14 @@ class Scraper:
         resp = session.post(url, data=payload, headers=Scraper.SCRAPER_HEADERS)
         if locator in resp.text:
             print('POST {} ...OK'.format(url))
-            soup = BeautifulSoup(resp.text, 'html.parser')
+            soup = BeautifulSoup(resp.content.decode('ISO-8859-1'), 'html.parser')
             causas = soup.find_all('form', attrs={'action': locator})
             for causa in causas:
                 if 'causa not closed':  # TODO <-- this
-                    scrape_documents(causa)
+                    try:
+                        scrape_documents(causa)
+                    except:
+                        pass  # if fails just try the next causa
             return resp.text
         else:
             print('Unable to find {} forms'.format(causa_type))
@@ -185,24 +177,19 @@ class Scraper:
         for input_elm in causa.find_all('input'):
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
-
-        causa_obj = None
-        causa_id = None
-        if 'rol_causa' in data.keys() and 'era_causa' in data.keys():
-            causa_id = '1-{}-{}'.format(data['rol_causa'], data['era_causa'])  # cod corte suprema = 1
-            try:
-                causa_obj = Causa.objects.get(id=causa_id)
-            except Exception as ex:
-                causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_SUPREMA, archived=False,
-                                  caratulado=data['caratulado'])
-                causa_obj.save()
-
+        causa_id = '-'.join(data.values())
+        try:
+            causa_obj = Causa.objects.get(id=causa_id)
+        except Exception as ex:
+            causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_SUPREMA, archived=False,
+                              caratulado=data['caratulado'])
+            causa_obj.save()
         if causa_obj and causa_id:
             print(causa_obj)
             # Open causa details:
             resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
             if 'Recurso Corte Suprema' in resp.text:
-                resp_text = resp.text.replace('\r', ' ').replace('\n', '')
+                resp_text = resp.content.decode('ISO-8859-1').replace('\r', ' ').replace('\n', '')
                 html = '<html><body>{}</body></html>'.format(resp_text)
                 soup = BeautifulSoup(html, 'html.parser')
                 rows = soup.find(id='titTablaSup').parent.find_all('tr')
@@ -239,8 +226,6 @@ class Scraper:
 
                     else:
                         header = False
-        else:
-            raise Exception('Unable to find suprema documents')
 
     def scrape_apelaciones_document(self, causa):
         """Opens the detail of a causa. `causa` is the soup form element"""
@@ -250,27 +235,23 @@ class Scraper:
         for input_elm in causa.find_all('input'):
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
-
-        causa_obj = None
-        causa_id = None
-        if 'rol_causa' in data.keys() and 'era_causa' in data.keys():
-            causa_id = '50-{}-{}'.format(data['rol_causa'], data['era_causa'])  # cod corte apelaciones = 50
-            tr = causa.parent.parent
-            tds = tr.find_all('td')
-            caratulado = tds[3].string
-            try:
-                causa_obj = Causa.objects.get(id=causa_id)
-            except Exception as ex:
-                causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_APELACIONES, archived=False,
-                                  caratulado=caratulado)
-                causa_obj.save()
+        causa_id = '-'.join(data.values())
+        tr = causa.parent.parent
+        tds = tr.find_all('td')
+        caratulado = tds[3].string
+        try:
+            causa_obj = Causa.objects.get(id=causa_id)
+        except Exception as ex:
+            causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_APELACIONES, archived=False,
+                              caratulado=caratulado)
+            causa_obj.save()
 
         if causa_obj and causa_id:
             print(causa_obj)
             # Open causa details:
             resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
             if 'Recurso Corte de Apelaciones' in resp.text:
-                resp_text = resp.text.replace('\r', ' ').replace('\n', '')
+                resp_text = resp.content.decode('ISO-8859-1').replace('\r', ' ').replace('\n', '')
                 html = '<html><body>{}</body></html>'.format(resp_text)
                 soup = BeautifulSoup(html, 'html.parser')
                 rows = soup.find(id='titTablaApeGrid').parent.find_all('tr')
@@ -305,8 +286,6 @@ class Scraper:
 
                     else:
                         header = False
-        else:
-            raise Exception('Unable to find apelaciones documents')
 
     def scrape_civil_document(self, causa):
         """Opens the detail of a causa. `causa` is the soup form element"""
@@ -316,27 +295,23 @@ class Scraper:
         for input_elm in causa.find_all('input'):
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
-
-        causa_obj = None
-        causa_id = None
-        if 'rol' in data.keys() and 'ano' in data.keys():
-            causa_id = 'C-{}-{}'.format(data['rol'], data['ano'])  # cod civil = C
-            tr = causa.parent.parent
-            tds = tr.find_all('td')
-            caratulado = tds[3].string
-            try:
-                causa_obj = Causa.objects.get(id=causa_id)
-            except Exception as ex:
-                causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_CIVIL, archived=False,
-                                  caratulado=caratulado)
-                causa_obj.save()
+        causa_id = '-'.join(data.values())
+        tr = causa.parent.parent
+        tds = tr.find_all('td')
+        caratulado = tds[3].string
+        try:
+            causa_obj = Causa.objects.get(id=causa_id)
+        except Exception as ex:
+            causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_CIVIL, archived=False,
+                              caratulado=caratulado)
+            causa_obj.save()
 
         if causa_obj and causa_id:
             print(causa_obj)
             # Open causa details:
             resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
             if 'Causa Civil' in resp.text:
-                resp_text = resp.text.replace('\r', ' ').replace('\n', '')
+                resp_text = resp.content.decode('ISO-8859-1').replace('\r', ' ').replace('\n', '')
                 html = '<html><body>{}</body></html>'.format(resp_text)
                 soup = BeautifulSoup(html, 'html.parser')
                 rows = soup.find(id='titTablaCiv').parent.parent.find_all('tr')  # double parent becaouse this one has header tr inside <thead>
@@ -371,8 +346,6 @@ class Scraper:
 
                     else:
                         header = False
-        else:
-            raise Exception('Unable to find civil documents')
 
     def scrape_laboral_document(self, causa):
         """Opens the detail of a causa. `causa` is the soup form element"""
@@ -382,27 +355,23 @@ class Scraper:
         for input_elm in causa.find_all('input'):
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
-
-        causa_obj = None
-        causa_id = None
-        if 'rol_causa' in data.keys() and 'era_causa' in data.keys() and 'cod_tribunal' in data.keys():
-            causa_id = '{}-{}-{}'.format(data['cod_tribunal'], data['rol_causa'], data['era_causa'])
-            tr = causa.parent.parent
-            tds = tr.find_all('td')
-            caratulado = tds[3].string
-            try:
-                causa_obj = Causa.objects.get(id=causa_id)
-            except Exception as ex:
-                causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_LABORAL, archived=False,
-                                  caratulado=caratulado)
-                causa_obj.save()
+        causa_id = '-'.join(data.values())
+        tr = causa.parent.parent
+        tds = tr.find_all('td')
+        caratulado = tds[3].string
+        try:
+            causa_obj = Causa.objects.get(id=causa_id)
+        except Exception as ex:
+            causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_LABORAL, archived=False,
+                              caratulado=caratulado)
+            causa_obj.save()
 
         if causa_obj and causa_id:
             print(causa_obj)
             # Open causa details:
             resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
             if 'Causa Laboral' in resp.text:
-                resp_text = resp.text.replace('\r', ' ').replace('\n', '')
+                resp_text = resp.content.decode('ISO-8859-1').replace('\r', ' ').replace('\n', '')
                 html = '<html><body>{}</body></html>'.format(resp_text)
                 soup = BeautifulSoup(html, 'html.parser')
                 rows = soup.find(id='titTablaLab').parent.find_all('tr')
@@ -444,8 +413,6 @@ class Scraper:
 
                     else:
                         header = False
-        else:
-            raise Exception('Unable to find laboral documents')
 
     def scrape_penal_document(self, causa):
         """Opens the detail of a causa. `causa` is the soup form element"""
@@ -456,26 +423,23 @@ class Scraper:
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
 
-        causa_obj = None
-        causa_id = None
-        if 'rol_causa' in data.keys() and 'era_causa' in data.keys() and 'cod_tribunal' in data.keys():
-            causa_id = '{}-{}-{}'.format(data['cod_tribunal'], data['rol_causa'], data['era_causa'])
-            tr = causa.parent.parent
-            tds = tr.find_all('td')
-            caratulado = tds[4].string
-            try:
-                causa_obj = Causa.objects.get(id=causa_id)
-            except Exception as ex:
-                causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_PENAL, archived=False,
-                                  caratulado=caratulado)
-                causa_obj.save()
+        causa_id = '-'.join(data.values())
+        tr = causa.parent.parent
+        tds = tr.find_all('td')
+        caratulado = tds[4].string
+        try:
+            causa_obj = Causa.objects.get(id=causa_id)
+        except Exception as ex:
+            causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_PENAL, archived=False,
+                              caratulado=caratulado)
+            causa_obj.save()
 
         if causa_obj and causa_id:
             print(causa_obj)
             # Open causa details:
             resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
             if 'Causa Penal' in resp.text:
-                resp_text = resp.text.replace('\r', ' ').replace('\n', '')
+                resp_text = resp.content.decode('ISO-8859-1').replace('\r', ' ').replace('\n', '')
                 html = '<html><body>{}</body></html>'.format(resp_text)
                 soup = BeautifulSoup(html, 'html.parser')
                 rows = soup.find(id='titTablaPen').parent.find_all('tr')
@@ -519,8 +483,6 @@ class Scraper:
 
                     else:
                         header = False
-        else:
-            raise Exception('Unable to find penal documents')
 
     def scrape_cobranza_document(self, causa):
         """Opens the detail of a causa. `causa` is the soup form element"""
@@ -530,29 +492,24 @@ class Scraper:
         for input_elm in causa.find_all('input'):
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
-        causa_obj = None
-        causa_id = None
 
-        data_keys = data.keys()
-
-        if 'cod_tribunal' in data_keys and 'rol_causa' in data_keys and 'era_causa' in data_keys:
-            causa_id = '{}-{}-{}'.format(data['cod_tribunal'], data['rol_causa'], data['era_causa'])
-            tr = causa.parent.parent
-            tds = tr.find_all('td')
-            caratulado = tds[3].string
-            try:
-                causa_obj = Causa.objects.get(id=causa_id)
-            except Exception as ex:
-                causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_COBRANZA, archived=False,
-                                  caratulado=caratulado)
-                causa_obj.save()
+        causa_id = '-'.join(data.values())
+        tr = causa.parent.parent
+        tds = tr.find_all('td')
+        caratulado = tds[3].string
+        try:
+            causa_obj = Causa.objects.get(id=causa_id)
+        except Exception as ex:
+            causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_COBRANZA, archived=False,
+                              caratulado=caratulado)
+            causa_obj.save()
 
         if causa_obj and causa_id:
             print(causa_obj)
             # Open causa details:
             resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
             if 'Causa Cobranza' in resp.text:
-                resp_text = resp.text.replace('\r', ' ').replace('\n', '')
+                resp_text = resp.content.decode('ISO-8859-1').replace('\r', ' ').replace('\n', '')
                 html = '<html><body>{}</body></html>'.format(resp_text)
                 soup = BeautifulSoup(html, 'html.parser')
                 rows = soup.find(id='titTablaCob').parent.find_all('tr')
@@ -595,8 +552,6 @@ class Scraper:
 
                     else:
                         header = False
-        else:
-            raise Exception('Unable to find cobranza documents')
 
     def scrape_familia_document(self, causa):
         """Opens the detail of a causa. `causa` is the soup form element"""
@@ -606,7 +561,7 @@ class Scraper:
         for input_elm in causa.find_all('input'):
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
-        causa_id = '-'.join(data.values())  # TODO: use this kind of id for all causas
+        causa_id = '-'.join(data.values())
         tr = causa.parent.parent
         tds = tr.find_all('td')
         caratulado = tds[3].string
@@ -622,7 +577,7 @@ class Scraper:
             # Open causa details:
             resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
             if 'Causa Familia' in resp.text:
-                resp_text = resp.text.replace('\r', ' ').replace('\n', '')
+                resp_text = resp.content.decode('ISO-8859-1').replace('\r', ' ').replace('\n', '')
                 html = '<html><body>{}</body></html>'.format(resp_text)
                 soup = BeautifulSoup(html, 'html.parser')
                 rows = soup.find(id='titTablaFam').parent.find_all('tr')
@@ -660,8 +615,6 @@ class Scraper:
 
                     else:
                         header = False
-        else:
-            raise Exception('Unable to find familia documents')
 
     def scrape_causas(self, type, doc_scraper):
         # I need to post page 1 to know the total pages. Then loop starts from page 2
@@ -696,12 +649,33 @@ class Scraper:
         session.get(url, headers=headers)
         print('Loading {} ...OK'.format(url))
 
-        # self.scrape_causas('suprema', self.scrape_suprema_document)
-        # self.scrape_causas('apelaciones', self.scrape_apelaciones_document)
-        # self.scrape_causas('civil', self.scrape_civil_document)
-        # self.scrape_causas('laboral', self.scrape_laboral_document)
-        # self.scrape_causas('penal', self.scrape_penal_document)
-        # self.scrape_causas('cobranza', self.scrape_cobranza_document)
-        # self.scrape_causas('familia', self.scrape_familia_document)
+        try:
+            self.scrape_causas('suprema', self.scrape_suprema_document)
+        except:
+            pass
+        try:
+            self.scrape_causas('apelaciones', self.scrape_apelaciones_document)
+        except:
+            pass
+        try:
+            self.scrape_causas('civil', self.scrape_civil_document)
+        except:
+            pass
+        try:
+            self.scrape_causas('laboral', self.scrape_laboral_document)
+        except:
+            pass
+        try:
+            self.scrape_causas('penal', self.scrape_penal_document)
+        except:
+            pass
+        try:
+            self.scrape_causas('cobranza', self.scrape_cobranza_document)
+        except:
+            pass
+        try:
+            self.scrape_causas('familia', self.scrape_familia_document)
+        except:
+            pass
 
         session.close()

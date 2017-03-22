@@ -31,7 +31,7 @@ class Causa(models.Model):
         (TYPE_CHOICES_COBRANZA, 'Cobranza'),
         (TYPE_CHOICES_FAMILIA, 'Familia'),
     )
-    id = models.CharField(max_length=50, primary_key=True)  # <cod_corte>-<rol>-<era>
+    id = models.TextField(primary_key=True)  # <cod_corte>-<rol>-<era>
     user = models.ForeignKey(UserProfile)
     type = models.IntegerField(choices=TYPE_CHOICES)
     archived = models.BooleanField(default=False)
@@ -42,7 +42,7 @@ class Causa(models.Model):
 
 
 class DocSuprema(models.Model):
-    id = models.CharField(max_length=100, primary_key=True)  # id format is "<causa.id>__<iddoc>"
+    id = models.TextField(primary_key=True)  # id format is "<causa.id>__<iddoc>"
     causa = models.ForeignKey(Causa)
     anio = models.TextField(blank=True, null=True)
     fecha = models.TextField(blank=True, null=True)
@@ -59,7 +59,7 @@ class DocSuprema(models.Model):
 
 
 class DocApelaciones(models.Model):
-    id = models.CharField(max_length=100, primary_key=True)  # id format is "<causa.id>__<folio>"
+    id = models.TextField(primary_key=True)  # id format is "<causa.id>__<folio>"
     causa = models.ForeignKey(Causa)
     tipo = models.TextField(blank=True, null=True)
     descripcion = models.TextField(blank=True, null=True)
@@ -75,7 +75,7 @@ class DocApelaciones(models.Model):
 
 
 class DocCivil(models.Model):
-    id = models.CharField(max_length=100, primary_key=True)  # id format is "<causa.id>__<folio>"
+    id = models.TextField(primary_key=True)  # id format is "<causa.id>__<folio>"
     causa = models.ForeignKey(Causa)
     etapa = models.TextField(blank=True, null=True)
     tramite = models.TextField(blank=True, null=True)
@@ -91,7 +91,7 @@ class DocCivil(models.Model):
 
 
 class DocLaboral(models.Model):
-    id = models.CharField(max_length=100, primary_key=True)
+    id = models.TextField(primary_key=True)
     causa = models.ForeignKey(Causa)
     tipo = models.TextField(blank=True, null=True)
     tramite = models.TextField(blank=True, null=True)
@@ -105,7 +105,7 @@ class DocLaboral(models.Model):
 
 
 class DocPenal(models.Model):
-    id = models.CharField(max_length=100, primary_key=True)
+    id = models.TextField(primary_key=True)
     causa = models.ForeignKey(Causa)
     tipo = models.TextField(blank=True, null=True)
     observacion = models.TextField(blank=True, null=True)
@@ -121,7 +121,7 @@ class DocPenal(models.Model):
 
 
 class DocCobranza(models.Model):
-    id = models.CharField(max_length=100, primary_key=True)
+    id = models.TextField(primary_key=True)
     causa = models.ForeignKey(Causa)
     etapa = models.TextField(blank=True, null=True)
     tramite = models.TextField(blank=True, null=True)
@@ -136,7 +136,7 @@ class DocCobranza(models.Model):
 
 
 class DocFamilia(models.Model):
-    id = models.CharField(max_length=100, primary_key=True)
+    id = models.TextField(primary_key=True)
     causa = models.ForeignKey(Causa)
     etapa = models.TextField(blank=True, null=True)
     tramite = models.TextField(blank=True, null=True)
