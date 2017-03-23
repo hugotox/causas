@@ -13,6 +13,7 @@ logger = get_task_logger(__name__)
 def run_scraper():
     users = UserProfile.objects.filter(user__is_active=True)
     for profile in users:
+        print('Scraping for user {}'.format(profile.user.username))
         n1 = datetime.now()
         scraper = Scraper(profile)
         if scraper.login():

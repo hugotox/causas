@@ -77,9 +77,9 @@ class Scraper:
             'Upgrade-Insecure-Requests': '1'
         }
         session = self.session
-        print('Loading {} ...'.format(url))
+        # print('Loading {} ...'.format(url))
         resp = session.get(url, headers=headers)
-        print('Loading {} ...OK'.format(url))
+        # print('Loading {} ...OK'.format(url))
 
         if 'https://www.claveunica.gob.cl/openid/authorize' in resp.text:
             idx1 = resp.text.index('https://www.claveunica.gob.cl/openid/authorize')
@@ -90,7 +90,7 @@ class Scraper:
                 current = resp.text[idx2]
 
             auth_url = resp.text[idx1:idx2]
-            print('Loading {} ...'.format(auth_url))
+            # print('Loading {} ...'.format(auth_url))
 
             resp = session.get(auth_url, headers={
                 'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -104,7 +104,7 @@ class Scraper:
                               'Chrome/56.0.2924.87 Safari/537.36',
             })
 
-            print('Loading {} ... OK'.format(auth_url))
+            # print('Loading {} ... OK'.format(auth_url))
 
             soup = BeautifulSoup(resp.content.decode('ISO-8859-1'), 'html.parser')
             csrf_input = soup.find('input', attrs={'name': 'csrfmiddlewaretoken'})
@@ -119,7 +119,7 @@ class Scraper:
                     'password': clave
                 }
 
-                print('Login in... {}'.format(payload))
+                # print('Login in... {}'.format(payload))
                 login_url = 'https://www.claveunica.gob.cl/accounts/login/'
                 resp = session.post(login_url, data=payload, headers={
                     'Referer': 'https://www.claveunica.gob.cl/accounts/login/?next={}'.format(auth_url),
@@ -153,10 +153,10 @@ class Scraper:
             'dv_consulta': self.dv_consulta,
             'pagina': page
         }
-        print('POST {} ... Page: {}'.format(url, page))
+        # print('POST {} ... Page: {}'.format(url, page))
         resp = session.post(url, data=payload, headers=Scraper.SCRAPER_HEADERS)
         if locator in resp.text:
-            print('POST {} ...OK'.format(url))
+            print('POST {} - Page: {} ... OK'.format(url, page))
             soup = BeautifulSoup(resp.content.decode('ISO-8859-1'), 'html.parser')
             causas = soup.find_all('form', attrs={'action': locator})
             for causa in causas:
@@ -185,7 +185,7 @@ class Scraper:
                               caratulado=data['caratulado'])
             causa_obj.save()
         if causa_obj and causa_id:
-            print(causa_obj)
+            # print(causa_obj)
             # Open causa details:
             resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
             if 'Recurso Corte Suprema' in resp.text:
@@ -222,7 +222,7 @@ class Scraper:
                                     print('Sending notification: {}'.format(doc_obj))
                                     send_new_doc_notification(doc_obj)
 
-                            print(doc_obj)
+                            # print(doc_obj)
 
                     else:
                         header = False
@@ -247,7 +247,7 @@ class Scraper:
             causa_obj.save()
 
         if causa_obj and causa_id:
-            print(causa_obj)
+            # print(causa_obj)
             # Open causa details:
             resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
             if 'Recurso Corte de Apelaciones' in resp.text:
@@ -282,7 +282,7 @@ class Scraper:
                                     print('Sending notification: {}'.format(doc_obj))
                                     send_new_doc_notification(doc_obj)
 
-                            print(doc_obj)
+                            # print(doc_obj)
 
                     else:
                         header = False
@@ -307,7 +307,7 @@ class Scraper:
             causa_obj.save()
 
         if causa_obj and causa_id:
-            print(causa_obj)
+            # print(causa_obj)
             # Open causa details:
             resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
             if 'Causa Civil' in resp.text:
@@ -342,7 +342,7 @@ class Scraper:
                                     print('Sending notification: {}'.format(doc_obj))
                                     send_new_doc_notification(doc_obj)
 
-                            print(doc_obj)
+                            # print(doc_obj)
 
                     else:
                         header = False
@@ -367,7 +367,7 @@ class Scraper:
             causa_obj.save()
 
         if causa_obj and causa_id:
-            print(causa_obj)
+            # print(causa_obj)
             # Open causa details:
             resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
             if 'Causa Laboral' in resp.text:
@@ -409,7 +409,7 @@ class Scraper:
                                     print('Sending notification: {}'.format(doc_obj))
                                     send_new_doc_notification(doc_obj)
 
-                            print(doc_obj)
+                            # print(doc_obj)
 
                     else:
                         header = False
@@ -435,7 +435,7 @@ class Scraper:
             causa_obj.save()
 
         if causa_obj and causa_id:
-            print(causa_obj)
+            # print(causa_obj)
             # Open causa details:
             resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
             if 'Causa Penal' in resp.text:
@@ -479,7 +479,7 @@ class Scraper:
                                     print('Sending notification: {}'.format(doc_obj))
                                     send_new_doc_notification(doc_obj)
 
-                            print(doc_obj)
+                            # print(doc_obj)
 
                     else:
                         header = False
@@ -505,7 +505,7 @@ class Scraper:
             causa_obj.save()
 
         if causa_obj and causa_id:
-            print(causa_obj)
+            # print(causa_obj)
             # Open causa details:
             resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
             if 'Causa Cobranza' in resp.text:
@@ -548,7 +548,7 @@ class Scraper:
                                     print('Sending notification: {}'.format(doc_obj))
                                     send_new_doc_notification(doc_obj)
 
-                            print(doc_obj)
+                            # print(doc_obj)
 
                     else:
                         header = False
@@ -573,7 +573,7 @@ class Scraper:
             causa_obj.save()
 
         if causa_obj and causa_id:
-            print(causa_obj)
+            # print(causa_obj)
             # Open causa details:
             resp = session.post(url, data=data, headers=Scraper.SCRAPER_HEADERS)
             if 'Causa Familia' in resp.text:
@@ -611,7 +611,7 @@ class Scraper:
                                         print('Sending notification: {}'.format(doc_obj))
                                         send_new_doc_notification(doc_obj)
 
-                                print(doc_obj)
+                                # print(doc_obj)
 
                     else:
                         header = False
@@ -623,9 +623,9 @@ class Scraper:
         if resp_text:
             # find total record to calculate total pages
             total_records = self._get_total_records(resp_text)
-            print('Total records: {}'.format(total_records))
+            # print('Total records: {}'.format(total_records))
             total_pages = int(total_records / 10 + 1)
-            print('Total pages: {}'.format(total_pages))
+            # print('Total pages: {}'.format(total_pages))
             if total_pages > 1:
                 for page in range(2, total_pages + 1):
                     self.post_causa_type(type, page, doc_scraper)
@@ -645,9 +645,9 @@ class Scraper:
 
         url = 'https://oficinajudicialvirtual.pjud.cl/busqueda_por_rut.php'
 
-        print('Loading {} ...'.format(url))
+        # print('Loading {} ...'.format(url))
         session.get(url, headers=headers)
-        print('Loading {} ...OK'.format(url))
+        # print('Loading {} ...OK'.format(url))
 
         try:
             self.scrape_causas('suprema', self.scrape_suprema_document)
