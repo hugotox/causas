@@ -155,9 +155,14 @@ class Scraper:
         }
         # print('POST {} ... Page: {}'.format(url, page))
         resp = session.post(url, data=payload, headers=Scraper.SCRAPER_HEADERS)
+        resp_text = resp.text
+        try:
+            resp_text = resp.content.decode('UTF-8')
+        except:
+            pass
         if locator in resp.text:
             print('POST {} - Page: {} ... OK'.format(url, page))
-            soup = BeautifulSoup(resp.content.decode('ISO-8859-1'), 'html.parser')
+            soup = BeautifulSoup(resp_text, 'html.parser')
             causas = soup.find_all('form', attrs={'action': locator})
             for causa in causas:
                 if 'causa not closed':  # TODO <-- this
@@ -165,7 +170,7 @@ class Scraper:
                         scrape_documents(causa)
                     except:
                         pass  # if fails just try the next causa
-            return resp.text
+            return resp_text
         else:
             print('Unable to find {} forms'.format(causa_type))
 
