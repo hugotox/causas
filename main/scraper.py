@@ -1,6 +1,8 @@
 import requests
 import re
+import asyncio
 from bs4 import BeautifulSoup
+from django.conf import settings
 
 from main.crypto import decrypt
 from main.models import Causa, DocSuprema, DocApelaciones, DocCivil, DocLaboral, DocPenal, DocCobranza, DocFamilia
@@ -174,6 +176,48 @@ class Scraper:
         else:
             print('Unable to find {} forms'.format(causa_type))
 
+    def post_causa_type_async(self, causa_type, page, scrape_documents):
+        """Opens the causas list based on causa type and the pagination number. Then loops through all causas
+        and calls the document scraper for each one"""
+
+        async def runner(causas):
+            scrape_results = []
+            loop = asyncio.get_event_loop()
+            for causa in causas:
+                if 'causa not closed':  # TODO <-- this
+                    try:
+                        scrape_result = loop.run_in_executor(None, scrape_documents, causa)
+                        scrape_results.append(scrape_result)
+                    except:
+                        pass  # if fails just try the next causa
+            for scrape_result in scrape_results:
+                await scrape_result
+
+        url = Scraper.CAUSA_TYPES[causa_type]['url']
+        locator = Scraper.CAUSA_TYPES[causa_type]['locator']
+        session = self.session
+        payload = {
+            'rut_consulta': self.rut_consulta,
+            'dv_consulta': self.dv_consulta,
+            'pagina': page
+        }
+        # print('POST {} ... Page: {}'.format(url, page))
+        resp = session.post(url, data=payload, headers=Scraper.SCRAPER_HEADERS)
+        resp_text = resp.text
+        try:
+            resp_text = resp.content.decode('UTF-8')
+        except:
+            pass
+        if locator in resp.text:
+            print('POST {} - Page: {} ... OK'.format(url, page))
+            soup = BeautifulSoup(resp_text, 'html.parser')
+            causas = soup.find_all('form', attrs={'action': locator})
+            loop = asyncio.get_event_loop()
+            loop.run_until_complete(runner(causas))
+            return resp_text
+        else:
+            print('Unable to find {} forms'.format(causa_type))
+
     def scrape_suprema_document(self, causa):
         """Opens the detail of a causa"""
         session = self.session
@@ -248,6 +292,7 @@ class Scraper:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_APELACIONES, archived=False,
+                              rol=tds[1].string,
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -308,6 +353,7 @@ class Scraper:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_CIVIL, archived=False,
+                              rol=tds[1].string,
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -368,6 +414,7 @@ class Scraper:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_LABORAL, archived=False,
+                              rol=tds[1].string,
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -436,6 +483,7 @@ class Scraper:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_PENAL, archived=False,
+                              rol=tds[1].string,
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -506,6 +554,7 @@ class Scraper:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_COBRANZA, archived=False,
+                              rol=tds[1].string,
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -574,6 +623,7 @@ class Scraper:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_FAMILIA, archived=False,
+                              rol=tds[1].string,
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -623,7 +673,10 @@ class Scraper:
 
     def scrape_causas(self, type, doc_scraper):
         # I need to post page 1 to know the total pages. Then loop starts from page 2
-        resp_text = self.post_causa_type(type, 1, doc_scraper)
+        if settings.USE_ASYNC_CALLS:
+            resp_text = self.post_causa_type_async(type, 1, doc_scraper)
+        else:
+            resp_text = self.post_causa_type(type, 1, doc_scraper)
 
         if resp_text:
             # find total record to calculate total pages
@@ -633,7 +686,10 @@ class Scraper:
             # print('Total pages: {}'.format(total_pages))
             if total_pages > 1:
                 for page in range(2, total_pages + 1):
-                    self.post_causa_type(type, page, doc_scraper)
+                    if settings.USE_ASYNC_CALLS:
+                        self.post_causa_type_async(type, page, doc_scraper)
+                    else:
+                        self.post_causa_type(type, page, doc_scraper)
 
     def init_scraping(self):
         session = self.session

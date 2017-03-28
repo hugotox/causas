@@ -31,11 +31,14 @@ class Causa(models.Model):
         (TYPE_CHOICES_COBRANZA, 'Cobranza'),
         (TYPE_CHOICES_FAMILIA, 'Familia'),
     )
-    id = models.TextField(primary_key=True)  # <cod_corte>-<rol>-<era>
+    id = models.TextField(primary_key=True)
+    rol = models.TextField(default='')
     user = models.ForeignKey(UserProfile)
     type = models.IntegerField(choices=TYPE_CHOICES)
     archived = models.BooleanField(default=False)
     caratulado = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    modified = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     def __str__(self):
         return '{} - {} (Archived: {})'.format(self.id, self.caratulado, self.archived)
@@ -50,6 +53,8 @@ class DocSuprema(models.Model):
     nomenclatura = models.TextField(blank=True, null=True)
     descripcion = models.TextField(blank=True, null=True)
     salas = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    modified = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'Docs. Suprema'
@@ -66,6 +71,8 @@ class DocApelaciones(models.Model):
     fecha = models.TextField(blank=True, null=True)
     salas = models.TextField(blank=True, null=True)
     foja_inicial = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    modified = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'Docs. Apelaciones'
@@ -82,6 +89,8 @@ class DocCivil(models.Model):
     descripcion = models.TextField(blank=True, null=True)
     fecha = models.TextField(blank=True, null=True)
     foja = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    modified = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'Docs. Civil'
@@ -96,6 +105,8 @@ class DocLaboral(models.Model):
     tipo = models.TextField(blank=True, null=True)
     tramite = models.TextField(blank=True, null=True)
     fecha = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    modified = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'Docs. Laboral'
@@ -112,6 +123,8 @@ class DocPenal(models.Model):
     fecha = models.TextField(blank=True, null=True)
     estado = models.TextField(blank=True, null=True)
     cambio_estado = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    modified = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'Docs. Penal'
@@ -127,6 +140,8 @@ class DocCobranza(models.Model):
     tramite = models.TextField(blank=True, null=True)
     desc_tramite = models.TextField(blank=True, null=True)
     fecha = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    modified = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'Docs. Cobranza'
@@ -143,6 +158,8 @@ class DocFamilia(models.Model):
     desc_tramite = models.TextField(blank=True, null=True)
     referencia = models.TextField(blank=True, null=True)
     fecha = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    modified = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'Docs. Familia'

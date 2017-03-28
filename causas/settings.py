@@ -140,6 +140,8 @@ MASTER_KEY = b''
 ONE_SIGNAL_REST_TOKEN = ''
 ONE_SIGNAL_APP_ID = ''
 
+USE_ASYNC_CALLS = True
+
 try:
     from local_settings import *
 except:
