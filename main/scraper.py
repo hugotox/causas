@@ -714,29 +714,29 @@ class Scraper:
             self.scrape_causas('suprema', self.scrape_suprema_document)
         except:
             pass
-        # try:
-        #     self.scrape_causas('apelaciones', self.scrape_apelaciones_document)
-        # except:
-        #     pass
-        # try:
-        #     self.scrape_causas('civil', self.scrape_civil_document)
-        # except:
-        #     pass
-        # try:
-        #     self.scrape_causas('laboral', self.scrape_laboral_document)
-        # except:
-        #     pass
-        # try:
-        #     self.scrape_causas('penal', self.scrape_penal_document)
-        # except:
-        #     pass
-        # try:
-        #     self.scrape_causas('cobranza', self.scrape_cobranza_document)
-        # except:
-        #     pass
-        # try:
-        #     self.scrape_causas('familia', self.scrape_familia_document)
-        # except:
-        #     pass
+        try:
+            self.scrape_causas('apelaciones', self.scrape_apelaciones_document)
+        except:
+            pass
+        try:
+            self.scrape_causas('civil', self.scrape_civil_document)
+        except:
+            pass
+        try:
+            self.scrape_causas('laboral', self.scrape_laboral_document)
+        except:
+            pass
+        try:
+            self.scrape_causas('penal', self.scrape_penal_document)
+        except:
+            pass
+        try:
+            self.scrape_causas('cobranza', self.scrape_cobranza_document)
+        except:
+            pass
+        try:
+            self.scrape_causas('familia', self.scrape_familia_document)
+        except:
+            pass
 
         session.close()
