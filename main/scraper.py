@@ -226,7 +226,7 @@ class Scraper:
         for input_elm in causa.find_all('input'):
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
-        causa_id = '-'.join(data.values())
+        causa_id = 'SUP_{}_{}'.format(data['rol_causa'], data['era_causa'])
         try:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
@@ -284,7 +284,7 @@ class Scraper:
         for input_elm in causa.find_all('input'):
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
-        causa_id = '-'.join(data.values())
+        causa_id = 'APE_{}_{}'.format(data['rol_causa'], data['era_causa'])
         tr = causa.parent.parent
         tds = tr.find_all('td')
         caratulado = tds[3].string
@@ -345,7 +345,7 @@ class Scraper:
         for input_elm in causa.find_all('input'):
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
-        causa_id = '-'.join(data.values())
+        causa_id = 'CIV_{}_{}'.format(data['rol'], data['ano'])
         tr = causa.parent.parent
         tds = tr.find_all('td')
         caratulado = tds[3].string
@@ -406,7 +406,7 @@ class Scraper:
         for input_elm in causa.find_all('input'):
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
-        causa_id = '-'.join(data.values())
+        causa_id = 'LAB_{}_{}'.format(data['rol_causa'], data['era_causa'])
         tr = causa.parent.parent
         tds = tr.find_all('td')
         caratulado = tds[3].string
@@ -475,7 +475,7 @@ class Scraper:
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
 
-        causa_id = '-'.join(data.values())
+        causa_id = 'PEN_{}_{}'.format(data['rol_causa'], data['era_causa'])
         tr = causa.parent.parent
         tds = tr.find_all('td')
         caratulado = tds[4].string
@@ -546,7 +546,7 @@ class Scraper:
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
 
-        causa_id = '-'.join(data.values())
+        causa_id = 'COB_{}_{}'.format(data['rol_causa'], data['era_causa'])
         tr = causa.parent.parent
         tds = tr.find_all('td')
         caratulado = tds[3].string
@@ -615,7 +615,7 @@ class Scraper:
         for input_elm in causa.find_all('input'):
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
-        causa_id = '-'.join(data.values())
+        causa_id = 'FAM_{}_{}'.format(data['rol_causa'], data['era_causa'])
         tr = causa.parent.parent
         tds = tr.find_all('td')
         caratulado = tds[3].string
@@ -714,29 +714,29 @@ class Scraper:
             self.scrape_causas('suprema', self.scrape_suprema_document)
         except:
             pass
-        try:
-            self.scrape_causas('apelaciones', self.scrape_apelaciones_document)
-        except:
-            pass
-        try:
-            self.scrape_causas('civil', self.scrape_civil_document)
-        except:
-            pass
-        try:
-            self.scrape_causas('laboral', self.scrape_laboral_document)
-        except:
-            pass
-        try:
-            self.scrape_causas('penal', self.scrape_penal_document)
-        except:
-            pass
-        try:
-            self.scrape_causas('cobranza', self.scrape_cobranza_document)
-        except:
-            pass
-        try:
-            self.scrape_causas('familia', self.scrape_familia_document)
-        except:
-            pass
+        # try:
+        #     self.scrape_causas('apelaciones', self.scrape_apelaciones_document)
+        # except:
+        #     pass
+        # try:
+        #     self.scrape_causas('civil', self.scrape_civil_document)
+        # except:
+        #     pass
+        # try:
+        #     self.scrape_causas('laboral', self.scrape_laboral_document)
+        # except:
+        #     pass
+        # try:
+        #     self.scrape_causas('penal', self.scrape_penal_document)
+        # except:
+        #     pass
+        # try:
+        #     self.scrape_causas('cobranza', self.scrape_cobranza_document)
+        # except:
+        #     pass
+        # try:
+        #     self.scrape_causas('familia', self.scrape_familia_document)
+        # except:
+        #     pass
 
         session.close()
