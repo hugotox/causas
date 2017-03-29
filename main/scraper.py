@@ -231,6 +231,7 @@ class Scraper:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_SUPREMA, archived=False,
+                              rol=data['rol_causa'],
                               caratulado=data['caratulado'])
             causa_obj.save()
         if causa_obj and causa_id:
@@ -292,7 +293,7 @@ class Scraper:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_APELACIONES, archived=False,
-                              rol=tds[1].string,
+                              rol=data['rol_causa'],
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -353,7 +354,7 @@ class Scraper:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_CIVIL, archived=False,
-                              rol=tds[1].string,
+                              rol=data['rol'],
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -414,7 +415,7 @@ class Scraper:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_LABORAL, archived=False,
-                              rol=tds[1].string,
+                              rol=data['rol_causa'],
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -483,7 +484,7 @@ class Scraper:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_PENAL, archived=False,
-                              rol=tds[1].string,
+                              rol=data['rol_causa'],
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -554,7 +555,7 @@ class Scraper:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_COBRANZA, archived=False,
-                              rol=tds[1].string,
+                              rol=data['rol_causa'],
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -623,7 +624,7 @@ class Scraper:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_FAMILIA, archived=False,
-                              rol=tds[1].string,
+                              rol=data['rol_causa'],
                               caratulado=caratulado)
             causa_obj.save()
 
