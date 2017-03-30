@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 from main.crypto import encrypt
-from main.models import Causa, UserProfile
+from main.models import Causa, UserProfile, Notification
 from onesignalsdk import one_signal_sdk
 
 
@@ -49,10 +49,20 @@ def send_new_doc_notification(doc):
         causa_type = 'Laboral'
 
     if not settings.DEBUG and doc and causa_type:
+        heading = '{}: {}'.format(causa_type, doc.causa)
+        contents = '{}'.format(doc)
         one_signal = one_signal_sdk.OneSignalSdk(settings.ONE_SIGNAL_REST_TOKEN, settings.ONE_SIGNAL_APP_ID)
-        one_signal.create_notification(heading='{}: {}'.format(causa_type, doc.causa),
-                                       contents='{}'.format(doc),
-                                       player_ids=[doc.causa.user.player_id])
+        one_signal.create_notification(heading=heading,
+                                       contents=contents,
+                                       player_ids=doc.causa.user.player_id)
+        Notification.objects.create(
+            profile=doc.causa.user,
+            heading=heading,
+            contents=contents,
+            player_id=doc.causa.user.player_id,
+            document_type=doc.causa.type,
+            document_id=doc.id
+        )
 
 
 def create_user(username, password, player_id):

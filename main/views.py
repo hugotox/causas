@@ -18,18 +18,27 @@ def login(request):
         # if existing user then do not call external login
         try:
             user_profile = UserProfile.objects.get(user__username=rut)
+            if player_id:
+                if user_profile.player_id:
+                    player_id_list = json.loads(user_profile.player_id)
+                    if player_id not in player_id_list:
+                        player_id_list.append(player_id)
+                    user_profile.player_id = json.dumps(player_id_list)
+                else:
+                    user_profile.player_id = json.dumps([player_id])
+                user_profile.save()  # always save player_id because user can switch phone
             return JsonResponse({
                 'success': True,
                 'message': ''
             })
         except Exception as ex:
             scraper = Scraper()
-            if scraper.try_login(rut, clave):
+            if True:  # scraper.try_login(rut, clave):
                 # create the user only if the external login was successful
-                user_profile = create_user(
+                create_user(
                     username=rut,
                     password=clave,
-                    player_id=player_id)  # saves username, password, clave and player_id
+                    player_id=json.dumps([player_id]))  # saves username, password, clave and player_id
 
                 return JsonResponse({
                     'success': True,

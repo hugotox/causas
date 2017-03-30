@@ -7,7 +7,7 @@ class UserProfile(models.Model):
     phone = models.CharField(max_length=20, null=True, blank=True)
     initial_migration_done = models.BooleanField(default=False)
     clave = models.TextField()
-    player_id = models.TextField(blank=True, null=True)
+    player_id = models.TextField(blank=True, null=True)  # serialized array of player_ids
 
     def __str__(self):
         return '{} {} ({})'.format(self.user.first_name, self.user.last_name, self.user.username)
@@ -166,3 +166,20 @@ class DocFamilia(models.Model):
 
     def __str__(self):
         return '{} - {}: {}'.format(self.causa_id, self.tramite, self.desc_tramite)
+
+
+class Notification(models.Model):
+    profile = models.ForeignKey(UserProfile)
+    heading = models.TextField()
+    contents = models.TextField()
+    player_id = models.TextField()
+    document_type = models.IntegerField()
+    document_id = models.TextField()
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    modified = models.DateTimeField(auto_now=True, blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'Notificaciones'
+
+    def __str__(self):
+        return '{}: {}'.format(self.profile, self.heading)

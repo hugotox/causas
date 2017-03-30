@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from main.models import UserProfile, Causa, DocFamilia, DocCobranza, DocCivil, DocPenal, DocLaboral, DocApelaciones, \
-    DocSuprema
+from main.models import *
 
 
 class AdminDocSuprema(admin.ModelAdmin):
@@ -54,3 +53,4 @@ admin.site.register(DocPenal, AdminDocPenal)
 admin.site.register(DocCivil, AdminDocCivil)
 admin.site.register(DocCobranza, AdminDocCobranza)
 admin.site.register(DocFamilia, AdminDocFamilia)
+admin.site.register(Notification)
