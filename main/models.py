@@ -41,7 +41,7 @@ class Causa(models.Model):
     modified = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     def __str__(self):
-        return '{} - {} (Archived: {})'.format(self.id, self.caratulado, self.archived)
+        return '{} - {}'.format(self.id, self.caratulado)
 
 
 class DocSuprema(models.Model):
