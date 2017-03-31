@@ -6,7 +6,7 @@ from django.conf import settings
 
 from main.crypto import decrypt
 from main.models import Causa, DocSuprema, DocApelaciones, DocCivil, DocLaboral, DocPenal, DocCobranza, DocFamilia
-from main.utils import format_rut, send_new_doc_notification
+from main.utils import format_rut, send_new_doc_notification, simplify_string
 
 
 class Scraper:
@@ -231,7 +231,7 @@ class Scraper:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_SUPREMA, archived=False,
-                              rol=data['rol_causa'],
+                              rol='{}-{}'.format(data['rol_causa'], data['era_causa']),
                               caratulado=data['caratulado'])
             causa_obj.save()
         if causa_obj and causa_id:
@@ -257,12 +257,12 @@ class Scraper:
                                 doc_obj = DocSuprema(
                                     id=doc_id,
                                     causa=causa_obj,
-                                    anio=tds[2].string,
-                                    fecha=tds[3].string,
-                                    tipo=tds[4].string,
-                                    nomenclatura=tds[5].string,
-                                    descripcion=tds[6].string,
-                                    salas=tds[7].string
+                                    anio=simplify_string(tds[2].contents[0]),
+                                    fecha=simplify_string(tds[3].contents[0]),
+                                    tipo=simplify_string(tds[4].contents[0]),
+                                    nomenclatura=simplify_string(tds[5].contents[0]),
+                                    descripcion=simplify_string(tds[6].contents[0]),
+                                    salas=simplify_string(tds[7].contents[0])
                                 )
                                 doc_obj.save()
                                 created = True
@@ -288,12 +288,12 @@ class Scraper:
         causa_id = 'APE_{}_{}'.format(data['rol_causa'], data['era_causa'])
         tr = causa.parent.parent
         tds = tr.find_all('td')
-        caratulado = tds[3].string
+        caratulado = simplify_string(tds[3].contents[0])
         try:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_APELACIONES, archived=False,
-                              rol=data['rol_causa'],
+                              rol='{}-{}'.format(data['rol_causa'], data['era_causa']),
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -310,20 +310,32 @@ class Scraper:
                 for row in rows:
                     if not header:  # skip the header row
                         tds = row.find_all('td')
-                        if tds[2].string and tds[2].string.strip() != '':
-                            doc_id = '{}__{}'.format(causa_id, tds[2].string.strip())
+                        if tds[2].contents[0] and tds[2].contents[0].strip() != '':
+                            doc_id = '{}__{}'.format(causa_id, tds[2].contents[0].strip())
                             created = False
                             try:
                                 doc_obj = DocApelaciones.objects.get(id=doc_id)
                             except:
+                                libro = ''
+                                nro_ingreso = ''
+                                try:
+                                    descPopUps = soup.find_all('tr', attrs={'class': 'descPopUp'})
+                                    if len(descPopUps) >= 2:
+                                        descPopUpData = descPopUps[1].find_all('td')
+                                        libro = simplify_string(descPopUpData[0].contents[0])
+                                        nro_ingreso = simplify_string(descPopUpData[1].contents[0])
+                                except:
+                                    pass
                                 doc_obj = DocApelaciones(
                                     id=doc_id,
                                     causa=causa_obj,
-                                    tipo=tds[1].string,
-                                    descripcion=tds[3].string,
-                                    fecha=tds[4].string,
-                                    salas=tds[5].string,
-                                    foja_inicial=tds[6].string
+                                    tipo=simplify_string(tds[1].contents[0]),
+                                    descripcion=simplify_string(tds[3].contents[0]),
+                                    fecha=simplify_string(tds[4].contents[0]),
+                                    salas=simplify_string(tds[5].contents[0]),
+                                    foja_inicial=simplify_string(tds[6].contents[0]),
+                                    libro=libro,
+                                    nro_ingreso=nro_ingreso
                                 )
                                 doc_obj.save()
                                 created = True
@@ -346,15 +358,15 @@ class Scraper:
         for input_elm in causa.find_all('input'):
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
-        causa_id = 'CIV_{}_{}'.format(data['rol'], data['ano'])
+        causa_id = 'CIV_{}_{}_{}'.format(data['tipo'], data['rol'], data['ano'])
         tr = causa.parent.parent
         tds = tr.find_all('td')
-        caratulado = tds[3].string
+        caratulado = simplify_string(tds[3].contents[0])
         try:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_CIVIL, archived=False,
-                              rol=data['rol'],
+                              rol='{}-{}-{}'.format(data['tipo'], data['rol'], data['ano']),
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -371,20 +383,30 @@ class Scraper:
                 for row in rows:
                     if not header:  # skip the header row
                         tds = row.find_all('td')
-                        if tds[0].string and tds[0].string.strip() != '':
-                            doc_id = '{}__{}'.format(causa_id, tds[2].string.strip())  # id = causa_id__folio
+                        if tds[0].contents[0] and tds[0].contents[0].strip() != '':
+                            doc_id = '{}__{}'.format(causa_id, tds[0].contents[0].strip())  # id = causa_id__folio
                             created = False
                             try:
                                 doc_obj = DocCivil.objects.get(id=doc_id)
                             except:
+                                tribunal = ''
+                                try:
+                                    strongs = soup.find_all('strong')
+                                    if len(strongs) >= 8:
+                                        tribunal = simplify_string(
+                                            strongs[7].parent.contents[1]
+                                        )
+                                except:
+                                    pass
                                 doc_obj = DocCivil(
                                     id=doc_id,
                                     causa=causa_obj,
-                                    etapa=tds[3].string,
-                                    tramite=tds[4].string,
-                                    descripcion=tds[5].string,
-                                    fecha=tds[6].string,
-                                    foja=tds[7].string
+                                    etapa=simplify_string(tds[3].contents[0]),
+                                    tramite=simplify_string(tds[4].contents[0]),
+                                    descripcion=simplify_string(tds[5].contents[0]),
+                                    fecha=simplify_string(tds[6].contents[0]),
+                                    foja=simplify_string(tds[7].contents[0]),
+                                    tribunal=tribunal
                                 )
                                 doc_obj.save()
                                 created = True
@@ -407,15 +429,15 @@ class Scraper:
         for input_elm in causa.find_all('input'):
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
-        causa_id = 'LAB_{}_{}'.format(data['rol_causa'], data['era_causa'])
+        causa_id = 'LAB_{}_{}_{}'.format(data['tipo_causa'], data['rol_causa'], data['era_causa'])
         tr = causa.parent.parent
         tds = tr.find_all('td')
-        caratulado = tds[3].string
+        caratulado = simplify_string(tds[3].contents[0])
         try:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_LABORAL, archived=False,
-                              rol=data['rol_causa'],
+                              rol='{}-{}-{}'.format(data['tipo_causa'], data['rol_causa'], data['era_causa']),
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -450,9 +472,9 @@ class Scraper:
                                 doc_obj = DocLaboral(
                                     id=doc_id,
                                     causa=causa_obj,
-                                    tipo=tds[1].string,
-                                    tramite=tds[2].string,
-                                    fecha=tds[3].string,
+                                    tipo=simplify_string(tds[1].contents[0]),
+                                    tramite=simplify_string(tds[2].contents[0]),
+                                    fecha=simplify_string(tds[3].contents[0]),
                                 )
                                 doc_obj.save()
                                 created = True
@@ -476,15 +498,15 @@ class Scraper:
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
 
-        causa_id = 'PEN_{}_{}'.format(data['rol_causa'], data['era_causa'])
+        causa_id = 'PEN_{}_{}:{}'.format(data['tipo_causa'], data['rol_causa'], data['era_causa'])
         tr = causa.parent.parent
         tds = tr.find_all('td')
-        caratulado = tds[4].string
+        caratulado = simplify_string(tds[4].contents[0])
         try:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_PENAL, archived=False,
-                              rol=data['rol_causa'],
+                              rol='{}-{}-{}'.format(data['tipo_causa'], data['rol_causa'], data['era_causa']),
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -516,14 +538,24 @@ class Scraper:
                             try:
                                 doc_obj = DocPenal.objects.get(id=doc_id)
                             except:
+                                tribunal = ''
+                                try:
+                                    labels = soup.find_all('label')
+                                    if len(labels) >= 1:
+                                        tribunal = simplify_string(
+                                            labels[0].parent.parent.contents[2].contents[0]
+                                        )
+                                except:
+                                    pass
                                 doc_obj = DocPenal(
                                     id=doc_id,
                                     causa=causa_obj,
-                                    tipo=tds[1].string,
-                                    observacion=tds[2].string,
-                                    fecha=tds[3].string,
-                                    estado=tds[4].string,
-                                    cambio_estado=tds[5].string,
+                                    tipo=simplify_string(tds[1].contents[0]),
+                                    observacion=simplify_string(tds[2].contents[0]),
+                                    fecha=simplify_string(tds[3].contents[0]),
+                                    estado=simplify_string(tds[4].contents[0]),
+                                    cambio_estado=simplify_string(tds[5].contents[0]),
+                                    tribunal=tribunal,
                                 )
                                 doc_obj.save()
                                 created = True
@@ -547,15 +579,15 @@ class Scraper:
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
 
-        causa_id = 'COB_{}_{}'.format(data['rol_causa'], data['era_causa'])
+        causa_id = 'COB_{}_{}_{}'.format(data['tipo_causa'], data['rol_causa'], data['era_causa'])
         tr = causa.parent.parent
         tds = tr.find_all('td')
-        caratulado = tds[3].string
+        caratulado = simplify_string(tds[3].contents[0])
         try:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_COBRANZA, archived=False,
-                              rol=data['rol_causa'],
+                              rol='{}-{}-{}'.format(data['tipo_causa'], data['rol_causa'], data['era_causa']),
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -590,10 +622,10 @@ class Scraper:
                                 doc_obj = DocCobranza(
                                     id=doc_id,
                                     causa=causa_obj,
-                                    etapa=tds[1].string,
-                                    tramite=tds[2].string,
-                                    desc_tramite=tds[3].string,
-                                    fecha=tds[4].string,
+                                    etapa=simplify_string(tds[1].contents[0]),
+                                    tramite=simplify_string(tds[2].contents[0]),
+                                    desc_tramite=simplify_string(tds[3].contents[0]),
+                                    fecha=simplify_string(tds[4].contents[0]),
                                 )
                                 doc_obj.save()
                                 created = True
@@ -616,15 +648,15 @@ class Scraper:
         for input_elm in causa.find_all('input'):
             if 'name' in input_elm.attrs.keys() and 'value' in input_elm.attrs.keys():
                 data[input_elm.attrs['name']] = input_elm.attrs['value']
-        causa_id = 'FAM_{}_{}'.format(data['rol_causa'], data['era_causa'])
+        causa_id = 'FAM_{}_{}_{}'.format(data['tipo_causa'], data['rol_causa'], data['era_causa'])
         tr = causa.parent.parent
         tds = tr.find_all('td')
-        caratulado = tds[3].string
+        caratulado = simplify_string(tds[3].contents[0])
         try:
             causa_obj = Causa.objects.get(id=causa_id)
         except Exception as ex:
             causa_obj = Causa(id=causa_id, user=self.profile, type=Causa.TYPE_CHOICES_FAMILIA, archived=False,
-                              rol=data['rol_causa'],
+                              rol='{}-{}-{}'.format(data['tipo_causa'], data['rol_causa'], data['era_causa']),
                               caratulado=caratulado)
             causa_obj.save()
 
@@ -653,11 +685,11 @@ class Scraper:
                                     doc_obj = DocFamilia(
                                         id=doc_id,
                                         causa=causa_obj,
-                                        etapa=tds[2].string,
-                                        tramite=tds[3].string,
-                                        desc_tramite=tds[4].string,
-                                        referencia=tds[5].string,
-                                        fecha=tds[6].string,
+                                        etapa=simplify_string(tds[2].contents[0]),
+                                        tramite=simplify_string(tds[3].contents[0]),
+                                        desc_tramite=simplify_string(tds[4].contents[0]),
+                                        referencia=simplify_string(tds[5].contents[0]),
+                                        fecha=simplify_string(tds[6].contents[0]),
                                     )
                                     doc_obj.save()
                                     created = True

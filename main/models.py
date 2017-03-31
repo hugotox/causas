@@ -10,7 +10,7 @@ class UserProfile(models.Model):
     player_id = models.TextField(blank=True, null=True)  # serialized array of player_ids
 
     def __str__(self):
-        return '{} {} ({})'.format(self.user.first_name, self.user.last_name, self.user.username)
+        return '{}'.format(self.user.username)
 
 
 class Causa(models.Model):
@@ -41,7 +41,7 @@ class Causa(models.Model):
     modified = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     def __str__(self):
-        return '{} - {}'.format(self.id, self.caratulado)
+        return '{} - {}'.format(self.rol, self.caratulado)
 
 
 class DocSuprema(models.Model):
@@ -60,7 +60,7 @@ class DocSuprema(models.Model):
         verbose_name_plural = 'Docs. Suprema'
 
     def __str__(self):
-        return '{} - {}'.format(self.causa_id, self.descripcion)
+        return '{}'.format(self.nomenclatura)
 
 
 class DocApelaciones(models.Model):
@@ -71,6 +71,8 @@ class DocApelaciones(models.Model):
     fecha = models.TextField(blank=True, null=True)
     salas = models.TextField(blank=True, null=True)
     foja_inicial = models.TextField(blank=True, null=True)
+    libro = models.TextField(blank=True, null=True)
+    nro_ingreso = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     modified = models.DateTimeField(auto_now=True, blank=True, null=True)
 
@@ -78,7 +80,7 @@ class DocApelaciones(models.Model):
         verbose_name_plural = 'Docs. Apelaciones'
 
     def __str__(self):
-        return '{} - {}'.format(self.causa_id, self.descripcion)
+        return '{} - {} - {}'.format(self.libro, self.nro_ingreso, self.descripcion)
 
 
 class DocCivil(models.Model):
@@ -87,6 +89,7 @@ class DocCivil(models.Model):
     etapa = models.TextField(blank=True, null=True)
     tramite = models.TextField(blank=True, null=True)
     descripcion = models.TextField(blank=True, null=True)
+    tribunal = models.TextField(blank=True, null=True)
     fecha = models.TextField(blank=True, null=True)
     foja = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
@@ -96,7 +99,7 @@ class DocCivil(models.Model):
         verbose_name_plural = 'Docs. Civil'
 
     def __str__(self):
-        return '{} - {}'.format(self.causa_id, self.descripcion)
+        return '{} - {}'.format(self.descripcion, self.tribunal)
 
 
 class DocLaboral(models.Model):
@@ -112,7 +115,7 @@ class DocLaboral(models.Model):
         verbose_name_plural = 'Docs. Laboral'
 
     def __str__(self):
-        return '{} - {}'.format(self.causa_id, self.tramite)
+        return '{}'.format(self.tramite)
 
 
 class DocPenal(models.Model):
@@ -120,6 +123,7 @@ class DocPenal(models.Model):
     causa = models.ForeignKey(Causa)
     tipo = models.TextField(blank=True, null=True)
     observacion = models.TextField(blank=True, null=True)
+    tribunal = models.TextField(blank=True, null=True)
     fecha = models.TextField(blank=True, null=True)
     estado = models.TextField(blank=True, null=True)
     cambio_estado = models.TextField(blank=True, null=True)
@@ -130,7 +134,7 @@ class DocPenal(models.Model):
         verbose_name_plural = 'Docs. Penal'
 
     def __str__(self):
-        return '{} - {}'.format(self.causa_id, self.observacion)
+        return '{} - {}'.format(self.tribunal, self.observacion)
 
 
 class DocCobranza(models.Model):
@@ -147,7 +151,7 @@ class DocCobranza(models.Model):
         verbose_name_plural = 'Docs. Cobranza'
 
     def __str__(self):
-        return '{} - {}: {}'.format(self.causa_id, self.tramite, self.desc_tramite)
+        return '{}'.format(self.desc_tramite)
 
 
 class DocFamilia(models.Model):
@@ -165,7 +169,7 @@ class DocFamilia(models.Model):
         verbose_name_plural = 'Docs. Familia'
 
     def __str__(self):
-        return '{} - {}: {}'.format(self.causa_id, self.tramite, self.desc_tramite)
+        return '{}'.format(self.desc_tramite)
 
 
 class Notification(models.Model):

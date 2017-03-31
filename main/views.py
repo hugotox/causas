@@ -1,8 +1,10 @@
 import json
+
+from django.core import serializers
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from main.models import UserProfile
+from main.models import UserProfile, Notification
 from main.scraper import Scraper
 from main.utils import create_user
 
@@ -54,3 +56,20 @@ def login(request):
         return JsonResponse({
             'message': 'Nothing here'
         })
+
+
+@csrf_exempt
+def notifications(request, rut):
+    try:
+        notifications_qs = Notification.objects.filter(profile__user__username=rut).values()
+        data = [n for n in notifications_qs]
+        return JsonResponse({
+            'success': True,
+            'data': data,
+            'message': ''
+        })
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'message': '{}'.format(e)
+        }, status=404)
