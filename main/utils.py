@@ -22,7 +22,6 @@ def format_rut(rut):
 
 
 def send_new_doc_notification(doc):
-
     if not settings.DEBUG and doc and doc.causa.type:
         heading = '{}'.format(doc.causa)
         contents = '{}'.format(doc)
@@ -38,6 +37,10 @@ def send_new_doc_notification(doc):
             document_type=doc.causa.type,
             document_id=doc.id
         )
+
+
+def send_new_causa_notification(causa):
+    """TODO"""
 
 
 def create_user(username, password, player_id):

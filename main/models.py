@@ -184,6 +184,7 @@ class Notification(models.Model):
 
     class Meta:
         verbose_name_plural = 'Notificaciones'
+        ordering = ['-created']
 
     def __str__(self):
         return '{}: {}'.format(self.profile, self.heading)

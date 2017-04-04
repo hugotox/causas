@@ -142,6 +142,8 @@ ONE_SIGNAL_APP_ID = ''
 
 USE_ASYNC_CALLS = False
 
+NOTIF_API_ITEMS_PER_PAGE = 50
+
 try:
     from local_settings import *
 except:
