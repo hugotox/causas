@@ -234,7 +234,8 @@ class Scraper:
                               rol='{}-{}'.format(data['rol_causa'], data['era_causa']),
                               caratulado=data['caratulado'])
             causa_obj.save()
-            send_new_causa_notification(causa_obj)
+            if self.profile.initial_migration_done:
+                send_new_causa_notification(causa_obj)
         if causa_obj and causa_id:
             # print(causa_obj)
             # Open causa details:
@@ -297,7 +298,8 @@ class Scraper:
                               rol='{}-{}'.format(data['rol_causa'], data['era_causa']),
                               caratulado=caratulado)
             causa_obj.save()
-            send_new_causa_notification(causa_obj)
+            if self.profile.initial_migration_done:
+                send_new_causa_notification(causa_obj)
 
         if causa_obj and causa_id:
             # print(causa_obj)
@@ -371,7 +373,8 @@ class Scraper:
                               rol='{}-{}-{}'.format(data['tipo'], data['rol'], data['ano']),
                               caratulado=caratulado)
             causa_obj.save()
-            send_new_causa_notification(causa_obj)
+            if self.profile.initial_migration_done:
+                send_new_causa_notification(causa_obj)
 
         if causa_obj and causa_id:
             # print(causa_obj)
@@ -443,7 +446,8 @@ class Scraper:
                               rol='{}-{}-{}'.format(data['tipo_causa'], data['rol_causa'], data['era_causa']),
                               caratulado=caratulado)
             causa_obj.save()
-            send_new_causa_notification(causa_obj)
+            if self.profile.initial_migration_done:
+                send_new_causa_notification(causa_obj)
 
         if causa_obj and causa_id:
             # print(causa_obj)
@@ -513,7 +517,8 @@ class Scraper:
                               rol='{}-{}-{}'.format(data['tipo_causa'], data['rol_causa'], data['era_causa']),
                               caratulado=caratulado)
             causa_obj.save()
-            send_new_causa_notification(causa_obj)
+            if self.profile.initial_migration_done:
+                send_new_causa_notification(causa_obj)
 
         if causa_obj and causa_id:
             # print(causa_obj)
@@ -595,7 +600,8 @@ class Scraper:
                               rol='{}-{}-{}'.format(data['tipo_causa'], data['rol_causa'], data['era_causa']),
                               caratulado=caratulado)
             causa_obj.save()
-            send_new_causa_notification(causa_obj)
+            if self.profile.initial_migration_done:
+                send_new_causa_notification(causa_obj)
 
         if causa_obj and causa_id:
             # print(causa_obj)
@@ -665,7 +671,8 @@ class Scraper:
                               rol='{}-{}-{}'.format(data['tipo_causa'], data['rol_causa'], data['era_causa']),
                               caratulado=caratulado)
             causa_obj.save()
-            send_new_causa_notification(causa_obj)
+            if self.profile.initial_migration_done:
+                send_new_causa_notification(causa_obj)
 
         if causa_obj and causa_id:
             # print(causa_obj)

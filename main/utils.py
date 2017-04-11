@@ -40,7 +40,21 @@ def send_new_doc_notification(doc):
 
 
 def send_new_causa_notification(causa):
-    """TODO"""
+    if not settings.DEBUG:
+        heading = '{}'.format(causa)
+        contents = 'Nueva causa: {}'.format(causa)
+        one_signal = one_signal_sdk.OneSignalSdk(settings.ONE_SIGNAL_REST_TOKEN, settings.ONE_SIGNAL_APP_ID)
+        one_signal.create_notification(heading=heading,
+                                       contents=contents,
+                                       player_ids=causa.user.player_id)
+        Notification.objects.create(
+            profile=causa.user,
+            heading=heading,
+            contents=contents,
+            player_id=causa.user.player_id,
+            document_type=causa.type,
+            document_id=causa.id
+        )
 
 
 def create_user(username, password, player_id):
