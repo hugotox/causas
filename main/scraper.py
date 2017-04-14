@@ -5,7 +5,8 @@ from bs4 import BeautifulSoup
 from django.conf import settings
 
 from main.crypto import decrypt
-from main.models import Causa, DocSuprema, DocApelaciones, DocCivil, DocLaboral, DocPenal, DocCobranza, DocFamilia
+from main.models import Causa, DocSuprema, DocApelaciones, DocCivil, DocLaboral, DocPenal, DocCobranza, DocFamilia, \
+    EscritoCivilPorResolver
 from main.utils import format_rut, send_new_doc_notification, simplify_string, send_new_causa_notification
 
 
@@ -354,6 +355,39 @@ class Scraper:
                     else:
                         header = False
 
+    def scrape_civil_escrito(self, causa_id, causa_obj, soup):
+        """Searches for escritos pendientes in civil causa"""
+        rows = soup.find(id='titTablaCivEsc').parent.parent.find_all('tr')   # double parent because this one has header tr inside <thead>
+        header = True
+        for row in rows:
+            if not header:  # skip the header row
+                tds = row.find_all('td')
+                input_el = row.find('input', attrs={'name': 'id_documento'})
+                id_documento = input_el.attrs['value']
+                if id_documento:
+                    doc_id = '{}__{}'.format(causa_id, id_documento)  # id = causa_id__id_documento
+                    created = False
+                    try:
+                        doc_obj = EscritoCivilPorResolver.objects.get(id=doc_id)
+                    except:
+                        doc_obj = EscritoCivilPorResolver(
+                            id=doc_id,
+                            causa=causa_obj,
+                            fecha=simplify_string(tds[2].contents[0]),
+                            tipo=simplify_string(tds[3].contents[0]),
+                            solicitante=simplify_string(tds[4].contents[0]),
+                        )
+                        doc_obj.save()
+                        created = True
+
+                    if created:
+                        if self.profile.initial_migration_done:
+                            print('Sending notification: {}'.format(doc_obj))
+                            send_new_doc_notification(doc_obj)
+
+            else:
+                header = False
+
     def scrape_civil_document(self, causa):
         """Opens the detail of a causa. `causa` is the soup form element"""
         session = self.session
@@ -384,6 +418,7 @@ class Scraper:
                 resp_text = resp.content.decode('ISO-8859-1').replace('\r', ' ').replace('\n', '')
                 html = '<html><body>{}</body></html>'.format(resp_text)
                 soup = BeautifulSoup(html, 'html.parser')
+                self.scrape_civil_escrito(causa_id, causa_obj, soup)
                 rows = soup.find(id='titTablaCiv').parent.parent.find_all('tr')  # double parent becaouse this one has header tr inside <thead>
                 header = True
                 for row in rows:
@@ -757,33 +792,33 @@ class Scraper:
         session.get(url, headers=headers)
         # print('Loading {} ...OK'.format(url))
 
-        try:
-            self.scrape_causas('suprema', self.scrape_suprema_document)
-        except:
-            pass
-        try:
-            self.scrape_causas('apelaciones', self.scrape_apelaciones_document)
-        except:
-            pass
+        # try:
+        #     self.scrape_causas('suprema', self.scrape_suprema_document)
+        # except:
+        #     pass
+        # try:
+        #     self.scrape_causas('apelaciones', self.scrape_apelaciones_document)
+        # except:
+        #     pass
         try:
             self.scrape_causas('civil', self.scrape_civil_document)
         except:
             pass
-        try:
-            self.scrape_causas('laboral', self.scrape_laboral_document)
-        except:
-            pass
-        try:
-            self.scrape_causas('penal', self.scrape_penal_document)
-        except:
-            pass
-        try:
-            self.scrape_causas('cobranza', self.scrape_cobranza_document)
-        except:
-            pass
-        try:
-            self.scrape_causas('familia', self.scrape_familia_document)
-        except:
-            pass
+        # try:
+        #     self.scrape_causas('laboral', self.scrape_laboral_document)
+        # except:
+        #     pass
+        # try:
+        #     self.scrape_causas('penal', self.scrape_penal_document)
+        # except:
+        #     pass
+        # try:
+        #     self.scrape_causas('cobranza', self.scrape_cobranza_document)
+        # except:
+        #     pass
+        # try:
+        #     self.scrape_causas('familia', self.scrape_familia_document)
+        # except:
+        #     pass
 
         session.close()

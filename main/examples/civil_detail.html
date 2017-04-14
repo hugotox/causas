@@ -67,7 +67,7 @@
 </script>
 <form id="formoCuaderno" action="/causas/causaCivil2.php" method="post">
   <input type="hidden" name='cotd' value='211'>
-  <input type="hidden" name='crrCausa' value='18305065'>
+  <input type="hidden" name='crrCausa' value='18659670'>
   <input type="hidden" name='cuaderno' id="hiCuaderno" value="">
   <input type="hidden" name='tipoCuaderno' id="hiTipoCuaderno" value="">
 </form>
@@ -82,30 +82,30 @@
     <table width="100%" border="0">
       <tbody class="descPopUp">
       <tr>
-        <td><strong>ROL:</strong> C-41-2017 <label title="Causa LTE"></label></td>
-        <td>TRONCOSO/FIGUEROA</td>
-        <td><strong>F. Ing.:</strong> 30/01/2017</td>
+        <td><strong>ROL:</strong> C-89-2017 <label title="Causa LTE"></label></td>
+        <td>ROMERO/MUÑOZ</td>
+        <td><strong>F. Ing.:</strong> 10/04/2017</td>
       </tr>
       <tr>
         <td title="Legajo: "><strong style="color:black;">Est. Adm.: </strong>Sin archivar</td>
-        <td><strong>Proc.:</strong> 2 Contestación y Conciliación</td>
+        <td><strong>Proc.:</strong> 0 Ingreso</td>
         <td><strong>Ubicación:</strong> Digital</td>
       </tr>
       <tr>
         <td><strong>Etapa:</strong> Sumario</td>
-        <td><strong>Estado Proc.:</strong> Tramitación</td>
+        <td><strong>Estado Proc.:</strong> Sin tramitación</td>
         <td><strong>Tribunal:</strong> Juzgado de Letras de Pitrufquen</td>
       </tr>
       <tr>
         <td><strong>Texto Demanda:</strong>
-          <form name="word" action="docu.php" method="post" target="5890625">
+          <form name="word" action="docu.php" method="post" target="6228522">
             <input type="hidden" name="tabla" value="TADD_DOCUMENTOCAUSA">
             <input type="hidden" name="field" value="NOM_DOCUMENTO">
             <input type="hidden" name="fielddoc" value="DOC_DOCUMENTO">
-            <input type="hidden" name="where" value="COD_TRIBUNAL = 211 and CRR_IDDOCUMENTOCAUSA= 5890625">
+            <input type="hidden" name="where" value="COD_TRIBUNAL = 211 and CRR_IDDOCUMENTOCAUSA= 6228522">
             <input type="hidden" name="typedoc" value="pdf">
             <input type="hidden" name="extdoc" value=".pdf">
-            <input type="image" src="../images/pdf.png" onclick="popup(5890625);" value="">
+            <input type="image" src="../images/pdf.png" onclick="popup(6228522);" value="">
           </form>
 
         </td>
@@ -120,9 +120,9 @@
         <td><strong>Ebook:</strong>
 
           <form name="word" action="newebookcivil.php" method="post" target="_blank">
-            <input type="hidden" name="crr_causa" value="18305065">
+            <input type="hidden" name="crr_causa" value="18659670">
             <input type="hidden" name="cod_tribunal" value="211">
-            <input type="image" src="../images/pdf.png" onclick="popup(18305065);" value="">
+            <input type="image" src="../images/pdf.png" onclick="popup(18659670);" value="">
           </form>
 
         </td>
@@ -139,22 +139,21 @@
           <div style="float:left; width:430px;">
             <strong>Historia Causa Cuaderno</strong><br>
             <select id="selCuaderno" onChange="cambiaCuaderno();">
-              <option value="22937724|1">Principal</option>
-              <option value="23199241|18">Incidente Acumulación</option>
+              <option value="23394986|1">Principal</option>
 
             </select>
           </div>
 
           <div style="float:left; width:300px;">
-            <form method="post" action="receptorCivil.php" id="formRecept41" target="formRecept41">
+            <form method="post" action="receptorCivil.php" id="formRecept89" target="formRecept89">
               <input type="hidden" name="cod_tribunal" value="211">
               <input type="hidden" name="tipCausa" value="C">
-              <input type="hidden" name="rolCausa" value="41">
+              <input type="hidden" name="rolCausa" value="89">
               <input type="hidden" name="eraCausa" value="2017">
               <input type="hidden" name="codNaturaleza" value="C">
               <input type="hidden" name="tipcuaderno" value="1">
-              <input type="hidden" name="crr_idcuaderno" value="22937724">
-              <a style="cursor:pointer;" onclick="popReceptor('formRecept41');"><b>Informaci&oacute;n notificaciones
+              <input type="hidden" name="crr_idcuaderno" value="23394986">
+              <a style="cursor:pointer;" onclick="popReceptor('formRecept89');"><b>Informaci&oacute;n notificaciones
                 receptor:</b><br><img src="../images/receptor.png" width="24px" height="24px" border="0"/></a>
             </form>
           </div>
@@ -188,318 +187,6 @@
           <tbody>
           <input type="hidden" name="flgMarcaDigital" value="3">
 
-          <tr>
-            <td>
-              10
-            </td>
-            <td align="center">
-              <form name="word" action="docuS.php" method="post" target="76294208">
-                <input type='hidden' name='id_documento' value='76294208'>
-                <input type='hidden' name='cod_tribunal' value='211'>
-                <input type='hidden' name='tip_doc' value='pdf'>
-                <input type="image" src="../images/pdf.png" onClick='this.submit();' value="">
-              </form>
-
-            </td>
-
-            <!-- NUEVO CAMPO -->
-            <td align="center">
-
-            </td>
-            <!-- NUEVO CAMPO -->
-
-            <td>
-              Contestación y Conciliación
-            </td>
-            <td>
-              (COM)Comparendo
-            </td>
-            <td>
-              Del hecho de haberse celebrado Comparen.
-            </td>
-            <td>
-              07/03/2017
-            </td>
-            <td>
-              7
-            </td>
-          </tr>
-          <tr>
-            <td>
-              10
-            </td>
-            <td align="center">
-              <img src="../images/missing.png" height="24px" width="24px">
-            </td>
-
-            <!-- NUEVO CAMPO -->
-            <td align="center">
-
-            </td>
-            <!-- NUEVO CAMPO -->
-
-            <td>
-            </td>
-            <td>
-            </td>
-            <td>
-              Del hecho de haberse celebrado Comparen.
-            </td>
-            <td>
-              07/03/2017
-            </td>
-            <td>
-              7
-            </td>
-          </tr>
-          <tr>
-            <td>
-              9
-            </td>
-            <td align="center">
-              <form name="word" action="docuN.php" method="post" target="41308720">
-                <input type='hidden' name='id_documento' value='41308720'>
-                <input type='hidden' name='cod_tribunal' value='211'>
-                <input type='hidden' name='tip_doc' value='pdf'>
-                <input type="image" src="../images/pdf.png" onClick='this.submit();' value="">
-              </form>
-            </td>
-
-            <!-- NUEVO CAMPO -->
-            <td align="center">
-
-            </td>
-            <!-- NUEVO CAMPO -->
-
-            <td>
-              Contestación y Conciliación
-            </td>
-            <td>
-              Escrito
-            </td>
-            <td>
-              Designa patrocinante y apod.
-            </td>
-            <td>
-              07/03/2017
-            </td>
-            <td>
-              6
-            </td>
-          </tr>
-          <tr>
-            <td>
-              7
-            </td>
-            <td align="center">
-              <form name="word" action="docuS.php" method="post" target="76286705">
-                <input type='hidden' name='id_documento' value='76286705'>
-                <input type='hidden' name='cod_tribunal' value='211'>
-                <input type='hidden' name='tip_doc' value='pdf'>
-                <input type="image" src="../images/pdf.png" onClick='this.submit();' value="">
-              </form>
-
-            </td>
-
-            <!-- NUEVO CAMPO -->
-            <td align="center">
-
-            </td>
-            <!-- NUEVO CAMPO -->
-
-            <td>
-              Notificación demanda y su proveido
-            </td>
-            <td>
-              (NOT)Notificacion
-            </td>
-            <td>
-              Not. demanda y cita a comparendo
-            </td>
-            <td>
-              07/03/2017
-            </td>
-            <td>
-              5
-            </td>
-          </tr>
-          <tr>
-            <td>
-              6
-            </td>
-            <td align="center">
-              <form name="word" action="docuN.php" method="post" target="41298092">
-                <input type='hidden' name='id_documento' value='41298092'>
-                <input type='hidden' name='cod_tribunal' value='211'>
-                <input type='hidden' name='tip_doc' value='pdf'>
-                <input type="image" src="../images/pdf.png" onClick='this.submit();' value="">
-              </form>
-            </td>
-
-            <!-- NUEVO CAMPO -->
-            <td align="center">
-
-            </td>
-            <!-- NUEVO CAMPO -->
-
-            <td>
-              Notificación demanda y su proveido
-            </td>
-            <td>
-              Escrito
-            </td>
-            <td>
-              Informes
-            </td>
-            <td>
-              06/03/2017
-            </td>
-            <td>
-              0
-            </td>
-          </tr>
-          <tr>
-            <td>
-              5
-            </td>
-            <td align="center">
-              <form name="word" action="docuS.php" method="post" target="75515717">
-                <input type='hidden' name='id_documento' value='75515717'>
-                <input type='hidden' name='cod_tribunal' value='211'>
-                <input type='hidden' name='tip_doc' value='pdf'>
-                <input type="image" src="../images/pdf.png" onClick='this.submit();' value="">
-              </form>
-
-            </td>
-
-            <!-- NUEVO CAMPO -->
-            <td align="center">
-
-            </td>
-            <!-- NUEVO CAMPO -->
-
-            <td>
-              Ingreso
-            </td>
-            <td>
-              Resolución
-            </td>
-            <td>
-              Da curso a la demanda
-            </td>
-            <td>
-              06/02/2017
-            </td>
-            <td>
-              4
-            </td>
-          </tr>
-          <tr>
-            <td>
-              3
-            </td>
-            <td align="center">
-              <form name="word" action="docuN.php" method="post" target="40682166">
-                <input type='hidden' name='id_documento' value='40682166'>
-                <input type='hidden' name='cod_tribunal' value='211'>
-                <input type='hidden' name='tip_doc' value='pdf'>
-                <input type="image" src="../images/pdf.png" onClick='this.submit();' value="">
-              </form>
-            </td>
-
-            <!-- NUEVO CAMPO -->
-            <td align="center">
-
-            </td>
-            <!-- NUEVO CAMPO -->
-
-            <td>
-              Ingreso
-            </td>
-            <td>
-              Escrito
-            </td>
-            <td>
-              Cumple lo ordenado
-            </td>
-            <td>
-              01/02/2017
-            </td>
-            <td>
-              3
-            </td>
-          </tr>
-          <tr>
-            <td>
-              2
-            </td>
-            <td align="center">
-              <form name="word" action="docuS.php" method="post" target="75324039">
-                <input type='hidden' name='id_documento' value='75324039'>
-                <input type='hidden' name='cod_tribunal' value='211'>
-                <input type='hidden' name='tip_doc' value='pdf'>
-                <input type="image" src="../images/pdf.png" onClick='this.submit();' value="">
-              </form>
-
-            </td>
-
-            <!-- NUEVO CAMPO -->
-            <td align="center">
-
-            </td>
-            <!-- NUEVO CAMPO -->
-
-            <td>
-              Ingreso
-            </td>
-            <td>
-              Resolución
-            </td>
-            <td>
-              Apercibimiento poder y/o título
-            </td>
-            <td>
-              31/01/2017
-            </td>
-            <td>
-              2
-            </td>
-          </tr>
-          <tr>
-            <td>
-              1
-            </td>
-            <td align="center">
-              <form name="word" action="docuN.php" method="post" target="40609564">
-                <input type='hidden' name='id_documento' value='40609564'>
-                <input type='hidden' name='cod_tribunal' value='211'>
-                <input type='hidden' name='tip_doc' value='pdf'>
-                <input type="image" src="../images/pdf.png" onClick='this.submit();' value="">
-              </form>
-            </td>
-
-            <!-- NUEVO CAMPO -->
-            <td align="center">
-
-            </td>
-            <!-- NUEVO CAMPO -->
-
-            <td>
-              Ingreso
-            </td>
-            <td>
-              Escrito
-            </td>
-            <td>
-              Ingreso demanda
-            </td>
-            <td>
-              30/01/2017
-            </td>
-            <td>
-              1
-            </td>
-          </tr>
           </tbody>
         </table>
         </p>
@@ -522,13 +209,13 @@
               AB.DTE
             </td>
             <td align="left">
-              11907596-3
+              15580613-3
             </td>
             <td align="left">
               NATURAL
             </td>
             <td align="left">
-              IRMA ALICIA DEL CARMEN BENI CUMINAO (Poder Amplio)
+              LEONARDO FRANCISCO TAPIA GRANDÓN (Sin Acreditacion)
             </td>
           </tr>
           <tr>
@@ -536,13 +223,13 @@
               DDO.
             </td>
             <td align="left">
-              9272507-3
+              6315867-4
             </td>
             <td align="left">
               NATURAL
             </td>
             <td align="left">
-              ESTERLINA MAGALY FIGUEROA RODRÍGUEZ
+              GERMÁN ANTONIO MUÑOZ JARA
             </td>
           </tr>
           <tr>
@@ -550,46 +237,18 @@
               DTE.
             </td>
             <td align="left">
-              5909161-1
+              12199258-2
             </td>
             <td align="left">
               NATURAL
             </td>
             <td align="left">
-              DOMINGO SEGUNDO TRONCOSO CARRASCO
+              LUDETT DEL CARMEN ROMERO NAHUELPÁN
             </td>
           </tr>
           <tr>
             <td align="left">
               AP.DTE
-            </td>
-            <td align="left">
-              17450519-5
-            </td>
-            <td align="left">
-              NATURAL
-            </td>
-            <td align="left">
-              SERGIO MANUEL ULLOA PEÑA (Poder Amplio)
-            </td>
-          </tr>
-          <tr>
-            <td align="left">
-              AB.DDO
-            </td>
-            <td align="left">
-              15580613-3
-            </td>
-            <td align="left">
-              NATURAL
-            </td>
-            <td align="left">
-              LEONARDO FRANCISCO TAPIA GRANDÓN (Poder Amplio)
-            </td>
-          </tr>
-          <tr>
-            <td align="left">
-              AP.DDO
             </td>
             <td align="left">
               13277045-K
@@ -598,7 +257,7 @@
               NATURAL
             </td>
             <td align="left">
-              HUGO MOLINA RIVEROS (Poder Amplio)
+              HUGO GUILLERMO MOLINA RIVEROS (Sin Acreditacion)
             </td>
           </tr>
           </tbody>
@@ -619,6 +278,33 @@
           </tr>
           </thead>
           <tbody>
+          <tr>
+            <td align="center">
+              <form name="word" action="docuN.php" method="post" target="42194143">
+                <input type='hidden' name='id_documento' value='42194143'>
+                <input type='hidden' name='cod_tribunal' value=''>
+                <input type='hidden' name='tip_doc' value='pdf'>
+                <input type="image" src="../images/pdf.png" onclick="popup(42194143);" value="">
+              </form>
+            </td>
+
+            <!-- NUEVO CAMPO -->
+
+            <td align="center">
+
+            </td>
+            <!-- NUEVO CAMPO -->
+
+            <td>
+              10/04/2017
+            </td>
+            <td>
+              Ingreso demanda
+            </td>
+            <td>
+              Demandante
+            </td>
+          </tr>
           </tbody>
         </table>
         </p>

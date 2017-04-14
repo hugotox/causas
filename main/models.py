@@ -172,6 +172,22 @@ class DocFamilia(models.Model):
         return '{}'.format(self.desc_tramite)
 
 
+class EscritoCivilPorResolver(models.Model):
+    id = models.TextField(primary_key=True)
+    causa = models.ForeignKey(Causa)  # always is a causa type civil
+    fecha = models.TextField(blank=True, null=True)
+    tipo = models.TextField(blank=True, null=True)
+    solicitante = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    modified = models.DateTimeField(auto_now=True, blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'Escritos por resolver'
+
+    def __str__(self):
+        return 'Escrito: {} / Solic: {} / Causa: {}'.format(self.tipo, self.solicitante, self.causa)
+
+
 class Notification(models.Model):
     profile = models.ForeignKey(UserProfile)
     heading = models.TextField()

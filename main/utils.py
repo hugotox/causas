@@ -40,7 +40,7 @@ def send_new_doc_notification(doc):
 
 
 def send_new_causa_notification(causa):
-    if not settings.DEBUG:
+    if not settings.DEBUG and causa:
         heading = '{}'.format(causa)
         contents = 'Nueva causa: {}'.format(causa)
         one_signal = one_signal_sdk.OneSignalSdk(settings.ONE_SIGNAL_REST_TOKEN, settings.ONE_SIGNAL_APP_ID)
