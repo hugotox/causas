@@ -28,6 +28,12 @@ class AdminDocCivil(admin.ModelAdmin):
     readonly_fields = ('created', 'modified')
 
 
+class AdminDocCivilEscrito(admin.ModelAdmin):
+    search_fields = ('causa__rol', 'causa__caratulado', 'tipo', 'solicitante')
+    list_display = ('causa', 'tipo', 'solicitante', 'fecha')
+    readonly_fields = ('created', 'modified')
+
+
 class AdminDocLaboral(admin.ModelAdmin):
     search_fields = ('causa__rol', 'causa__caratulado', 'tramite',)
     list_display = ('causa', 'tramite')
@@ -65,6 +71,7 @@ admin.site.register(DocSuprema, AdminDocSuprema)
 admin.site.register(DocLaboral, AdminDocLaboral)
 admin.site.register(DocPenal, AdminDocPenal)
 admin.site.register(DocCivil, AdminDocCivil)
+admin.site.register(EscritoCivilPorResolver, AdminDocCivilEscrito)
 admin.site.register(DocCobranza, AdminDocCobranza)
 admin.site.register(DocFamilia, AdminDocFamilia)
 admin.site.register(Notification, AdminNotification)
