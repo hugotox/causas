@@ -19,4 +19,4 @@ def restart():
 def reload_supervisord():
     local('supervisorctl stop all')
     local('sudo unlink /tmp/supervisor.sock')
-    local('supervisord')
+    local('supervisord -c /home/ubuntu/supervisord.conf')
