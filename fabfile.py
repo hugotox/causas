@@ -10,7 +10,7 @@ def test():
 
 
 def restart():
-    local('pkill gunicorn')
+    local('sudo pkill gunicorn')
     local('sudo systemctl start gunicorn')
     local('sudo systemctl enable gunicorn')
     local('sudo systemctl restart nginx')
