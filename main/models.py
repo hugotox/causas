@@ -185,7 +185,7 @@ class EscritoCivilPorResolver(models.Model):
         verbose_name_plural = 'Escritos por resolver'
 
     def __str__(self):
-        return 'Escrito: {} / Solic: {} / Causa: {}'.format(self.tipo, self.solicitante, self.causa)
+        return 'Escrito: {} / Solic: {}'.format(self.tipo, self.solicitante)
 
 
 class Notification(models.Model):
