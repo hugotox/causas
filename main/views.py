@@ -64,9 +64,13 @@ def logout(request):
     if request.method == "POST":
         data = json.loads(request.body.decode('utf-8'))
         rut = data['rut']
+        player_id = data['playerId']
         try:
             user_profile = UserProfile.objects.get(user__username=rut)
-            user_profile.player_id = None
+            # remove player id from the list
+            player_id_list = json.loads(user_profile.player_id)
+            player_id_list.remove(player_id)
+            user_profile.player_id = player_id_list
             user_profile.save()
         except Exception as ex:
             pass
