@@ -60,6 +60,27 @@ def login(request):
 
 
 @csrf_exempt
+def logout(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode('utf-8'))
+        rut = data['rut']
+        try:
+            user_profile = UserProfile.objects.get(user__username=rut)
+            user_profile.player_id = None
+            user_profile.save()
+        except Exception as ex:
+            pass
+        return JsonResponse({
+            'success': True,
+            'message': ''
+        })
+    else:
+        return JsonResponse({
+            'message': 'Nothing here'
+        })
+
+
+@csrf_exempt
 def notifications(request):
     if request.method == "POST":
         data = json.loads(request.body.decode('utf-8'))
