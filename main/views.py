@@ -70,7 +70,7 @@ def logout(request):
             # remove player id from the list
             player_id_list = json.loads(user_profile.player_id)
             player_id_list.remove(player_id)
-            user_profile.player_id = player_id_list
+            user_profile.player_id = json.dumps(player_id_list)
             user_profile.save()
         except Exception as ex:
             pass
