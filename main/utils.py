@@ -1,3 +1,4 @@
+import json
 from django.conf import settings
 from django.contrib.auth.models import User
 
@@ -28,7 +29,7 @@ def send_new_doc_notification(doc):
         one_signal = one_signal_sdk.OneSignalSdk(settings.ONE_SIGNAL_REST_TOKEN, settings.ONE_SIGNAL_APP_ID)
         one_signal.create_notification(heading=heading,
                                        contents=contents,
-                                       player_ids=doc.causa.user.player_id)
+                                       player_ids=json.loads(doc.causa.user.player_id))
         Notification.objects.create(
             profile=doc.causa.user,
             heading=heading,
@@ -46,7 +47,7 @@ def send_new_causa_notification(causa):
         one_signal = one_signal_sdk.OneSignalSdk(settings.ONE_SIGNAL_REST_TOKEN, settings.ONE_SIGNAL_APP_ID)
         one_signal.create_notification(heading=heading,
                                        contents=contents,
-                                       player_ids=causa.user.player_id)
+                                       player_ids=json.loads(causa.user.player_id))
         Notification.objects.create(
             profile=causa.user,
             heading=heading,
