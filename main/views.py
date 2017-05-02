@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from main.crypto import decrypt
-from main.models import UserProfile, Notification
+from main.models import UserProfile, Notification, Comments
 from main.scraper import Scraper
 from main.utils import create_user
 
@@ -74,6 +74,31 @@ def logout(request):
             user_profile.save()
         except Exception as ex:
             pass
+        return JsonResponse({
+            'success': True,
+            'message': ''
+        })
+    else:
+        return JsonResponse({
+            'message': 'Nothing here'
+        })
+
+
+@csrf_exempt
+def comments(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode('utf-8'))
+        rut = data['rut']
+        _comments = data['comments']
+        print(rut, _comments)
+
+        try:
+            user_profile = UserProfile.objects.get(user__username=rut)
+            # remove player id from the list
+            Comments.objects.create(profile=user_profile, contents=_comments)
+        except Exception as ex:
+            pass
+
         return JsonResponse({
             'success': True,
             'message': ''

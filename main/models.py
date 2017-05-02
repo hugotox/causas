@@ -204,3 +204,17 @@ class Notification(models.Model):
 
     def __str__(self):
         return '{}: {}'.format(self.profile, self.heading)
+
+
+class Comments(models.Model):
+    profile = models.ForeignKey(UserProfile)
+    contents = models.TextField()
+    created = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    modified = models.DateTimeField(auto_now=True, blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'Comentarios'
+        ordering = ['-created']
+
+    def __str__(self):
+        return self.contents

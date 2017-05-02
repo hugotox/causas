@@ -7,5 +7,6 @@ urlpatterns = [
     url(r'^login/$', login),
     url(r'^logout/$', logout),
     url(r'^api/notifications/$', notifications),
+    url(r'^api/comments/$', comments),
     url(r'', RedirectView.as_view(url='/admin/')),
 ]

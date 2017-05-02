@@ -64,6 +64,11 @@ class AdminNotification(admin.ModelAdmin):
     list_display = ('profile', 'heading', 'contents', 'document_type', 'document_id')
 
 
+class AdminComment(admin.ModelAdmin):
+    readonly_fields = ('created', 'modified')
+    list_display = ('profile', 'contents', 'created', 'modified')
+
+
 admin.site.register(UserProfile)
 admin.site.register(Causa, AdminCausa)
 admin.site.register(DocApelaciones, AdminDocApelaciones)
@@ -75,3 +80,4 @@ admin.site.register(EscritoCivilPorResolver, AdminDocCivilEscrito)
 admin.site.register(DocCobranza, AdminDocCobranza)
 admin.site.register(DocFamilia, AdminDocFamilia)
 admin.site.register(Notification, AdminNotification)
+admin.site.register(Comments, AdminComment)
