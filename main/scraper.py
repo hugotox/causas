@@ -1,8 +1,6 @@
 import requests
 import re
-import asyncio
 from bs4 import BeautifulSoup
-from django.conf import settings
 
 from main.crypto import decrypt
 from main.models import Causa, DocSuprema, DocApelaciones, DocCivil, DocLaboral, DocPenal, DocCobranza, DocFamilia, \
@@ -175,49 +173,7 @@ class Scraper:
                         pass  # if fails just try the next causa
             return resp_text
         else:
-            print('Unable to find {} forms'.format(causa_type))
-
-    def post_causa_type_async(self, causa_type, page, scrape_documents):
-        """Opens the causas list based on causa type and the pagination number. Then loops through all causas
-        and calls the document scraper for each one"""
-
-        async def runner(causas):
-            scrape_results = []
-            loop = asyncio.get_event_loop()
-            for causa in causas:
-                if 'causa not closed':  # TODO <-- this
-                    try:
-                        scrape_result = loop.run_in_executor(None, scrape_documents, causa)
-                        scrape_results.append(scrape_result)
-                    except:
-                        pass  # if fails just try the next causa
-            for scrape_result in scrape_results:
-                await scrape_result
-
-        url = Scraper.CAUSA_TYPES[causa_type]['url']
-        locator = Scraper.CAUSA_TYPES[causa_type]['locator']
-        session = self.session
-        payload = {
-            'rut_consulta': self.rut_consulta,
-            'dv_consulta': self.dv_consulta,
-            'pagina': page
-        }
-        # print('POST {} ... Page: {}'.format(url, page))
-        resp = session.post(url, data=payload, headers=Scraper.SCRAPER_HEADERS)
-        resp_text = resp.text
-        try:
-            resp_text = resp.content.decode('UTF-8')
-        except:
-            pass
-        if locator in resp.text:
-            print('POST {} - Page: {} ... OK'.format(url, page))
-            soup = BeautifulSoup(resp_text, 'html.parser')
-            causas = soup.find_all('form', attrs={'action': locator})
-            loop = asyncio.get_event_loop()
-            loop.run_until_complete(runner(causas))
-            return resp_text
-        else:
-            print('Unable to find {} forms'.format(causa_type))
+            print('Unable to find {} forms> in: {}'.format(causa_type, resp.text))
 
     def scrape_suprema_document(self, causa):
         """Opens the detail of a causa"""
@@ -754,24 +710,21 @@ class Scraper:
                         header = False
 
     def scrape_causas(self, type, doc_scraper):
-        # I need to post page 1 to know the total pages. Then loop starts from page 2
-        if settings.USE_ASYNC_CALLS:
-            resp_text = self.post_causa_type_async(type, 1, doc_scraper)
-        else:
+        try:
+            # I need to post page 1 to know the total pages. Then loop starts from page 2
             resp_text = self.post_causa_type(type, 1, doc_scraper)
 
-        if resp_text:
-            # find total record to calculate total pages
-            total_records = self._get_total_records(resp_text)
-            # print('Total records: {}'.format(total_records))
-            total_pages = int(total_records / 10 + 1)
-            # print('Total pages: {}'.format(total_pages))
-            if total_pages > 1:
-                for page in range(2, total_pages + 1):
-                    if settings.USE_ASYNC_CALLS:
-                        self.post_causa_type_async(type, page, doc_scraper)
-                    else:
+            if resp_text:
+                # find total record to calculate total pages
+                total_records = self._get_total_records(resp_text)
+                # print('Total records: {}'.format(total_records))
+                total_pages = int(total_records / 10 + 1)
+                # print('Total pages: {}'.format(total_pages))
+                if total_pages > 1:
+                    for page in range(2, total_pages + 1):
                         self.post_causa_type(type, page, doc_scraper)
+        except:
+            pass
 
     def init_scraping(self):
         session = self.session
@@ -792,33 +745,12 @@ class Scraper:
         session.get(url, headers=headers)
         # print('Loading {} ...OK'.format(url))
 
-        try:
-            self.scrape_causas('suprema', self.scrape_suprema_document)
-        except:
-            pass
-        try:
-            self.scrape_causas('apelaciones', self.scrape_apelaciones_document)
-        except:
-            pass
-        try:
-            self.scrape_causas('civil', self.scrape_civil_document)
-        except:
-            pass
-        try:
-            self.scrape_causas('laboral', self.scrape_laboral_document)
-        except:
-            pass
-        try:
-            self.scrape_causas('penal', self.scrape_penal_document)
-        except:
-            pass
-        try:
-            self.scrape_causas('cobranza', self.scrape_cobranza_document)
-        except:
-            pass
-        try:
-            self.scrape_causas('familia', self.scrape_familia_document)
-        except:
-            pass
+        self.scrape_causas('suprema', self.scrape_suprema_document)
+        self.scrape_causas('apelaciones', self.scrape_apelaciones_document)
+        self.scrape_causas('civil', self.scrape_civil_document)
+        self.scrape_causas('laboral', self.scrape_laboral_document)
+        self.scrape_causas('penal', self.scrape_penal_document)
+        self.scrape_causas('cobranza', self.scrape_cobranza_document)
+        self.scrape_causas('familia', self.scrape_familia_document)
 
         session.close()
